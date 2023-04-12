@@ -11,6 +11,7 @@ CGameMain::CGameMain(aqua::IGameObject* parent)
 
 void CGameMain::Update()
 {
+	IScene::Update();
 }
 
 void CGameMain::Draw()

@@ -10,6 +10,7 @@ CResult::CResult(aqua::IGameObject* parent)
 
 void CResult::Update()
 {
+	IScene::Update();
 }
 
 void CResult::Draw()

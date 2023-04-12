@@ -15,6 +15,7 @@ void CSceneManager::Initialize()
 
 void CSceneManager::Update()
 {
+	// ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
 	if (m_Scene->CheckChangeFlag())
 	{
 		m_NectID = m_Scene->GetNextScene();
@@ -30,26 +31,23 @@ void CSceneManager::Update()
 	IGameObject::Update();
 }
 
-void CSceneManager::Draw()
-{
-	IGameObject::Draw();
-}
-
 void CSceneManager::ChageScene(Scene::ID scene_id)
 {
+	if (scene_id == Scene::ID::DUMMY)return;
 
 	switch (scene_id)
 	{
 	case Scene::ID::TITLE:
 		m_Scene = (IScene*)aqua::CreateGameObject<CTitle>(this);
 		break;
+	case Scene::ID::SELECT:
+		m_Scene = (IScene*)aqua::CreateGameObject<CSelect>(this);
+		break;
 	case Scene::ID::GAME:
 		m_Scene = (IScene*)aqua::CreateGameObject<CGameMain>(this);
 		break;
 	case Scene::ID::RESULT:
 		m_Scene = (IScene*)aqua::CreateGameObject<CResult>(this);
-		break;
-	default:
 		break;
 	}
 }

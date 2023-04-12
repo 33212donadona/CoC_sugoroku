@@ -98,30 +98,25 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\game\button\button.cpp" />
-    <ClCompile Include="src\game\scene_manager\scene\C_result\result.cpp" />
-    <ClCompile Include="src\game\scene_manager\scene\B_game_main\game_main.cpp" />
+    <ClCompile Include="src\game\scene_manager\scene\result\result.cpp" />
+    <ClCompile Include="src\game\scene_manager\scene\game_main\game_main.cpp" />
+    <ClCompile Include="src\game\scene_manager\scene\select\select.cpp" />
     <ClCompile Include="src\game\scene_manager\scene_manager.cpp" />
     <ClCompile Include="src\game\scene_manager\scene\scene.cpp" />
     <ClCompile Include="src\game\game.cpp" />
-    <ClCompile Include="src\game\shape\circle\circle.cpp" />
-    <ClCompile Include="src\game\shape\square\square.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\game\scene_manager\scene\A_title\title.cpp" />
+    <ClCompile Include="src\game\scene_manager\scene\title\title.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\game\button\button.h" />
-    <ClInclude Include="src\game\button\button_info.h" />
-    <ClInclude Include="src\game\scene_manager\scene\C_result\result.h" />
-    <ClInclude Include="src\game\scene_manager\scene\B_game_main\game_main.h" />
+    <ClInclude Include="src\game\scene_manager\scene\result\result.h" />
+    <ClInclude Include="src\game\scene_manager\scene\game_main\game_main.h" />
     <ClInclude Include="src\game\scene_manager\scene\scene_enum.h" />
+    <ClInclude Include="src\game\scene_manager\scene\select\select.h" />
     <ClInclude Include="src\game\scene_manager\scene_channel.h" />
     <ClInclude Include="src\game\scene_manager\scene_manager.h" />
     <ClInclude Include="src\game\scene_manager\scene\scene.h" />
     <ClInclude Include="src\game\game.h" />
-    <ClInclude Include="src\game\scene_manager\scene\A_title\title.h" />
-    <ClInclude Include="src\game\shape\circle\circle.h" />
-    <ClInclude Include="src\game\shape\square\square.h" />
+    <ClInclude Include="src\game\scene_manager\scene\title\title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

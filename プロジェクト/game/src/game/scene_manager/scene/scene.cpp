@@ -15,7 +15,7 @@ void IScene::Update()
 
 void IScene::Draw()
 {
-#ifdef  _DEBUG
+#ifdef  AQUA_DEBUG
 	m_SceneName.Draw();
 #endif //  _DEBUG
 }
