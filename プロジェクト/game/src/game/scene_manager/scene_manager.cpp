@@ -8,11 +8,13 @@ CSceneManager::CSceneManager(aqua::IGameObject* parent)
 {
 }
 
+// 初期化
 void CSceneManager::Initialize()
 {
 	ChageScene(m_NectID);
 }
 
+// 更新
 void CSceneManager::Update()
 {
 	// シーンの切り替え
@@ -31,6 +33,7 @@ void CSceneManager::Update()
 	IGameObject::Update();
 }
 
+// シーン切り替え
 void CSceneManager::ChageScene(Scene::ID scene_id)
 {
 	if (scene_id == Scene::ID::DUMMY)return;
