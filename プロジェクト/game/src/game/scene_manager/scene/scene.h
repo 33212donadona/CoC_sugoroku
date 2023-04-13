@@ -9,7 +9,7 @@ public:
 	/*!
 	* @brief コンストラクト
 	*/
-	IScene(aqua::IGameObject* parent,std::string name);
+	IScene(aqua::IGameObject* parent,std::string name, Scene::ID next_scene);
 
 	/*!
 	* @brief デストラクト
@@ -45,13 +45,10 @@ public:
 	*/
 	Scene::ID GetNextScene();
 
-protected:
-
+private:
 	Scene::ID m_NextSceneID;         //! 次のシーンID
 
 	aqua::CLabel m_SceneName;        //! シーン名
-
-private:
 
 	bool ChangeFlag;                 //! 切り替えフラグ
 

@@ -7,7 +7,14 @@ class CSceneManager :
 {
 public:
 
+	/*!
+	*  @brief コンストラクタ
+	*/
 	CSceneManager(aqua::IGameObject* parent);
+
+	/*!
+	*  @brief デストラクタ
+	*/
 	~CSceneManager() = default;
 
 	/*!
