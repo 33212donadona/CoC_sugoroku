@@ -21,7 +21,7 @@ void IScene::Draw()
 {
 #ifdef  AQUA_DEBUG
 	m_SceneName.Draw();
-#endif //  _DEBUG
+#endif
 }
 
 // ‰ð•ú

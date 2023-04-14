@@ -81,6 +81,7 @@
     <ClInclude Include="src\graphics\graphics.h" />
     <ClInclude Include="src\graphics\graphic_filter\graphic_filter.h" />
     <ClInclude Include="src\graphics\label\label.h" />
+    <ClInclude Include="src\graphics\mask\mask.h" />
     <ClInclude Include="src\graphics\primitive\box_primitive\box_primitive.h" />
     <ClInclude Include="src\graphics\primitive\circle_primitive\circle_primitive.h" />
     <ClInclude Include="src\graphics\primitive\line_primitive\line_primitive.h" />

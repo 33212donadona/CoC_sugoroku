@@ -75,6 +75,14 @@ GetWindowHeight( void )
 }
 
 /*
+ * ウィンドウの幅取得 by弓削
+ */
+aqua::CPoint aqua::GetWindowSize()
+{
+    return aqua::CPoint(GetWindowWidth(), GetWindowHeight());
+}
+
+/*
  *  デルタタイム取得
  */
 float

@@ -27,6 +27,11 @@ public:
 	*/
 	void Update()override;
 
+	/*!
+	*  @brief 描画
+	*/
+	void Draw()override;
+
 private:
 
 	/*!
@@ -36,7 +41,43 @@ private:
 
 private:
 
-	IScene* m_Scene;           //! シーンの基底クラス
-	Scene::ID m_NectID;		   //! 次のシーンID
-};
+	/*!
+	 *  @brief      状態ID
+	 */
+	enum class STATE
+	{
+		SCENE_IN,
+		SCENE_UPDATA,
+		SCENE_OUT,
+		SCENE_CHANGE,
+	};
 
+	/*!
+	 *  @brief      色ID 
+	 */
+	enum class COLOR
+	{
+		BLACK,
+		GREEN,
+		BLUE,
+		YELLOW,
+		CYAN,
+		MAGENT,
+
+		MAX
+	};
+
+	static const unsigned int m_fade_color[(int)COLOR::MAX]; //! フェードの色
+	static const float        m_fade_time;                   //! フェードの最大時間
+	static const float        m_max_alpha;                   //! 透過度の最大
+	static const float        m_min_alpha;                   //! 透過度の最小
+											                 
+	IScene* m_Scene;                                         //! シーンの基底クラス
+											                 
+	Scene::ID m_NectID;		                                 //! 次のシーンID
+	STATE     m_SceneState;                                  //! シーンの状態
+											                 
+	aqua::CBoxPrimitive m_FadeBox;                           //! 画面フェード
+	aqua::CTimer        m_FadeTime;                          //! フェードの時間
+
+};

@@ -79,17 +79,6 @@ namespace aqua
         CTexture    GetTexture( void );
 
     private:
-        /*!
-         *  @brief  リソースの読み込み(未使用)
-         *
-         *  @param[in]  file_name   ファイル名
-         */
-        void    Load( const std::string& file_name );
-
-        /*!
-         *  @brief  リソースの解放(未使用)
-         */
-        void    Unload( void );
 
         /*!
          *  @brief  スプライトクラスをフレンド登録

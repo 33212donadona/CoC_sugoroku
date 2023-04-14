@@ -47,4 +47,18 @@ namespace aqua
      *  @return     最小値から最大値までの範囲で求められた乱数値
      */
     int         Rand(int max, int min = 0 );
+
+    /*!
+     *  @brief      数値の上下を求める
+     * 
+     *  @param[in]  num     数値
+     *  @param[in]  t_max   最大値
+     *  @param[in]  t_min   最小値  
+     * 
+     *  @return     最小値から最大値までの数値
+     */
+    template<class T> T Limit(T num, T t_min, T t_max)
+    {
+        return std::max<T>(t_min, std::min<T>(num, t_max));
+    }
 }

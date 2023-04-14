@@ -28,8 +28,8 @@
 #include "..\sounds\sounds.h"
 
 const char*         aqua::core::CFramework::m_class_name                = "AQUA GAME LIBRARY 7.17";
-const unsigned int  aqua::core::CFramework::m_width                     = 1280;
-const unsigned int  aqua::core::CFramework::m_height                    = 720;
+const unsigned int  aqua::core::CFramework::m_width                     = 1920;
+const unsigned int  aqua::core::CFramework::m_height                    = 1080;
 const int           aqua::core::CFramework::m_color_bit                 = 32;
 const float         aqua::core::CFramework::m_one_millisecond           = 1000.0f;
 const float         aqua::core::CFramework::m_max_delta_time            = 0.16f;

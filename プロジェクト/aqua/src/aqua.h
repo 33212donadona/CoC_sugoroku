@@ -69,6 +69,14 @@ namespace aqua
     unsigned int        GetWindowHeight( void );
 
     /*!
+    *
+    *  @brief      ウィンドウの幅取得
+    *
+    *  @return     ウィンドウの幅
+    */
+    aqua::CPoint        GetWindowSize();
+
+    /*!
      *  @brief      デルタタイム取得
      *
      *  @return     デルタタイム

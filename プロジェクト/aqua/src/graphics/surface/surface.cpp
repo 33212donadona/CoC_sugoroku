@@ -90,22 +90,3 @@ GetTexture( void )
 {
     return m_Texture;
 }
-
-/*
- *  リソースの読み込み(未使用)
- */
-void
-aqua::CSurface::
-Load( const std::string& file_name )
-{
-    (void)file_name;
-}
-
-/*
- *  リソースの解放(未使用)
- */
-void
-aqua::CSurface::
-Unload( void )
-{
-}
