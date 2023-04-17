@@ -1,6 +1,6 @@
 #pragma once
 #include "aqua.h"
-#include "scene_enum.h"
+#include "scene_id.h"
 class IScene : 
 	public aqua::IGameObject
 {

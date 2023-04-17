@@ -10,6 +10,7 @@ const unsigned int CSceneManager::m_fade_color[] =
 	0xff007f7f,
 	0xff7f007f
 };
+
 const float        CSceneManager::m_fade_time = 0.75f;
 const float        CSceneManager::m_max_alpha = 250.0f;
 const float        CSceneManager::m_min_alpha = 0.0f;

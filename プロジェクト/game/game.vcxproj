@@ -98,6 +98,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\csv_manager\csv_manager.cpp" />
+    <ClCompile Include="src\game\game_siund_manager\game_sound_manager.cpp" />
     <ClCompile Include="src\game\scene_manager\scene\result\result.cpp" />
     <ClCompile Include="src\game\scene_manager\scene\game_main\game_main.cpp" />
     <ClCompile Include="src\game\scene_manager\scene\select\select.cpp" />
@@ -108,15 +110,18 @@
     <ClCompile Include="src\game\scene_manager\scene\title\title.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\csv_manager\csv_manager.h" />
+    <ClInclude Include="src\game\game_siund_manager\sound_id.h" />
     <ClInclude Include="src\game\scene_manager\scene\result\result.h" />
     <ClInclude Include="src\game\scene_manager\scene\game_main\game_main.h" />
-    <ClInclude Include="src\game\scene_manager\scene\scene_enum.h" />
+    <ClInclude Include="src\game\scene_manager\scene\scene_id.h" />
     <ClInclude Include="src\game\scene_manager\scene\select\select.h" />
     <ClInclude Include="src\game\scene_manager\scene_channel.h" />
     <ClInclude Include="src\game\scene_manager\scene_manager.h" />
     <ClInclude Include="src\game\scene_manager\scene\scene.h" />
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\scene_manager\scene\title\title.h" />
+    <ClInclude Include="src\game\game_siund_manager\game_sound_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
