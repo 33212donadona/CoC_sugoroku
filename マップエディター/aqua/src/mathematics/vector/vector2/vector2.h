@@ -10,12 +10,14 @@
  */
 
 #pragma once
+#include "../../../utility/point/point.h"
 
 /*!
  *  @brief  aqua名前空間
  */
 namespace aqua
 {
+
     /*!
      *  @class      CVector2
      *
@@ -51,9 +53,25 @@ namespace aqua
         /*!
          *  @brief  コンストラクタ
          *
+         *  @param[in]  x   X成分
+         *  @param[in]  y   Y成分
+         */
+        CVector2(int x, int y);
+
+        /*!
+         *  @brief  コンストラクタ
+         *
          *  @param[in]  v  ベクトル
          */
         CVector2( const CVector2& v );
+
+        /*!
+         *  @brief  コンストラクタ
+         *
+         *  @param[in]  x   X成分
+         *  @param[in]  y   Y成分
+         */
+        CVector2(const CPoint& p );
 
         /*!
          *  @brief  デストラクタ
@@ -126,6 +144,21 @@ namespace aqua
         {
             x = v.x;
             y = v.y;
+
+            return *this;
+        }
+
+        /*!
+         *  @brief      代入演算子のオーバーロード
+         *
+         *  @param[in]  p   ポイントクラス
+         *
+         *  @return     ベクトルクラス
+         */
+        CVector2& operator=(const CPoint& p)
+        {
+            x = (float)p.x;
+            y = (float)p.y;
 
             return *this;
         }

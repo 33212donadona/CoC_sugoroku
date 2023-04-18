@@ -62,6 +62,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4099;4100;26812;6386;26451;6385;26495;</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -99,12 +100,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
+    <ClCompile Include="src\game\map_manager\back_ground_manager\back_ground_manager.cpp" />
     <ClCompile Include="src\game\map_manager\map_manager.cpp" />
+    <ClCompile Include="src\game\map_manager\save_manager\save_manager.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\game.h" />
+    <ClInclude Include="src\game\map_manager\back_ground_manager\back_ground_manager.h" />
     <ClInclude Include="src\game\map_manager\map_manager.h" />
+    <ClInclude Include="src\game\map_manager\save_manager\save_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

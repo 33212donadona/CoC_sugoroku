@@ -1,5 +1,6 @@
 #include "map_manager.h"
-#include <string.h>
+#include "back_ground_manager/back_ground_manager.h"
+#include "save_manager/save_manager.h"
 
 CMapManager::CMapManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "MapManager")
@@ -8,31 +9,27 @@ CMapManager::CMapManager(aqua::IGameObject* parent)
 
 void CMapManager::Initialize()
 {
+
+	aqua::CreateGameObject<CBackGroundManager>(this);
+	aqua::CreateGameObject<CSaveManager>(this);
+
+	aqua::IGameObject::Initialize();
+
 }
 
 void CMapManager::Update()
 {
-	GetDragFilePath(buffer);
-
-	if (aqua::mouse::Released(aqua::mouse::BUTTON_ID::LEFT))
-	{
-		if (s.GetResourceHandle() != -1)
-			s.Delete();
-
-		s.Create(buffer);
-	}
+	aqua::IGameObject::Update();
+	
 }
 
 void CMapManager::Draw()
 {
-	if (s.GetResourceHandle() != -1)
-	{
-		s.Draw();
-	}
+	aqua::IGameObject::Draw();
+
 }
 
 void CMapManager::Finalize()
 {
-	if (s.GetResourceHandle() != -1)
-		s.Delete();
+	aqua::IGameObject::Finalize();
 }

@@ -13,11 +13,4 @@ public:
 	void Update()override;
 	void Draw()override;
 	void Finalize()override;
-
-private:
-
-	char buffer[MAX_PATH];
-
-	aqua::CSprite s;
-
 };
