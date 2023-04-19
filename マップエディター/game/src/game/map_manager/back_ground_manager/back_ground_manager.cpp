@@ -78,7 +78,7 @@ void CBackGroundManager::DropSprite()
 	}
 }
 
-void CBackGroundManager::SaveSprite()
+bool CBackGroundManager::SaveSprite()
 {
 	if (m_BackGroundSprite.GetResourceHandle() == -1)return;
 
@@ -107,6 +107,12 @@ void CBackGroundManager::SaveSprite()
 			not_file = true;
 	}
 
-	if (not_file)
+	if (!not_file)
 		file_sys::copy_file(buffer, m_buffer);
+	else
+	{
+
+	}
+
+	return !not_file;
 }

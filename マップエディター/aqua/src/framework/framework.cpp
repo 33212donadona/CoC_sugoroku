@@ -91,7 +91,7 @@ Initialize( HINSTANCE instance_handle, aqua::IGameObject* game )
     ChangeWindowMode( TRUE );
 #else
     // フルスクリーンモードで起動
-    ChangeWindowMode( FALSE );
+    ChangeWindowMode( TRUE );
 
     // ゲーム画面の解像度に合わせてフルスクリーンにする
     SetFullScreenResolutionMode( DX_FSRESOLUTIONMODE_NATIVE );
@@ -113,8 +113,6 @@ Initialize( HINSTANCE instance_handle, aqua::IGameObject* game )
         return;
     }
 
-    // ドラックアンドドロップを許可
-    SetDragFileValidFlag(TRUE);
 
     // フルスクリーンウィンドウ切り替え時にリソースが消えるのを防ぐ
     SetChangeScreenModeGraphicsSystemResetFlag( FALSE );
@@ -124,6 +122,9 @@ Initialize( HINSTANCE instance_handle, aqua::IGameObject* game )
 
     // Effekseerに2D描画を設定する
     Effekseer_Set2DSetting(m_width, m_height);
+
+    // ドラックアンドドロップを許可
+    SetDragFileValidFlag(TRUE);
 
     // Zバッファの有効化
     SetUseZBuffer3D( TRUE );

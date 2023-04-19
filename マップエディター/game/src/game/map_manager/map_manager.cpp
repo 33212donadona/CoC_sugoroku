@@ -1,5 +1,6 @@
 #include "map_manager.h"
 #include "back_ground_manager/back_ground_manager.h"
+#include "cursor_manager/cursor_manager.h"
 #include "save_manager/save_manager.h"
 
 CMapManager::CMapManager(aqua::IGameObject* parent)
@@ -9,9 +10,11 @@ CMapManager::CMapManager(aqua::IGameObject* parent)
 
 void CMapManager::Initialize()
 {
-
 	aqua::CreateGameObject<CBackGroundManager>(this);
 	aqua::CreateGameObject<CSaveManager>(this);
+
+
+	aqua::CreateGameObject<CCursorManager>(this);
 
 	aqua::IGameObject::Initialize();
 

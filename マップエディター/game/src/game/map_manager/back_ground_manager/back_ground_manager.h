@@ -18,7 +18,7 @@ public:
 	/*
 	 *  @brief ‰æ‘œ‚Ì•Û‘¶
 	 */
-	void SaveSprite();
+	bool SaveSprite();
 
 private:
 

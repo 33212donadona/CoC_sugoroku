@@ -23,20 +23,28 @@ private:
 	 */
 	void ClickHitButton(aqua::CVector2& position);
 
+	/*
+	 *  @brief ボタンのサイズ変更
+	 */
+	void ButtonChangeSize();
+
 private:
 
-	static const float m_min_button_size;
-	static const float m_max_button_size;
-	static const float m_max_size_easing_time;
+	static const float m_min_button_size;	   //  
+	static const float m_max_button_size;	   //  
+	static const float m_max_size_easing_time; //  
+	static const float m_max_massage_time;     //  
 
-	CBackGroundManager* m_BackGroundClass; //  背景クラス
+	CBackGroundManager* m_BackGroundClass;     //  背景クラス
 
-	aqua::CSprite m_SaveButtonSprite;
-	aqua::CTimer m_SizeEasingTime;
+	aqua::CSprite m_SaveButtonSprite;          //  
+	aqua::CTimer m_SizeEasingTime;			   //  
+	aqua::CTimer m_MassageTime;			       //  
 
-	float m_SaveButtonSize;
+	float m_SaveButtonSize;                    //  
 
-	bool m_NowButton;
-	bool m_PrivNowButton;
+	bool m_CursorOnButton;                     //  
+	bool m_PrivCursorOnButton;				   //  
+	bool m_SaveMassageFlag;  				   //  セーブ時のメッセージフラグ
 
 };
