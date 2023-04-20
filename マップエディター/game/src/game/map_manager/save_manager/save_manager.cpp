@@ -33,7 +33,6 @@ void CSaveManager::Initialize()
 
 	// メッセージ時間
 	m_MassageTime.Setup(m_max_massage_time);
-
 }
 
 /*
