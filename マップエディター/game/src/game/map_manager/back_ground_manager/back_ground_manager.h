@@ -17,6 +17,10 @@ public:
 
 	/*
 	 *  @brief ‰æ‘œ‚Ì•Û‘¶
+	 * 
+	 *  @return •Û‘¶‚Ì¬Œ÷
+	 *  @retval     true    •Û‘¶¬Œ÷
+     *  @retval     false   •Û‘¶¸”s‚Ü‚½‚Í‚·‚Å‚É‘¶İ‚µ‚Ä‚¢‚é
 	 */
 	bool SaveSprite();
 

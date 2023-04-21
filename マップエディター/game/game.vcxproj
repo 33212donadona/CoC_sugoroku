@@ -102,6 +102,8 @@
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\map_manager\back_ground_manager\back_ground_manager.cpp" />
+    <ClCompile Include="src\game\map_manager\block_manager\block\block.cpp" />
+    <ClCompile Include="src\game\map_manager\block_manager\block_manager.cpp" />
     <ClCompile Include="src\game\map_manager\map_manager.cpp" />
     <ClCompile Include="src\game\map_manager\save_manager\save_manager.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -109,6 +111,9 @@
   <ItemGroup>
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\map_manager\back_ground_manager\back_ground_manager.h" />
+    <ClInclude Include="src\game\map_manager\block_manager\block\block.h" />
+    <ClInclude Include="src\game\map_manager\block_manager\block\normal_block\normal_block.h" />
+    <ClInclude Include="src\game\map_manager\block_manager\block_manager.h" />
     <ClInclude Include="src\game\map_manager\map_manager.h" />
     <ClInclude Include="src\game\map_manager\save_manager\save_manager.h" />
   </ItemGroup>

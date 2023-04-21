@@ -31,8 +31,10 @@ void CBackGroundManager::Draw()
 {
 	if (m_BackGroundSprite.GetResourceHandle() != -1)
 	{
+
 		m_BackGroundSprite.Draw();
 		m_BackGroundFile.Draw();
+
 	}
 
 	m_FileNum.Draw();
@@ -77,42 +79,34 @@ void CBackGroundManager::DropSprite()
 
 	}
 }
-
+/*
+ *  画像の保存
+ */
 bool CBackGroundManager::SaveSprite()
 {
-	if (m_BackGroundSprite.GetResourceHandle() == -1)return;
+	if (m_BackGroundSprite.GetResourceHandle() == -1)return false;
 
-	int min_buffer = 0;
+	int file_buffer_num = 0;
 
+	// ファイル名を取得
 	for (int i = MAX_PATH; i > 0; i--)
 	{
 		if (buffer[i] == '\\')
 		{
-			min_buffer = i + 1;
+			file_buffer_num = i + 1;
 			break;
 		}
 	}
 
-	std::string m_buffer;
-	bool        not_file = false;
+	std::string m_file_buffer = m_DirectyoryName + "\\";
 
-	for (int i = min_buffer; i < MAX_PATH; i++)
-		m_buffer += buffer[i];
+	// コピー先の参照パスを作成
+	for (int i = file_buffer_num; i < MAX_PATH; i++)
+		m_file_buffer += buffer[i];
 
-	m_buffer = m_DirectyoryName + "\\" + m_buffer;
+	// ファイルが存在しなけれはコピー先に保存する
+	if (!file_sys::exists(m_file_buffer))
+		file_sys::copy_file(buffer, m_file_buffer);
 
-	for (const auto& f_it : file_sys::directory_iterator(m_DirectyoryName + "\\"))
-	{
-		if (f_it.path() == m_buffer)
-			not_file = true;
-	}
-
-	if (!not_file)
-		file_sys::copy_file(buffer, m_buffer);
-	else
-	{
-
-	}
-
-	return !not_file;
+	return true;
 }

@@ -4,10 +4,13 @@
 const float CSaveManager::m_min_button_size = 1.0f;
 const float CSaveManager::m_max_button_size = 1.5f;
 const float CSaveManager::m_max_size_easing_time = 1.0f;
-const float CSaveManager::m_max_massage_time = 2.5f;
+const float CSaveManager::m_max_message_time = 2.5f;
+const int   CSaveManager::m_message_font_size = 100;
+const int   CSaveManager::m_message_box_space = 10;
 
 CSaveManager::CSaveManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "SaveManager")
+	, m_SaveMessageFlag(false)
 {
 }
 
@@ -21,9 +24,25 @@ void CSaveManager::Initialize()
 
 	// ボタン画像の座標を設定
 	m_SaveButtonSprite.position = aqua::GetWindowSize();
-
 	m_SaveButtonSprite.position.x -= m_SaveButtonSprite.GetTextureWidth();
 	m_SaveButtonSprite.position.y -= m_SaveButtonSprite.GetTextureHeight();
+
+	// メッセージラベルの設定
+	m_MessageLabel.Create(m_message_font_size);
+	m_MessageLabel.text = "保存しました";
+	m_MessageLabel.position = aqua::GetWindowSize() / 2.0f;
+	m_MessageLabel.position.x -= m_MessageLabel.GetTextWidth() / 2.0f;
+	m_MessageLabel.position.y -= m_MessageLabel.GetFontHeight() / 2.0f;
+	m_MessageLabel.color.alpha = 0x00;
+
+	// メッセージボックスの設定
+	m_MessageBox.Setup
+	(
+		m_MessageLabel.position - aqua::CVector2::ONE * m_message_box_space / 2.0f,
+		float(m_MessageLabel.GetTextWidth()  + m_message_box_space),
+		float(m_MessageLabel.GetFontHeight() + m_message_box_space),
+		0x00000000
+	);
 
 	// 背景クラス
 	m_BackGroundClass = (CBackGroundManager*)aqua::FindGameObject("BackGroundManager");
@@ -32,7 +51,9 @@ void CSaveManager::Initialize()
 	m_SizeEasingTime.Setup(m_max_size_easing_time);
 
 	// メッセージ時間
-	m_MassageTime.Setup(m_max_massage_time);
+	m_MessageTime.Setup(m_max_message_time);
+
+	m_MessageTime.SetTime(m_max_message_time);
 }
 
 /*
@@ -44,6 +65,8 @@ void CSaveManager::Update()
 
 	ButtonChangeSize();
 
+	MessageUpdata();
+
 	m_SaveButtonSize = aqua::Limit(m_SaveButtonSize, m_min_button_size, m_max_button_size);
 }
 
@@ -53,6 +76,9 @@ void CSaveManager::Update()
 void CSaveManager::Draw()
 {
 	m_SaveButtonSprite.Draw();
+
+	m_MessageBox.Draw();
+	m_MessageLabel.Draw();
 }
 
 /*
@@ -82,16 +108,17 @@ void CSaveManager::ClickHitButton(aqua::CVector2& position)
 		position.y < origin.y + m_SaveButtonSprite.GetTextureHeight() * m_SaveButtonSprite.scale.y
 		)
 	{
-
 		if (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT))
 			m_SaveButtonSprite.color = (aqua::CColor)0xff5f5f5f;
 
 		// 左クリックでセーブ
 		if (aqua::mouse::Released(aqua::mouse::BUTTON_ID::LEFT) && m_BackGroundClass)
 		{
-			m_SaveMassageFlag = m_BackGroundClass->SaveSprite();
+
+			m_SaveMessageFlag = m_BackGroundClass->SaveSprite();
 
 			m_SaveButtonSprite.color = (aqua::CColor)0xffffffff;
+
 		}
 
 		// カーソルフラグを真
@@ -160,4 +187,31 @@ void CSaveManager::ButtonChangeSize()
 	m_SaveButtonSprite.position.x -= m_SaveButtonSprite.GetTextureWidth() * m_SaveButtonSprite.scale.x;
 	m_SaveButtonSprite.position.y -= m_SaveButtonSprite.GetTextureHeight() * m_SaveButtonSprite.scale.y;
 
+}
+
+/*
+ *   メッセージの表示時間
+ */
+void CSaveManager::MessageUpdata()
+{
+	if (m_SaveMessageFlag && m_MessageTime.Finished())
+		m_MessageTime.Reset();
+
+	if (m_SaveMessageFlag || !m_MessageTime.Finished())
+	{
+		m_SaveMessageFlag = false;
+
+		m_MessageLabel.color.alpha =
+			(unsigned char)aqua::easing::InCubic
+			(
+				m_MessageTime.GetTime(),
+				m_MessageTime.GetLimit(),
+				255,
+				0
+			);
+
+		m_MessageBox.color.alpha = m_MessageLabel.color.alpha;
+
+		m_MessageTime.Update();
+	}
 }
