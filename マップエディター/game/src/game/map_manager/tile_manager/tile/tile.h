@@ -40,4 +40,6 @@ private:
 
 	aqua::CVector2 m_TileSize;
 
+	aqua::CVector2 m_CenterPosition;
+
 };

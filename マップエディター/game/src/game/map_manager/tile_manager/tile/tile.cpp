@@ -21,6 +21,8 @@ void ITile::Initialize(std::string block_name, aqua::CVector2 position)
 
 	m_TileSize.x = m_TileSprite.GetTextureWidth();
 	m_TileSize.y = m_TileSprite.GetTextureHeight();
+
+	m_CenterPosition = position + m_TileSize;
 }
 
 void ITile::Update()
@@ -73,5 +75,10 @@ int ITile::GetNextTile(int next_tile_number)
 
 bool ITile::CheckOnTile(aqua::CVector2& position) // TODO
 {
-	return false;
+	aqua::CVector2 distance = m_CenterPosition - position;
+	distance.x = abs(distance.x);
+	distance.y = abs(distance.y);
+	float dis_float = sqrt(distance.x * distance.x + distance.y * distance.y);
+
+	return dis_float <= m_TileSize.x;
 }
