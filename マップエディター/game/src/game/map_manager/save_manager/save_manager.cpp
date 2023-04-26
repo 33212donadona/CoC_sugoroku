@@ -39,7 +39,7 @@ void CSaveManager::Initialize()
 	m_MessageBox.Setup
 	(
 		m_MessageLabel.position - aqua::CVector2::ONE * m_message_box_space / 2.0f,
-		float(m_MessageLabel.GetTextWidth()  + m_message_box_space),
+		float(m_MessageLabel.GetTextWidth() + m_message_box_space),
 		float(m_MessageLabel.GetFontHeight() + m_message_box_space),
 		0x00000000
 	);
@@ -127,6 +127,9 @@ void CSaveManager::ClickHitButton(aqua::CVector2& position)
 	}
 	else
 	{
+		if (m_CursorOnButton)
+			m_SaveButtonSprite.color = (aqua::CColor)0xffffffff;
+
 		// カーソルフラグを偽
 		m_CursorOnButton = false;
 	}

@@ -57,7 +57,7 @@ GetCursorPos( void )
 /*
  *  ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ÌŽæ“¾
  */
-aqua::CPoint
+aqua::CVector2
 aqua::mouse::
 GetCursorMovement( void )
 {

@@ -102,6 +102,7 @@
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\map_manager\back_ground_manager\back_ground_manager.cpp" />
+    <ClCompile Include="src\game\map_manager\tile_manager\line\line.cpp" />
     <ClCompile Include="src\game\map_manager\tile_manager\tile\tile.cpp" />
     <ClCompile Include="src\game\map_manager\tile_manager\tile\ivent_tile\ivent_tile.cpp" />
     <ClCompile Include="src\game\map_manager\tile_manager\tile\normal_tile\normal_tile.cpp" />
@@ -113,6 +114,7 @@
   <ItemGroup>
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\map_manager\back_ground_manager\back_ground_manager.h" />
+    <ClInclude Include="src\game\map_manager\tile_manager\line\line.h" />
     <ClInclude Include="src\game\map_manager\tile_manager\tile\tile.h" />
     <ClInclude Include="src\game\map_manager\tile_manager\tile\ivent_tile\ivent_tile.h" />
     <ClInclude Include="src\game\map_manager\tile_manager\tile\normal_tile\normal_tile.h" />

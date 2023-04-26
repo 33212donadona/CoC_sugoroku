@@ -120,7 +120,7 @@ namespace aqua
              *
              *  @return     マウスカーソルの移動量
              */
-            aqua::CPoint    GetCursorMovement(void);
+            aqua::CVector2  GetCursorMovement(void);
 
             /*!
              *  @brief      マウスホイール値取得
