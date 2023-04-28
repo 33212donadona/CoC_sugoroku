@@ -86,19 +86,19 @@ aqua::CVector2* ITile::GetCenterPosition()
 /*!
  *   @brief  進めるタイル番号を設定
  */
-void ITile::SetNextTileID(int vector_num, int next_tile_number)
+void ITile::SetNextTileID(int vector_num,ITile* next_tile)
 {
-	if (next_tile_number < 0) return;
+	if (next_tile == nullptr) return;
 
-	int max = (int)m_NextTileNumber.size();
+	int max = (int)m_NextTile.size();
 
 	if (max > vector_num)
 	{
-		m_NextTileNumber[vector_num] = next_tile_number;
+		m_NextTile[vector_num] = next_tile;
 	}
 	else
 	{
-		m_NextTileNumber.push_back(next_tile_number);
+		m_NextTile.push_back(next_tile);
 	}
 }
 /*! 
@@ -112,7 +112,7 @@ void ITile::SetTileID(int tile_number)
 }
 
 /*!
- *   @brief  自分のタイル番号を取得
+ *  自分のタイル番号を取得
  */
 int ITile::GetNowTileID()
 {
@@ -120,25 +120,28 @@ int ITile::GetNowTileID()
 }
 
 /*!
- *   @brief  初期化
+ *  初期化
  */
 int ITile::GetMaxNextTileSize()
 {
-	return (int)m_NextTileNumber.size();
+	if (m_NextTile.empty())return NULL;
+
+	return (int)m_NextTile.size();
 }
 
 /*!
- *   @brief  進めるタイルの最大値を取得
+ *  進めるタイルの最大値を取得
  */
 int ITile::GetNextTileID(int vector_num)
 {
 	if (vector_num < 0 && vector_num >= GetMaxNextTileSize())return NULL;
+	if (!m_NextTile[vector_num])return NULL;
 
-	return m_NextTileNumber[vector_num];
+	return m_NextTile[vector_num]->GetNowTileID();
 }
 
 /*!
- *   @brief  引数との衝突判定
+ *  引数との衝突判定
  */
 bool ITile::CheckOnTile(aqua::CVector2& position)
 {
@@ -150,6 +153,9 @@ bool ITile::CheckOnTile(aqua::CVector2& position)
 	return dis_float <= m_TileHalfSize.x + m_out_of_range;
 }
 
+/*!
+ *  タイルの大きさ
+ */
 aqua::CVector2 ITile::GetTileSize()
 {
 	return m_TileHalfSize * 2.0f;

@@ -1,5 +1,6 @@
 #include "save_manager.h"
 #include "../back_ground_manager/back_ground_manager.h"
+#include "../tile_manager/tile_manager.h"
 
 const float CSaveManager::m_min_button_size = 1.0f;
 const float CSaveManager::m_max_button_size = 1.5f;
@@ -44,8 +45,10 @@ void CSaveManager::Initialize()
 		0x00000000
 	);
 
-	// 背景クラス
+	// 背景管理クラス
 	m_BackGroundClass = (CBackGroundManager*)aqua::FindGameObject("BackGroundManager");
+	// タイル管理クラス
+	m_TileManagerClass = (CTileManager*)aqua::FindGameObject("TileManager");
 
 	// イージング時間
 	m_SizeEasingTime.Setup(m_max_size_easing_time);
@@ -86,13 +89,14 @@ void CSaveManager::Draw()
  */
 void CSaveManager::Finalize()
 {
+	m_MessageLabel.Delete();
 	m_SaveButtonSprite.Delete();
 }
 
 /*
  *  ボタン処理
  */
-void CSaveManager::ClickHitButton(aqua::CVector2& position)
+void CSaveManager::ClickHitButton(aqua::CVector2 position)
 {
 	// 前フレームのフラグを保存
 	m_PrivCursorOnButton = m_CursorOnButton;
@@ -112,10 +116,13 @@ void CSaveManager::ClickHitButton(aqua::CVector2& position)
 			m_SaveButtonSprite.color = (aqua::CColor)0xff5f5f5f;
 
 		// 左クリックでセーブ
-		if (aqua::mouse::Released(aqua::mouse::BUTTON_ID::LEFT) && m_BackGroundClass)
+		if (aqua::mouse::Released(aqua::mouse::BUTTON_ID::LEFT) 
+			&& m_BackGroundClass && m_TileManagerClass)
 		{
 
 			m_SaveMessageFlag = m_BackGroundClass->SaveSprite();
+
+			m_TileManagerClass->SaveTile(m_BackGroundClass->GetBackGround());
 
 			m_SaveButtonSprite.color = (aqua::CColor)0xffffffff;
 

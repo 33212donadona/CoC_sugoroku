@@ -4,7 +4,8 @@
 
 namespace file_sys = std::filesystem;
 
-const std::string CBackGroundManager::m_DirectyoryName = "map_data";
+const std::string CBackGroundManager::m_directyory_name = "map_data";
+const int         CBackGroundManager::m_drop_file_label_size = 100;
 
 CBackGroundManager::CBackGroundManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "BackGroundManager")
@@ -14,12 +15,20 @@ CBackGroundManager::CBackGroundManager(aqua::IGameObject* parent)
 void CBackGroundManager::Initialize()
 {
 	// ディレクトリを生成
-	file_sys::create_directory(m_DirectyoryName);
+	file_sys::create_directory(m_directyory_name);
 
 	m_BackGroundFile.Create(20);
 	m_FileNum.Create(20);
 
 	m_FileNum.text = "ドラックアンドドロップ : " + std::to_string(0);
+
+	// ラベル
+	m_DropFileLabel.Create(m_drop_file_label_size);
+	m_DropFileLabel.text = "背景画像をココに\nドラックアンドドロップ!!";
+	m_DropFileLabel.position = aqua::GetWindowSize() / 2.0f;
+	m_DropFileLabel.position.x -= m_DropFileLabel.GetTextWidth()  / 2.0f;
+	m_DropFileLabel.position.y -= m_DropFileLabel.GetFontHeight() / 2.0f;
+	m_DropFileLabel.color = 0xff000000;
 }
 
 void CBackGroundManager::Update()
@@ -29,24 +38,27 @@ void CBackGroundManager::Update()
 
 void CBackGroundManager::Draw()
 {
-	if (m_BackGroundSprite.GetResourceHandle() != -1)
+	if (m_BackGroundSprite.GetResourceHandle() != AQUA_UNUSED_HANDLE)
 	{
 
 		m_BackGroundSprite.Draw();
 		m_BackGroundFile.Draw();
 
 	}
+	else
+		m_DropFileLabel.Draw();
 
 	m_FileNum.Draw();
 }
 
 void CBackGroundManager::Finalize()
 {
-	if (m_BackGroundSprite.GetResourceHandle() != -1)
+	if (m_BackGroundSprite.GetResourceHandle() != AQUA_UNUSED_HANDLE)
 	{
 		m_BackGroundSprite.Delete();
 	}
 
+	m_DropFileLabel.Delete();
 	m_BackGroundFile.Delete();
 	m_FileNum.Delete();
 }
@@ -67,7 +79,7 @@ void CBackGroundManager::DropSprite()
 
 		if (m_DropSpiteNum >= 1)
 		{
-			if (m_BackGroundSprite.GetResourceHandle() != -1)
+			if (m_BackGroundSprite.GetResourceHandle() != AQUA_UNUSED_HANDLE)
 				m_BackGroundSprite.Delete();
 
 			m_BackGroundFile.text = buffer;
@@ -84,7 +96,7 @@ void CBackGroundManager::DropSprite()
  */
 bool CBackGroundManager::SaveSprite()
 {
-	if (m_BackGroundSprite.GetResourceHandle() == -1)return false;
+	if (m_BackGroundSprite.GetResourceHandle() == AQUA_UNUSED_HANDLE)return false;
 
 	int file_buffer_num = 0;
 
@@ -98,15 +110,28 @@ bool CBackGroundManager::SaveSprite()
 		}
 	}
 
-	std::string m_file_buffer = m_DirectyoryName + "\\";
+	m_BackGround = m_directyory_name + "\\";
 
 	// コピー先の参照パスを作成
 	for (int i = file_buffer_num; i < MAX_PATH; i++)
-		m_file_buffer += buffer[i];
+	{
+		if (buffer[i] == '\0')
+			break;
+
+		m_BackGround += buffer[i];
+	}
 
 	// ファイルが存在しなけれはコピー先に保存する
-	if (!file_sys::exists(m_file_buffer))
-		file_sys::copy_file(buffer, m_file_buffer);
+	if (!file_sys::exists(m_BackGround))
+		file_sys::copy_file(buffer, m_BackGround);
 
 	return true;
+}
+
+/*
+ *  背景のファイル名のポインタ
+ */
+std::string* CBackGroundManager::GetBackGround()
+{
+	return &m_BackGround;
 }

@@ -107,8 +107,8 @@ GetCursorMovement( void )
 {
     CVector2 t;
 
-    t.x = m_CursorPos.x - m_PrevCursorPos.x;
-    t.y = m_CursorPos.y - m_PrevCursorPos.y;
+    t.x = float(m_CursorPos.x - m_PrevCursorPos.x);
+    t.y = float(m_CursorPos.y - m_PrevCursorPos.y);
 
     return t;
 }

@@ -63,7 +63,7 @@ public:
 	 *   @param[in] vector_num       配列番号
 	 *   @param[in] next_tile_number タイル番号
 	 */
-	void SetNextTileID(int vector_num,int next_tile_number);
+	void SetNextTileID(int vector_num,ITile* next_tile_number);
 
 	/*!
 	 *   @brief  タイル番号を設定
@@ -90,6 +90,7 @@ public:
 	 *   @brief  次に進めるタイル番号
 	 * 
 	 *   @param[in] vector_num 配列番号
+	 * 
 	 *   @return 次に進めるタイル番号
 	 */
 	int GetNextTileID(int vector_num);
@@ -123,7 +124,7 @@ private:
 
 	int m_NowID;                         //! 自分のタイル番号
 
-	std::vector<int> m_NextTileNumber;   //! 次に進めるタイル番号
+	std::vector<ITile*> m_NextTile;      //! 次に進めるタイル番号
 
 	aqua::CSprite m_TileSprite;          //! タイルの画像
 

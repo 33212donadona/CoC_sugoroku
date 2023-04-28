@@ -29,12 +29,52 @@ public:
 	 */
 	void Finalize()override;
 
-	aqua::CVector2* m_TergetPosition;
+	/*
+	 * @brief 道のりのタイル番号の設定
+	 * 
+	 * @param[in] id タイル番号
+	 */
+	void SetLineWay(int id);
+
+	/*
+	 * @brief 道のりにタイル番号があるか取得
+	 * 	 
+	 * @param[in] id タイル番号
+	 *
+	 * @return 道のりにタイル番号があるか
+	 * @retval true  ある
+	 * @retval false ない
+	 */
+	bool GetLineWayFlag(int id);
+
+	/*
+	 * @brief 矢印の描画
+	 * 
+	 */
+	static void ArrowDraw();
+
+	aqua::CVector2* m_TergetPosition;     // 終点座標
+
+	static std::list<aqua::CSprite*> m_ArrowSpriteList;    // 矢印画像リスト
 
 private:
-	static const float m_LineThick;
 
-	aqua::CVector2* m_FirstPosition;
-	aqua::CVector2  m_PrevFirstPosition;
+	enum class LineWay
+	{
+		FROM,
+		TO,
 
+		MAX
+	};
+
+private:
+
+	static const float m_LineThick;                        // 線の太さ
+	static const float m_ArrowSize;                        // 矢印の大きさ
+
+	aqua::CVector2* m_FirstPosition;                       // 始点座標のポインタ
+	aqua::CVector2  m_PrevFirstPosition;                   // 終点座標
+	aqua::CSprite   m_ArrowSprite;                         // 矢印画像
+
+	int             m_RefalenceTileID[(int)LineWay::MAX];  // 始点終点のタイル番号
 };

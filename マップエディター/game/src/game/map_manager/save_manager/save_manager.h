@@ -2,6 +2,7 @@
 #include "aqua.h"
 
 class CBackGroundManager;
+class CTileManager;
 
 class CSaveManager :
 	public aqua::IGameObject
@@ -21,7 +22,7 @@ private:
 	/*
 	 *  @brief ボタンのクリック処理 
 	 */
-	void ClickHitButton(aqua::CVector2& position);
+	void ClickHitButton(aqua::CVector2 position);
 
 	/*
 	 *  @brief ボタンのサイズ変更
@@ -42,7 +43,8 @@ private:
 	static const int   m_message_font_size;    //  
 	static const int   m_message_box_space;    //  
 
-	CBackGroundManager* m_BackGroundClass;     //  背景クラス
+	CBackGroundManager* m_BackGroundClass;     //  背景管理クラス
+	CTileManager*       m_TileManagerClass;    //  タイル管理クラス
 
 	aqua::CSprite m_SaveButtonSprite;          //  
 	aqua::CTimer m_SizeEasingTime;			   //  

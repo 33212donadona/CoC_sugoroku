@@ -24,6 +24,11 @@ public:
 	 */
 	bool SaveSprite();
 
+	/*
+	 *  @brief 背景のファイル名のポインタ 
+	 */
+	std::string* GetBackGround();
+
 private:
 
 	/*
@@ -33,15 +38,19 @@ private:
 
 private:
 
-	static const std::string m_DirectyoryName;
+	static const std::string m_directyory_name;
+	static const int         m_drop_file_label_size;
 
 	char buffer[MAX_PATH];
+
+	std::string m_BackGround;
 
 	aqua::CSprite m_BackGroundSprite;
 
 	aqua::CLabel  m_BackGroundFile;
 	aqua::CLabel  m_FileNum;
-	aqua::CLabel  m_ExePath;
+
+	aqua::CLabel  m_DropFileLabel;
 
 	int m_DropSpiteNum;
 
