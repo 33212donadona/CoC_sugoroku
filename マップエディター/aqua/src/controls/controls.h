@@ -79,7 +79,7 @@ namespace aqua
          *
          *  @return     マウスの移動量
          */
-        aqua::CVector2  GetCursorMovement(void);
+        aqua::CPoint    GetCursorMovement(void);
 
         /*!
          *  @brief      マウスボタン判定

@@ -101,14 +101,14 @@ GetCursorPos( void )
 /*
  *  マウスカーソルの移動量取得
  */
-aqua::CVector2
+aqua::CPoint
 aqua::core::CMouse::
 GetCursorMovement( void )
 {
-    CVector2 t;
+    CPoint t = GetCursorPos( );
 
-    t.x = float(m_CursorPos.x - m_PrevCursorPos.x);
-    t.y = float(m_CursorPos.y - m_PrevCursorPos.y);
+    t.x = m_CursorPos.x - m_PrevCursorPos.x;
+    t.y = m_CursorPos.y - m_PrevCursorPos.y;
 
     return t;
 }
