@@ -4,7 +4,6 @@
 
 #include <filesystem>
 
-
 namespace fs = std::filesystem;
 
 const float CTileManager::m_menu_space = 20.0f;
@@ -13,7 +12,6 @@ const int   CTileManager::m_menu_font_size = 40;
 CTileManager::CTileManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "TileManager")
 	, m_SelectTileID(0)
-	, m_TileTextFileMax(0)
 	, m_LineClass(nullptr)
 	, m_FromTile(nullptr)
 {
@@ -63,10 +61,10 @@ void CTileManager::Initialize()
 	}
 
 	m_MenuBox.position.x = aqua::GetWindowSize().x - m_MenuBox.width;
-	m_MenuBox.position.y = (aqua::GetWindowSize().y - m_MenuBox.height) / 2.0f;
+	m_MenuBox.position.y = (aqua::GetWindowSize().y - m_MenuBox.height) /2.0f;
 	m_MenuBox.position -= aqua::CVector2::ONE * m_menu_space;
 
-	m_MenuBox.width += m_menu_space;
+	m_MenuBox.width  += m_menu_space; 
 	m_MenuBox.height += m_menu_space;
 
 	// メニューラベル
@@ -78,7 +76,6 @@ void CTileManager::Initialize()
 	CreateTile(TILE_ID::NORMAL, aqua::CVector2::ONE * 500);
 	CreateTile(TILE_ID::NORMAL, aqua::CVector2::ONE * 600);
 	CreateTile(TILE_ID::NORMAL, aqua::CVector2::ONE * 650);
-
 }
 
 /*
@@ -105,7 +102,7 @@ void CTileManager::Draw()
 	m_MenuBox.Draw();
 
 	IGameObject::Draw();
-
+	
 	m_MenuLabel.Draw();
 
 	CLine::ArrowDraw();
@@ -116,7 +113,6 @@ void CTileManager::Draw()
  */
 void CTileManager::Finalize()
 {
-	m_MenuLabel.Delete();
 	IGameObject::Finalize();
 }
 
@@ -149,20 +145,8 @@ void CTileManager::CreateTile(TILE_ID tile_id, aqua::CVector2 position)
 /*
  * タイル情報を書き込む
  */
-void CTileManager::SaveTile(std::string* back_ground)
+void CTileManager::SaveTile()
 {
-	bool file_exists = true;
-	std::error_code ec;
-
-	// 保存先の既存ファイルを確認
-	do
-	{
-		m_TileDataTextName = "map_data\\tile_data_" + std::to_string(m_TileTextFileMax) + ".txt";
-		file_exists = fs::exists(m_TileDataTextName, ec);
-
-		++m_TileTextFileMax;
-
-	} while (file_exists);
 
 	int j = 1;
 
@@ -173,11 +157,11 @@ void CTileManager::SaveTile(std::string* back_ground)
 		++j;
 	}
 
-	m_TileDataText.open(m_TileDataTextName, std::ios::out);
+	m_TileDataText.open("map_data\\tile_data.txt", std::ios::out);
 
 	int count_tiles = 0;
 
-	WritingText(*back_ground);
+	WritingText("tile_info");
 	WritingTextCollEnd();
 
 	for (auto& i : m_TileList)
@@ -281,7 +265,7 @@ void CTileManager::SampleTile()
  */
 void CTileManager::DeleteTile()
 {
-	if (aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::RIGHT))
+	if(aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::RIGHT))
 	{
 		aqua::CVector2 pos = aqua::mouse::GetCursorPos();
 
@@ -289,6 +273,7 @@ void CTileManager::DeleteTile()
 
 		std::list<ITile*>::iterator tile_it = m_TileList.begin();
 		std::list<ITile*>::iterator tile_end = m_TileList.end();
+		std::list<ITile*>::iterator tile_now;
 
 		// タイルを削除
 		while (tile_it != tile_end)
@@ -297,9 +282,7 @@ void CTileManager::DeleteTile()
 			{
 				ID = (*tile_it)->GetNowTileID();
 
-				(*tile_it)->Finalize();
-
-				m_TileList.erase(tile_it);
+				tile_now = tile_it;
 
 				break;
 			}
@@ -340,11 +323,15 @@ void CTileManager::DeleteTile()
 
 				line_it = m_LineList.erase(line_it);
 
-
 			}
 			else
 				++line_it;
 		}
+
+		(*tile_now)->Finalize();
+
+		m_TileList.erase(tile_now);
+
 	}
 }
 
@@ -353,34 +340,16 @@ void CTileManager::DeleteTile()
  */
 void CTileManager::CreateLine()
 {
-	aqua::CVector2 pos = aqua::mouse::GetCursorPos();
-
-	// ラインクラスを生成と始点の保存
-	if (aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::MIDDLE))
-	{
-		for (auto& it : m_TileList)
-		{
-			if (it->CheckOnTile(pos))
-			{
-				m_LineClass = aqua::CreateGameObjectF<CLine>(this);
-
-				m_LineClass->Initialize(it->GetCenterPosition());
-
-				m_LineClass->SetLineWay(it->GetNowTileID());
-
-				m_FromTile = it; // イテレーターを保存
-			}
-		}
-	}
-
+	aqua::CVector2* pos = &aqua::CVector2(aqua::mouse::GetCursorPos());
+	
 	// 終点の保存
 	if (m_LineClass)
 	{
-		m_LineClass->m_TergetPosition = &pos;
+		m_LineClass->m_TergetPosition = pos;
 
 		for (auto& it : m_TileList)
 		{
-			if (it->CheckOnTile(pos))
+			if (it->CheckOnTile(*pos))
 			{
 				m_LineClass->m_TergetPosition = it->GetCenterPosition();
 
@@ -412,5 +381,27 @@ void CTileManager::CreateLine()
 			}
 		}
 
+	}
+	else
+	{
+		// ラインクラスを生成と始点の保存
+		if (aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::MIDDLE))
+		{
+			for (auto& it : m_TileList)
+			{
+				if (it->CheckOnTile(*pos))
+				{
+					m_LineClass = aqua::CreateGameObjectF<CLine>(this);
+
+					m_LineClass->Initialize(it->GetCenterPosition());
+
+					m_LineClass->SetLineWay(it->GetNowTileID());
+
+					m_FromTile = it; // イテレーターを保存
+
+					break;
+				}
+			}
+		}
 	}
 }

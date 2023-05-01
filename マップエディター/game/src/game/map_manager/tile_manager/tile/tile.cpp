@@ -101,6 +101,7 @@ void ITile::SetNextTileID(int vector_num,ITile* next_tile)
 		m_NextTile.push_back(next_tile);
 	}
 }
+
 /*! 
  *   ƒ^ƒCƒ‹”Ô†‚ğÄİ’è
  */

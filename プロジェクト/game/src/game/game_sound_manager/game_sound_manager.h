@@ -8,15 +8,40 @@ public:
 	CGameSoundManager(aqua::IGameObject* parent);
 	~CGameSoundManager() = default;
 
+	/*
+	*  @brief ‰Šú‰»
+	*/
 	void Initialize()override;
+
+	/*
+	*  @brief XV
+	*/
 	void Update()override;
+
+	/*
+	*  @brief ‰ğ•ú
+	*/
 	void Finalize()override;
 
 private:
 
-	static const std::string m_SoundListFile;
+	/*
+	 *  @brief BGM‚Ì“Ç‚İ‚İ 
+	 */
+	void LoadBGM();
 
-	std::vector<std::pair<Scene::ID,std::string>> m_SoundBGM;
+	/*
+	 *  @brief SE‚Ì“Ç‚İ‚İ
+	 */
+	void LoadSE();
+
+private:
+
+	static const std::string m_bgm_list_file;
+	static const std::string m_se_list_file;
+
+	std::vector<std::pair<Scene::ID,aqua::CSoundPlayer*>> m_SoundBGM;
+	std::vector<std::pair<Scene::ID,aqua::CSoundPlayer*>> m_SoundSE;
 
 
 

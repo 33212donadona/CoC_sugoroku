@@ -40,9 +40,6 @@ void CLine::Update()
 	m_ArrowSprite.rotation = atan2(m_PrevFirstPosition.y - m_FirstPosition->y, m_PrevFirstPosition.x - m_FirstPosition->x);
 
 	m_ArrowSprite.position = *m_FirstPosition - (*m_FirstPosition - m_PrevFirstPosition) / 2.0f - m_ArrowSprite.anchor;
-
-	if (m_ArrowSprite.GetResourceHandle() == -1)
-		m_ArrowSpriteList.erase(std::find(m_ArrowSpriteList.begin(), m_ArrowSpriteList.end(), &m_ArrowSprite));
 }
 
 /*
@@ -58,6 +55,7 @@ void CLine::Draw()
  */
 void CLine::Finalize()
 {
+	m_ArrowSpriteList.erase(std::find(m_ArrowSpriteList.begin(), m_ArrowSpriteList.end(), &m_ArrowSprite));
 	m_ArrowSprite.Delete();
 }
 

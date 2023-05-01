@@ -22,7 +22,7 @@ private:
 	/*
 	 *  @brief ボタンのクリック処理 
 	 */
-	void ClickHitButton(aqua::CVector2 position);
+	void ClickHitButton(aqua::CVector2& position);
 
 	/*
 	 *  @brief ボタンのサイズ変更

@@ -48,7 +48,7 @@ public:
 	/*
 	 * @brief タイルの保存
 	 */
-	void SaveTile(std::string* back_ground);
+	void SaveTile();
 
 private:
 
@@ -88,23 +88,20 @@ private:
 	static const float        m_menu_space;              //! メニューのスペース
 	static const int          m_menu_font_size;          //! メニュー文字の太さ
 
-	std::ofstream             m_TileDataText;            //! タイル保存ファイル変数 
+	std::ofstream             m_TileDataText;            //! 
 
-	std::string               m_TileDataTextName;        //! タイル保存ファイル名
+	std::list<ITile*>         m_TileList;	             //! 
+	std::list<ITile*>         m_TileMenu;	             //! 
+	std::list<CLine*>         m_LineList;	             //! 
+	std::list<ITile*>::iterator::value_type m_FromTile;  //! 
 
-	std::list<ITile*>         m_TileList;	             //! タイルクラスのリスト
-	std::list<ITile*>         m_TileMenu;	             //! メニュータイルクラスのリスト
-	std::list<CLine*>         m_LineList;	             //! ラインクラスのリスト
-	std::list<ITile*>::iterator::value_type m_FromTile;  //! ラインの始点
+	CLine*                    m_LineClass;               //! 
 
-	CLine*                    m_LineClass;               //! ラインクラス
-
-	std::vector<bool>         m_MoveFlag;                //! タイルクラスの移動フラグ
+	std::vector<bool>         m_MoveFlag;                //! 
 
 	aqua::CBoxPrimitive       m_MenuBox;                 //! メニューボックス
 	aqua::CLabel              m_MenuLabel;               //! メニューラベル
 
-	int                       m_SelectTileID;            //! 操作したいタイル番号
-	int                       m_TileTextFileMax;         //! タイル保存ファイルの個数
+	int                       m_SelectTileID;            //! 
 
 };

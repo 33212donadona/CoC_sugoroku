@@ -89,14 +89,13 @@ void CSaveManager::Draw()
  */
 void CSaveManager::Finalize()
 {
-	m_MessageLabel.Delete();
 	m_SaveButtonSprite.Delete();
 }
 
 /*
  *  ボタン処理
  */
-void CSaveManager::ClickHitButton(aqua::CVector2 position)
+void CSaveManager::ClickHitButton(aqua::CVector2& position)
 {
 	// 前フレームのフラグを保存
 	m_PrivCursorOnButton = m_CursorOnButton;
@@ -122,7 +121,7 @@ void CSaveManager::ClickHitButton(aqua::CVector2 position)
 
 			m_SaveMessageFlag = m_BackGroundClass->SaveSprite();
 
-			m_TileManagerClass->SaveTile(m_BackGroundClass->GetBackGround());
+			m_TileManagerClass->SaveTile();
 
 			m_SaveButtonSprite.color = (aqua::CColor)0xffffffff;
 
