@@ -1,7 +1,7 @@
 #include "select.h"
 
 const std::string CSelect::scene_name = "Select";
-const Scene::ID   CSelect::m_next_scene = Scene::ID::GAME;
+const SceneID   CSelect::m_next_scene = SceneID::GAME;
 
 // コンストラクタ
 CSelect::CSelect(aqua::IGameObject* parent)

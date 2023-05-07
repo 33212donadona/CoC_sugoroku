@@ -1,13 +1,11 @@
 #pragma once
 
-namespace Scene
+
+enum class SceneID
 {
-	enum class ID
-	{
-		TITLE,
-		SELECT,
-		GAME,
-		RESULT,
-		DUMMY
-	};
-}
+	TITLE,
+	SELECT,
+	GAME,
+	RESULT,
+	DUMMY
+};

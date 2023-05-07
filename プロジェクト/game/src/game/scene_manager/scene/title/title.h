@@ -31,7 +31,7 @@ public:
 private:
 
     static const std::string scene_name;      //! シーンの名前
-    static const Scene::ID   m_next_scene;    //! 次のシーンのID
+    static const SceneID   m_next_scene;    //! 次のシーンのID
 
     aqua::CSprite  m_GroundSprite;            //! 地面の画像
     aqua::CSprite  m_GroundLineSprite;        //! 白線の画像

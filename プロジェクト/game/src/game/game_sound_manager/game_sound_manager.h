@@ -1,6 +1,9 @@
 #pragma once
 #include "aqua.h"
-#include "sound_id.h"
+#include "game_sound//game_sound.h"
+
+using SoundVector = std::vector<CGameSound*>;
+
 class CGameSoundManager : 
 	public aqua::IGameObject
 {
@@ -23,26 +26,35 @@ public:
 	*/
 	void Finalize()override;
 
+	/*
+	*  @brief BGMを再生
+	* 
+	*  @param[in] id  シーンID
+	*/
+	void PlayBGM(Sound_ID id);
+
+	/*
+	*  @brief SEを再生
+	* 
+	*  @param[in] id　SEのID
+	*/
+	void PlaySE(Sound_ID id);
+
 private:
 
 	/*
-	 *  @brief BGMの読み込み 
-	 */
-	void LoadBGM();
-
-	/*
-	 *  @brief SEの読み込み
-	 */
-	void LoadSE();
+	*  @brief  音楽の読み込み
+	*/
+	void LoadSound(const std::string& file_name,SoundVector& vector,bool loop = true);
 
 private:
 
 	static const std::string m_bgm_list_file;
 	static const std::string m_se_list_file;
 
-	std::vector<std::pair<Scene::ID,aqua::CSoundPlayer*>> m_SoundBGM;
-	std::vector<std::pair<Scene::ID,aqua::CSoundPlayer*>> m_SoundSE;
+	SoundVector m_SoundBGM;
+	SoundVector m_SoundSE;
 
-
+	Sound_ID          m_PlayingSceneID;          // 再生中のBGMのID
 
 };

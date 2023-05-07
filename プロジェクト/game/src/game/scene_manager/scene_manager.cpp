@@ -1,5 +1,6 @@
 #include "scene_manager.h"
 #include "scene_channel.h"
+#include "../game_sound_manager/game_sound_manager.h"
 
 const unsigned int CSceneManager::m_fade_color[] = 
 {
@@ -18,7 +19,7 @@ const float        CSceneManager::m_min_alpha = 0.0f;
 CSceneManager::CSceneManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "SceneManager")
 	, m_Scene(nullptr)
-	, m_NectID(Scene::ID::TITLE)
+	, m_NectID(SceneID::TITLE)
 	, m_SceneState(STATE::SCENE_IN)
 {
 }
@@ -26,6 +27,8 @@ CSceneManager::CSceneManager(aqua::IGameObject* parent)
 // èâä˙âª
 void CSceneManager::Initialize()
 {
+	aqua::CreateGameObject<CGameSoundManager>(this);
+
 	ChageScene(m_NectID);
 
 	m_FadeBox.Setup(
@@ -129,22 +132,22 @@ void CSceneManager::Draw()
 }
 
 // ÉVÅ[ÉìêÿÇËë÷Ç¶
-void CSceneManager::ChageScene(Scene::ID scene_id)
+void CSceneManager::ChageScene(SceneID scene_id)
 {
-	if (scene_id == Scene::ID::DUMMY)return;
+	if (scene_id == SceneID::DUMMY)return;
 
 	switch (scene_id)
 	{
-	case Scene::ID::TITLE:
+	case SceneID::TITLE:
 		m_Scene = (IScene*)aqua::CreateGameObject<CTitle>(this);
 		break;
-	case Scene::ID::SELECT:
+	case SceneID::SELECT:
 		m_Scene = (IScene*)aqua::CreateGameObject<CSelect>(this);
 		break;
-	case Scene::ID::GAME:
+	case SceneID::GAME:
 		m_Scene = (IScene*)aqua::CreateGameObject<CGameMain>(this);
 		break;
-	case Scene::ID::RESULT:
+	case SceneID::RESULT:
 		m_Scene = (IScene*)aqua::CreateGameObject<CResult>(this);
 		break;
 	}

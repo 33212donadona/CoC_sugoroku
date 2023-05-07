@@ -37,7 +37,7 @@ private:
 	/*!
 	*  @brief シーンの切り替え
 	*/
-	void ChageScene(Scene::ID scene_id);
+	void ChageScene( SceneID scene_id);
 
 private:
 
@@ -74,7 +74,7 @@ private:
 											                 
 	IScene* m_Scene;                                         //! シーンの基底クラス
 											                 
-	Scene::ID m_NectID;		                                 //! 次のシーンID
+	 SceneID m_NectID;		                                 //! 次のシーンID
 	STATE     m_SceneState;                                  //! シーンの状態
 											                 
 	aqua::CBoxPrimitive m_FadeBox;                           //! 画面フェード

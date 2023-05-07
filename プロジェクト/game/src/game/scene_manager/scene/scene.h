@@ -1,6 +1,10 @@
 #pragma once
 #include "aqua.h"
 #include "scene_id.h"
+#include "../../game_sound_manager/sound_id.h"
+
+class CGameSoundManager;
+
 class IScene : 
 	public aqua::IGameObject
 {
@@ -9,7 +13,7 @@ public:
 	/*!
 	* @brief コンストラクト
 	*/
-	IScene(aqua::IGameObject* parent,std::string name, Scene::ID next_scene);
+	IScene(aqua::IGameObject* parent,std::string name,SceneID next_scene);
 
 	/*!
 	* @brief デストラクト
@@ -43,14 +47,24 @@ public:
 	* 
 	* @return 次のシーン
 	*/
-	Scene::ID GetNextScene();
+	SceneID GetNextScene();
 
 private:
-	Scene::ID m_NextSceneID;         //! 次のシーンID
+
+	/*!
+	*   @brief シーンに合った音楽IDを取得
+	* 
+	*   @return 音楽ID
+	*/
+	Sound_ID SceneSoundID(std::string& name);
+
+private:
+	SceneID m_NextSceneID;           //! 次のシーンID
 
 	aqua::CLabel m_SceneName;        //! シーン名
 
 	bool ChangeFlag;                 //! 切り替えフラグ
 
+	CGameSoundManager* m_GameSoundManager; //! 音楽管理クラス
 };
 

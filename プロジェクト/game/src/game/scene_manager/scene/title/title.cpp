@@ -1,7 +1,7 @@
 #include "title.h"
 
 const std::string CTitle::scene_name = "Title";
-const Scene::ID   CTitle::m_next_scene = Scene::ID::SELECT;
+const SceneID   CTitle::m_next_scene = SceneID::SELECT;
 
 // コンストラクタ
 CTitle::CTitle(aqua::IGameObject* parent)

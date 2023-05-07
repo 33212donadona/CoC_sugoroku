@@ -27,5 +27,5 @@ public:
     void Finalize()override;
 private:
     static const std::string scene_name;      //! シーンの名前
-    static const Scene::ID   m_next_scene;    //! 次のシーンのID
+    static const SceneID   m_next_scene;    //! 次のシーンのID
 };

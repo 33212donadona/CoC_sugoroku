@@ -1,8 +1,15 @@
 #pragma once
 #include "../scene_manager/scene/scene_id.h"
 
-enum class Sound_Effect
+enum class Sound_ID
 {
+	TITLE,
+	SELECT,
+	GAME,
+	RESULT,
+
+	DUMMY,        // <- ‹æØ‚è
+
 	TITLE_CLICK,
 	TITLE_BOTTON_MOVE,
 
