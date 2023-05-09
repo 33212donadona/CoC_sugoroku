@@ -98,15 +98,27 @@ bool CBackGroundManager::SaveSprite()
 		}
 	}
 
-	std::string m_file_buffer = m_DirectyoryName + "\\";
+	m_FilePath = m_DirectyoryName + "\\";
 
 	// コピー先の参照パスを作成
 	for (int i = file_buffer_num; i < MAX_PATH; i++)
-		m_file_buffer += buffer[i];
+	{
+
+		if (buffer[i] != '\0') // パスの終端
+			m_FilePath += buffer[i];
+		else
+			break;
+
+	}
 
 	// ファイルが存在しなけれはコピー先に保存する
-	if (!file_sys::exists(m_file_buffer))
-		file_sys::copy_file(buffer, m_file_buffer);
+	if (!file_sys::exists(m_FilePath))
+		file_sys::copy_file(buffer, m_FilePath);
 
 	return true;
+}
+
+std::string CBackGroundManager::GetSpritePath()
+{
+	return m_FilePath;
 }

@@ -2,7 +2,7 @@
 #include "scene_channel.h"
 #include "../game_sound_manager/game_sound_manager.h"
 
-const unsigned int CSceneManager::m_fade_color[] = 
+const unsigned int CSceneManager::m_fade_color[] =       //! フェードの色
 {
 	0xff000000,
 	0xff007f00,
@@ -12,36 +12,43 @@ const unsigned int CSceneManager::m_fade_color[] =
 	0xff7f007f
 };
 
-const float        CSceneManager::m_fade_time = 0.75f;
-const float        CSceneManager::m_max_alpha = 250.0f;
-const float        CSceneManager::m_min_alpha = 0.0f;
+const float        CSceneManager::m_fade_time = 0.75f;	 //! フェードの最大時間
+const float        CSceneManager::m_max_alpha = 250.0f;	 //! 透過度の最大
+const float        CSceneManager::m_min_alpha = 0.0f;    //! 透過度の最小
 
+/*
+ *  コンストラクタ
+ */
 CSceneManager::CSceneManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "SceneManager")
 	, m_Scene(nullptr)
-	, m_NectID(SceneID::TITLE)
+	, m_NextID(SceneID::TITLE)
 	, m_SceneState(STATE::SCENE_IN)
 {
 }
 
-// 初期化
+/*
+ *  初期化
+ */
 void CSceneManager::Initialize()
 {
-	aqua::CreateGameObject<CGameSoundManager>(this);
+	aqua::CreateGameObject<CGameSoundManager>(this)->Initialize();
 
-	ChageScene(m_NectID);
+	ChageScene(m_NextID);
 
 	m_FadeBox.Setup(
 		aqua::CVector2::ZERO,
-		aqua::GetWindowWidth(),
-		aqua::GetWindowHeight(),
+		(float)aqua::GetWindowWidth(),
+		(float)aqua::GetWindowHeight(),
 		m_fade_color[(int)COLOR::BLACK]
 	);
 
 	m_FadeTime.Setup(m_fade_time);
 }
 
-// 更新
+/*
+ *  更新
+ */
 void CSceneManager::Update()
 {
 	switch (m_SceneState)
@@ -51,7 +58,7 @@ void CSceneManager::Update()
 		if (m_FadeTime.GetLimit() < m_FadeTime.GetTime())
 			m_FadeTime.SetTime(m_FadeTime.GetLimit());
 
-		m_FadeBox.color.alpha = aqua::easing::InExp
+		m_FadeBox.color.alpha = (unsigned char)aqua::easing::InExp
 		(
 			m_FadeTime.GetTime(),
 			m_FadeTime.GetLimit(),
@@ -74,7 +81,7 @@ void CSceneManager::Update()
 		if (m_Scene->CheckChangeFlag())
 		{
 			m_SceneState = STATE::SCENE_OUT;
-			int color = aqua::Rand((int)COLOR::MAX - 1,(int)COLOR::BLACK);
+			int color = aqua::Rand((int)COLOR::MAX - 1, (int)COLOR::BLACK);
 			m_FadeBox.color = m_fade_color[color];
 		}
 
@@ -84,7 +91,7 @@ void CSceneManager::Update()
 		if (m_FadeTime.GetLimit() <= m_FadeTime.GetTime())
 			m_FadeTime.SetTime(m_FadeTime.GetLimit());
 
-		m_FadeBox.color.alpha = aqua::easing::OutExp
+		m_FadeBox.color.alpha = (unsigned char)aqua::easing::OutExp
 		(
 			m_FadeTime.GetTime(),
 			m_FadeTime.GetLimit(),
@@ -105,17 +112,18 @@ void CSceneManager::Update()
 	case CSceneManager::STATE::SCENE_CHANGE:
 
 		// 次のシーンを参照
-		m_NectID = m_Scene->GetNextScene();
+		m_NextID = m_Scene->GetNextScene();
 
 		// シーンの終了処理
 		m_Scene->Finalize();
-		m_Scene = nullptr;
+		m_ChildObjectList.erase(std::find(m_ChildObjectList.begin(), m_ChildObjectList.end(), m_Scene));
+
+		AQUA_SAFE_DELETE(m_Scene);
 
 		// シーンの切り替え
-		ChageScene(m_NectID);
+		ChageScene(m_NextID);
 
 		m_SceneState = STATE::SCENE_IN;
-
 
 		break;
 	}
@@ -123,15 +131,34 @@ void CSceneManager::Update()
 	IGameObject::Update();
 }
 
-// 描画
+/*
+ *  描画
+ */
 void CSceneManager::Draw()
 {
-	IGameObject::Draw();
+	if (m_Scene)
+		m_Scene->Draw();
 
 	m_FadeBox.Draw();
 }
 
-// シーン切り替え
+/*
+ *  解放
+ */
+void CSceneManager::Finalize()
+{
+	// シーンの終了処理
+	m_Scene->Finalize();
+	m_ChildObjectList.erase(std::find(m_ChildObjectList.begin(), m_ChildObjectList.end(), m_Scene));
+
+	AQUA_SAFE_DELETE(m_Scene);
+
+	IGameObject::Finalize();
+}
+
+/*
+ *  シーンの切り替え
+ */
 void CSceneManager::ChageScene(SceneID scene_id)
 {
 	if (scene_id == SceneID::DUMMY)return;
@@ -152,5 +179,5 @@ void CSceneManager::ChageScene(SceneID scene_id)
 		break;
 	}
 
-	IGameObject::Initialize();
+	m_Scene->Initialize();
 }

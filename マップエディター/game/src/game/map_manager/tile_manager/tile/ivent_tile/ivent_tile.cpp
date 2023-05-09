@@ -1,13 +1,13 @@
 #include "ivent_tile.h"
 
 CIventTile::CIventTile(aqua::IGameObject* parent)
-	:ITile(parent,"IventBlock")
+	:ITile(parent,"IventTile")
 {
 }
 
 void CIventTile::Initialize(aqua::CVector2 position)
 {
-	ITile::Initialize("data\\block\\ivent_block.png", position);
+	ITile::Initialize("data\\tile\\ivent_tile.png", position);
 }
 
 void CIventTile::Update()

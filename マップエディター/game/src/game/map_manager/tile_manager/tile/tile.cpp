@@ -115,9 +115,9 @@ void ITile::SetTileID(int tile_number)
 /*!
  *  自分のタイル番号を取得
  */
-int ITile::GetNowTileID()
+int* ITile::GetNowTileID()
 {
-	return m_NowID;
+	return &m_NowID;
 }
 
 /*!
@@ -133,7 +133,7 @@ int ITile::GetMaxNextTileSize()
 /*!
  *  進めるタイルの最大値を取得
  */
-int ITile::GetNextTileID(int vector_num)
+int* ITile::GetNextTileID(int vector_num)
 {
 	if (vector_num < 0 && vector_num >= GetMaxNextTileSize())return NULL;
 	if (!m_NextTile[vector_num])return NULL;

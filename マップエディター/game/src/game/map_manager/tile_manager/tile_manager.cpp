@@ -1,17 +1,20 @@
 #include "tile_manager.h"
 #include "tile/normal_tile/normal_tile.h"
 #include "tile/ivent_tile/ivent_tile.h"
-
+#include "../back_ground_manager/back_ground_manager.h"
 #include <filesystem>
 
 namespace fs = std::filesystem;
 
 const float CTileManager::m_menu_space = 20.0f;
 const int   CTileManager::m_menu_font_size = 40;
+const int   CTileManager::m_need_col_length= 4;
 
 CTileManager::CTileManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "TileManager")
 	, m_SelectTileID(0)
+	, m_TextCol(0)
+	, m_MaxTextCol(0)
 	, m_LineClass(nullptr)
 	, m_FromTile(nullptr)
 {
@@ -147,7 +150,7 @@ void CTileManager::CreateTile(TILE_ID tile_id, aqua::CVector2 position)
  */
 void CTileManager::SaveTile()
 {
-
+	// タイル情報の整理
 	int j = 1;
 
 	for (auto& it : m_TileList)
@@ -157,32 +160,49 @@ void CTileManager::SaveTile()
 		++j;
 	}
 
-	m_TileDataText.open("map_data\\tile_data.txt", std::ios::out);
+	j = -1;
 
-	int count_tiles = 0;
+	// 存在しないファイル名を検索
+	std::string file;
 
-	WritingText("tile_info");
+	do{
+		++j;
+		file = "map_data\\tile_data_" + std::to_string(j) + ".txt";
+	}while (fs::exists(file));
+
+	// ファイルを生成
+	m_TileDataText.open(file, std::ios::out);
+
+	// 背景クラスを探す
+	CBackGroundManager* Ground = (CBackGroundManager*)aqua::FindGameObject("BackGroundManager");
+
+	// ファイル内の横の最大値を決める
+	for (auto& i : m_TileList)
+	{
+		if (m_MaxTextCol < i->GetMaxNextTileSize() + m_need_col_length)
+			m_MaxTextCol = i->GetMaxNextTileSize() + m_need_col_length;
+	}
+
+	WritingText(Ground->GetSpritePath());
 	WritingTextCollEnd();
 
 	for (auto& i : m_TileList)
 	{
 		// 書き込み
-		WritingText(std::to_string(i->GetNowTileID()));
+		WritingText(std::to_string(*i->GetNowTileID()));
 
 		WritingText(i->GetGameObjectName());
 
 		WritingText(std::to_string(i->GetPosition().x));
 		WritingText(std::to_string(i->GetPosition().y));
-		WritingText(std::to_string(i->GetPosition().x));
 
 		int max = i->GetMaxNextTileSize();
 
 		for (int wt_i = 0; wt_i < max; wt_i++)
-			WritingText(std::to_string(i->GetNextTileID(wt_i)));
+			WritingText(std::to_string(*i->GetNextTileID(wt_i)));
 
 		WritingTextCollEnd();
 
-		count_tiles++;
 	}
 
 	m_TileDataText.close();
@@ -193,6 +213,7 @@ void CTileManager::SaveTile()
  */
 void CTileManager::WritingText(std::string w)
 {
+	m_TextCol++;
 	m_TileDataText << w << ",";
 }
 
@@ -201,8 +222,11 @@ void CTileManager::WritingText(std::string w)
  */
 void CTileManager::WritingTextCollEnd()
 {
-	m_TileDataText << "\n";
+	for (int i = m_TextCol; i < m_MaxTextCol; ++i)
+		WritingText("0");
 
+	m_TextCol = 0;
+	m_TileDataText << "DUMMY\n";
 }
 
 /*
@@ -269,7 +293,7 @@ void CTileManager::DeleteTile()
 	{
 		aqua::CVector2 pos = aqua::mouse::GetCursorPos();
 
-		int ID = -1;
+		int* ID{};
 
 		std::list<ITile*>::iterator tile_it = m_TileList.begin();
 		std::list<ITile*>::iterator tile_end = m_TileList.end();
@@ -300,7 +324,7 @@ void CTileManager::DeleteTile()
 
 			for (int tile_i = 0; tile_i < max; tile_i++)
 			{
-				if ((*tile_it)->GetNextTileID(tile_i) == ID)
+				if (*(*tile_it)->GetNextTileID(tile_i) == *ID)
 				{
 					(*tile_it)->SetNextTileID(tile_i, 0);
 				}

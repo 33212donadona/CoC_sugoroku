@@ -3,25 +3,40 @@
 const std::string CSelect::scene_name = "Select";
 const SceneID   CSelect::m_next_scene = SceneID::GAME;
 
-// コンストラクタ
+/*
+ *  初期化
+ */
 CSelect::CSelect(aqua::IGameObject* parent)
 	:IScene(parent, scene_name, m_next_scene)
 {
 }
 
-// 更新
+/*
+ *  初期化 
+ */
+void CSelect::Initialize()
+{
+}
+
+/*
+ *  初期化
+ */
 void CSelect::Update()
 {
 	IScene::Update();
 }
 
-// 描画
+/*
+ *  初期化
+ */
 void CSelect::Draw()
 {
 	IScene::Draw();
 }
 
-// 解放
+/*
+ *  初期化
+ */
 void CSelect::Finalize()
 {
 	IScene::Finalize();

@@ -62,7 +62,7 @@ void CLine::Finalize()
 /*
  * 道のりのタイル番号の設定
  */
-void CLine::SetLineWay(int id)
+void CLine::SetLineWay(int* id)
 {
 	if (id <= 0) return;
 
@@ -79,7 +79,7 @@ void CLine::SetLineWay(int id)
 /*
  * 道のりにタイル番号があるか取得
  */
-bool CLine::GetLineWayFlag(int id)
+bool CLine::GetLineWayFlag(int* id)
 {
 	for (int i = 0; i < (int)LineWay::MAX; i++)
 		if (m_RefalenceTileID[i] == id)return true;

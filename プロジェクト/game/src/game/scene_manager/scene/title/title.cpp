@@ -3,12 +3,18 @@
 const std::string CTitle::scene_name = "Title";
 const SceneID   CTitle::m_next_scene = SceneID::SELECT;
 
-// コンストラクタ
+
+/*
+ *  コンストラクタ
+ */ 
 CTitle::CTitle(aqua::IGameObject* parent)
 	:IScene(parent, scene_name, m_next_scene)
 {
 }
 
+/*
+ *  初期化
+ */
 void CTitle::Initialize()
 {
 	m_LeftBilldingSprite.Create("data\\title\\back_ground\\タイトル_ビル1.png");
@@ -16,16 +22,19 @@ void CTitle::Initialize()
 	m_GroundSprite.Create("data\\title\\back_ground\\タイトル_地面.png");
 	m_GroundLineSprite.Create("data\\title\\back_ground\\タイトル_地面_ライン.png");
 	m_LabelSprite.Create("data\\title\\back_ground\\タイトル_リボン.png");
-
 }
 
-// 更新
+/*
+ *  更新
+ */
 void CTitle::Update()
 {
 	IScene::Update();
 }
 
-// 描画
+/*
+ *  描画
+ */
 void CTitle::Draw()
 {
 	m_LeftBilldingSprite.Draw();
@@ -37,7 +46,9 @@ void CTitle::Draw()
 	IScene::Draw();
 }
 
-// 解放
+/*
+ *  解放
+ */
 void CTitle::Finalize()
 {
 	m_LeftBilldingSprite.Delete();

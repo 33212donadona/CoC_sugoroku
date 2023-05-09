@@ -34,7 +34,7 @@ public:
 	 * 
 	 * @param[in] id タイル番号
 	 */
-	void SetLineWay(int id);
+	void SetLineWay(int* id);
 
 	/*
 	 * @brief 道のりにタイル番号があるか取得
@@ -45,7 +45,7 @@ public:
 	 * @retval true  ある
 	 * @retval false ない
 	 */
-	bool GetLineWayFlag(int id);
+	bool GetLineWayFlag(int* id);
 
 	/*
 	 * @brief 矢印の描画
@@ -76,5 +76,5 @@ private:
 	aqua::CVector2  m_PrevFirstPosition;                   // 終点座標
 	aqua::CSprite   m_ArrowSprite;                         // 矢印画像
 
-	int             m_RefalenceTileID[(int)LineWay::MAX];  // 始点終点のタイル番号
+	int*            m_RefalenceTileID[(int)LineWay::MAX];  // 始点終点のタイル番号
 };

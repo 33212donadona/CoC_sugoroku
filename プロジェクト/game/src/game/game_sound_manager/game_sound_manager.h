@@ -1,8 +1,9 @@
 #pragma once
 #include "aqua.h"
-#include "game_sound//game_sound.h"
+#include "sound_id.h"
 
-using SoundVector = std::vector<CGameSound*>;
+using SoundInfo = std::pair<Sound_ID, aqua::CSoundPlayer>;
+using SoundVector = std::vector<SoundInfo*>;
 
 class CGameSoundManager : 
 	public aqua::IGameObject
@@ -45,7 +46,7 @@ private:
 	/*
 	*  @brief  âπäyÇÃì«Ç›çûÇ›
 	*/
-	void LoadSound(const std::string& file_name,SoundVector& vector,bool loop = true);
+	void LoadSound(const std::string& file_name, SoundInfo** info,SoundVector* vector,bool loop = true);
 
 private:
 
@@ -54,6 +55,9 @@ private:
 
 	SoundVector m_SoundBGM;
 	SoundVector m_SoundSE;
+
+	SoundInfo*  m_InfoBGM;
+	SoundInfo*  m_InfoSE;
 
 	Sound_ID          m_PlayingSceneID;          // çƒê∂íÜÇÃBGMÇÃID
 

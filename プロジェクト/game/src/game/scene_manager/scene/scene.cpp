@@ -5,6 +5,7 @@ IScene::IScene(aqua::IGameObject* parent, std::string name, SceneID next_scene)
 	:aqua::IGameObject(parent, name, "IScene")
 	, m_NextSceneID(SceneID::DUMMY)
 	, ChangeFlag(false)
+	, m_GameSoundManager(nullptr)
 {
 	m_SceneName.Create(40);
 	m_SceneName.text = name;
@@ -21,6 +22,7 @@ IScene::IScene(aqua::IGameObject* parent, std::string name, SceneID next_scene)
 void IScene::Update()
 {
 	ChangeFlag = aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::LEFT);
+	IGameObject::Update();
 }
 
 // •`‰æ
@@ -29,13 +31,17 @@ void IScene::Draw()
 #ifdef  AQUA_DEBUG
 	m_SceneName.Draw();
 #endif
+	IGameObject::Draw();
 }
 
 // ‰ğ•ú
 void IScene::Finalize()
 {
 	m_SceneName.Delete();
-	AQUA_SAFE_DELETE_ARRAY(m_GameSoundManager);
+
+	aqua::IGameObject::DeleteObject();
+
+	IGameObject::Finalize();
 }
 
 // Ø‚è‘Ö‚¦ƒtƒ‰ƒO‚Ìæ“¾

@@ -32,6 +32,11 @@ public:
 	*/
 	void Draw()override;
 
+	/*!
+	*  @brief 解放
+	*/
+	void Finalize()override;
+
 private:
 
 	/*!
@@ -74,8 +79,8 @@ private:
 											                 
 	IScene* m_Scene;                                         //! シーンの基底クラス
 											                 
-	 SceneID m_NectID;		                                 //! 次のシーンID
-	STATE     m_SceneState;                                  //! シーンの状態
+	SceneID m_NextID;		                                 //! 次のシーンID
+	STATE   m_SceneState;                                    //! シーンの状態
 											                 
 	aqua::CBoxPrimitive m_FadeBox;                           //! 画面フェード
 	aqua::CTimer        m_FadeTime;                          //! フェードの時間

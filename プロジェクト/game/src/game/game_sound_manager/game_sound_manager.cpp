@@ -4,8 +4,8 @@ const std::string CGameSoundManager::m_bgm_list_file = "data\\sound\\sound_bgm_l
 const std::string CGameSoundManager::m_se_list_file = "data\\sound\\sound_se_list.csv";
 
 /*
-*  コンストラクト
-*/
+ *  コンストラクト
+ */
 CGameSoundManager::CGameSoundManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "GameSoundManager")
 	, m_PlayingSceneID(Sound_ID::DUMMY)
@@ -13,80 +13,89 @@ CGameSoundManager::CGameSoundManager(aqua::IGameObject* parent)
 }
 
 /*
-*  初期化
-*/
+ *  初期化
+ */
 void CGameSoundManager::Initialize()
 {
-	LoadSound(m_bgm_list_file,m_SoundBGM,true);
+	LoadSound(m_bgm_list_file,&m_InfoBGM, &m_SoundBGM, true);
 
-	LoadSound(m_se_list_file, m_SoundSE,false);
+	LoadSound(m_se_list_file,&m_InfoSE, &m_SoundSE, false);
 }
 
 /*
- *  更新 
+ *  更新
  */
 void CGameSoundManager::Update()
 {
 	for (auto& bgm_iterotar : m_SoundBGM)
 	{
-		if (bgm_iterotar->IsPlaying())break;
+		if ((*bgm_iterotar).second.IsPlaying())break;
 
-		if (bgm_iterotar->GetSoundID() == m_PlayingSceneID)
+		if ((*bgm_iterotar).first == m_PlayingSceneID)
 		{
-			bgm_iterotar->Play();
+			(*bgm_iterotar).second.Play();
 			m_PlayingSceneID = Sound_ID::DUMMY;
 		}
 	}
 }
 
 /*
-*  解放
-*/
+ *  解放
+ */
 void CGameSoundManager::Finalize()
 {
 	for (auto& bgm_iterotar : m_SoundBGM)
 	{
-		bgm_iterotar->Finalize();
+		(*bgm_iterotar).second.Delete();
+		bgm_iterotar = nullptr;
 	}
+	AQUA_SAFE_DELETE_ARRAY(m_InfoBGM);
+	m_SoundBGM.clear();
 
 	for (auto& se_iterator : m_SoundSE)
 	{
-		se_iterator->Finalize();
+		(*se_iterator).second.Delete();
+		(se_iterator) = nullptr;
 	}
+	AQUA_SAFE_DELETE_ARRAY(m_InfoSE);
+	m_SoundSE.clear();
 }
 
 /*
-*  BGMを再生
-*/
+ *  BGMを再生
+ */
 void CGameSoundManager::PlayBGM(Sound_ID id)
 {
 	if ((int)id >= (int)Sound_ID::DUMMY)return;
 
-	if (m_PlayingSceneID != Sound_ID::DUMMY)
-		m_SoundBGM[(int)m_PlayingSceneID]->Stop();
+	for (auto& se_iterator : m_SoundBGM)
+	{
+		if ((*se_iterator).second.IsPlaying())
+			(*se_iterator).second.Stop();
+	}
 
 	m_PlayingSceneID = id;
 }
 
 /*
-*   SEを再生
-*/
+ *   SEを再生
+ */
 void CGameSoundManager::PlaySE(Sound_ID id)
 {
 	if ((int)id <= (int)Sound_ID::DUMMY && id == Sound_ID::MAX)return;
 
 	for (auto& se_iterator : m_SoundSE)
 	{
-		if (se_iterator->GetSoundID() == id)
-			se_iterator->Play();
+		if ((*se_iterator).first == id)
+			(*se_iterator).second.Play();
 	}
 
 }
 
 /*
-*  音楽の読み込み
-*/
-void CGameSoundManager::LoadSound(const std::string& file_name,SoundVector& vector, bool loop)
+ *  音楽の読み込み
+ */
+void CGameSoundManager::LoadSound(const std::string& file_name, SoundInfo** info, SoundVector* vector, bool loop)
 {
 	aqua::CCSVLoader loader;
 	loader.Load(file_name);
@@ -95,13 +104,14 @@ void CGameSoundManager::LoadSound(const std::string& file_name,SoundVector& vect
 
 	int row = loader.GetRows();
 
-	for (int i = 0; i <= row; i++)
+	(*info) = AQUA_NEW SoundInfo[row];
+
+	for (int i = 0; i < row; i++)
 	{
-		CGameSound* s;
+		(*info)[i].first = Sound_ID(loader.GetInteger(i, 0) + se_add);
+		(*info)[i].second.Create(loader.GetString(i, 2), loop);
 
-		s->Initialize(Sound_ID(loader.GetInteger(i, 0) + se_add), loader.GetString(i, 2), loop);
-
-		vector.push_back(s);
+		(*vector).push_back(&(*info)[i]);
 	}
 
 	loader.Unload();

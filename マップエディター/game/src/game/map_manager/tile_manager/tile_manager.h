@@ -87,6 +87,7 @@ private:
 private:
 	static const float        m_menu_space;              //! メニューのスペース
 	static const int          m_menu_font_size;          //! メニュー文字の太さ
+	static const int          m_need_col_length;         //! メニュー文字の太さ
 
 	std::ofstream             m_TileDataText;            //! 
 
@@ -103,5 +104,8 @@ private:
 	aqua::CLabel              m_MenuLabel;               //! メニューラベル
 
 	int                       m_SelectTileID;            //! 
+
+	int                       m_TextCol;                 //! 横の残り
+	int                       m_MaxTextCol;                 //! 横の残り
 
 };

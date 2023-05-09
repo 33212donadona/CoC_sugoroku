@@ -8,6 +8,13 @@ CResult::CResult(aqua::IGameObject* parent)
 {
 }
 
+/*
+ *  ‰Šú‰» 
+ */
+void CResult::Initialize()
+{
+}
+
 // XV
 void CResult::Update()
 {

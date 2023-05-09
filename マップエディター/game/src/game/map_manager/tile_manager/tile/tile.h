@@ -77,7 +77,7 @@ public:
 	 * 
 	 *   @return タイル番号
 	 */
-	int GetNowTileID();
+	int* GetNowTileID();
 
 	/*!
 	 *   @brief  進めるタイルの最大値を取得
@@ -93,7 +93,7 @@ public:
 	 * 
 	 *   @return 次に進めるタイル番号
 	 */
-	int GetNextTileID(int vector_num);
+	int* GetNextTileID(int vector_num);
 
 	/*!
 	 *   @brief  生成されたタイル番号

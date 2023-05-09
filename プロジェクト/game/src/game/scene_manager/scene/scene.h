@@ -10,48 +10,49 @@ class IScene :
 {
 public:
 
-	/*!
-	* @brief コンストラクト
+	/*
+	*  @brief コンストラクト
 	*/
 	IScene(aqua::IGameObject* parent,std::string name,SceneID next_scene);
 
-	/*!
-	* @brief デストラクト
+	/*
+	*  @brief デストラクト
 	*/
 	virtual ~IScene() = default;
 	
-	/*!
-	* @brief 更新
+	/*
+	*  @brief 更新
 	*/
 	virtual void Update()override;
 
-	/*!
-	* @brief 描画
+	/*
+	*  @brief 描画
 	*/
 	virtual void Draw()override;
 
-	/*!
-	* @brief 解放
+	/*
+	*  @brief 解放
 	*/
 	virtual void Finalize()override;
 
-	/*!
-	* @brief 切り替えフラグの取得
+	/*
+	*  @brief 切り替えフラグの取得
 	* 
-	* @return 切り替えフラグ
+	*  @retval     true    切り替える
+    *  @retval     false   切り替えない
 	*/
 	bool CheckChangeFlag();
 
-	/*!
-	* @brief 次のシーンの取得
+	/*
+	*  @brief 次のシーンの取得
 	* 
-	* @return 次のシーン
+	*  @return 次のシーン
 	*/
 	SceneID GetNextScene();
 
 private:
 
-	/*!
+	/*
 	*   @brief シーンに合った音楽IDを取得
 	* 
 	*   @return 音楽ID
