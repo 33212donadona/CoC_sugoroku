@@ -72,10 +72,10 @@ private:
 		MAX
 	};
 
-	static const unsigned int m_fade_color[(int)COLOR::MAX]; //! フェードの色
-	static const float        m_fade_time;                   //! フェードの最大時間
-	static const float        m_max_alpha;                   //! 透過度の最大
-	static const float        m_min_alpha;                   //! 透過度の最小
+	static const unsigned int  m_fade_color[(int)COLOR::MAX]; //! フェードの色
+	static const float         m_fade_time;                   //! フェードの最大時間
+	static const unsigned char m_max_alpha;                   //! 透過度の最大
+	static const unsigned char m_min_alpha;                   //! 透過度の最小
 											                 
 	IScene* m_Scene;                                         //! シーンの基底クラス
 											                 

@@ -7,9 +7,9 @@ CNormalTile::CNormalTile(aqua::IGameObject* parent)
 {
 }
 
-void CNormalTile::Initialize(aqua::CVector2 position)
+void CNormalTile::Initialize(TileInfo* info)
 {
-	ITile::Initialize("data\\tile\\normal_tile.png", position);
+	ITile::Initialize("data\\tile\\normal_tile.png", info);
 }
 
 void CNormalTile::Update()

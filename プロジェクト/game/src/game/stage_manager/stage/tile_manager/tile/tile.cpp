@@ -14,7 +14,7 @@ ITile::ITile(aqua::IGameObject* parent, std::string name)
 /*!
  *   @brief  èâä˙âª
  */
-void ITile::Initialize(TileInfo info)
+void ITile::Initialize(TileInfo* info)
 {
 	Initialize("data\\block\\normal_block.png", info);
 }
@@ -22,12 +22,12 @@ void ITile::Initialize(TileInfo info)
 /*!
  *   @brief  èâä˙âª
  */
-void ITile::Initialize(std::string block_name, TileInfo info)
+void ITile::Initialize(std::string block_name, TileInfo* info)
 {
 	m_TileSprite.Create(block_name);
-	m_TileSprite.position = info.position;
+	m_TileSprite.position = (*info).position;
 
-	m_TileInfo = info; // TODO
+	m_NowID = (*info).id;
 
 	m_TileHalfSize.x = m_TileSprite.GetTextureWidth()  / 2.0f;
 	m_TileHalfSize.y = m_TileSprite.GetTextureHeight() / 2.0f;

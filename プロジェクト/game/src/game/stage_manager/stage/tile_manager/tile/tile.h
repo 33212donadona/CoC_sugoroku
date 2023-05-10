@@ -14,7 +14,7 @@ public:
 	 * 
 	 *   @param[in] position 座標
 	 */
-	virtual void Initialize(TileInfo info);
+	virtual void Initialize(TileInfo* info);
 
 	/*!
 	 *   @brief  初期化
@@ -22,7 +22,7 @@ public:
 	 *   @param[in] block_name 画像名
 	 *   @param[in] position   座標
 	 */
-	virtual void Initialize(std::string block_name, TileInfo info);
+	virtual void Initialize(std::string block_name, TileInfo* info);
 
 	/*!
 	 *   @brief  更新

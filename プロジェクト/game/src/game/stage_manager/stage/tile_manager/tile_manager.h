@@ -39,9 +39,20 @@ public:
 	/*
 	 * @brief タイル生成
 	 */
-	void CreateTile(TileInfo info);
+	void CreateTile(TileInfo* info);
 
 private:
 
-	std::list<ITile*>        m_TileList;	             //!  タイルリスト
+	/*
+	 * @brief タイルをつなげる
+	 * 
+	 */
+	void TileLine();
+
+private:
+
+	std::list<ITile*>        m_TileList;   //!  タイルリスト
+
+	bool                     m_LineFlag;   //!  線を引いたかどうか
+
 };

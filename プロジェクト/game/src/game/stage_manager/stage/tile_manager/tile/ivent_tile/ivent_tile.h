@@ -9,7 +9,13 @@ public:
 	CIventTile(aqua::IGameObject* parent);
 	~CIventTile() = default;
 
-	void Initialize(aqua::CVector2 position)override;
+	/*!
+	 *   @brief  ‰Šú‰»
+	 *
+	 *   @param[in] position À•W
+	 */
+	void Initialize(TileInfo* info)override;
+
 	void Update()override;
 	void Draw()override;
 	void Finalize()override;

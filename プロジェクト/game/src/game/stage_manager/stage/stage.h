@@ -40,4 +40,6 @@ private:
 	aqua::CSprite m_BackGoundSprite;
 
 	CTileManager* m_TileManager;
+
+	TileInfo*     m_TileData;
 };

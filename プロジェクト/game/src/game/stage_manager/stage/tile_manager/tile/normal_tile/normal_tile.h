@@ -9,7 +9,13 @@ public:
 	CNormalTile(aqua::IGameObject* parent);
 	~CNormalTile() = default;
 
-	void Initialize(aqua::CVector2 position)override;
+	/*!
+	 *   @brief  èâä˙âª
+	 *
+	 *   @param[in] position ç¿ïW
+	 */
+	void Initialize(TileInfo* info)override;
+
 	void Update()override;
 	void Draw()override;
 	void Finalize()override;

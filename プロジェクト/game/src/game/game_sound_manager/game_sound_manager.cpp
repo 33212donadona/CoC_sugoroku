@@ -44,21 +44,8 @@ void CGameSoundManager::Update()
  */
 void CGameSoundManager::Finalize()
 {
-	for (auto& bgm_iterotar : m_SoundBGM)
-	{
-		(*bgm_iterotar).second.Delete();
-		bgm_iterotar = nullptr;
-	}
-	AQUA_SAFE_DELETE_ARRAY(m_InfoBGM);
-	m_SoundBGM.clear();
-
-	for (auto& se_iterator : m_SoundSE)
-	{
-		(*se_iterator).second.Delete();
-		(se_iterator) = nullptr;
-	}
-	AQUA_SAFE_DELETE_ARRAY(m_InfoSE);
-	m_SoundSE.clear();
+	DeleteSound(&m_InfoBGM, &m_SoundBGM);
+	DeleteSound(&m_InfoSE, &m_SoundSE);
 }
 
 /*
@@ -115,4 +102,15 @@ void CGameSoundManager::LoadSound(const std::string& file_name, SoundInfo** info
 	}
 
 	loader.Unload();
+}
+
+void CGameSoundManager::DeleteSound(SoundInfo** info, SoundVector* vector)
+{
+	for (auto& iterotar : (*vector))
+	{
+		(*iterotar).second.Delete();
+		iterotar = nullptr;
+	}
+	AQUA_SAFE_DELETE_ARRAY((*info));
+	(*vector).clear();
 }

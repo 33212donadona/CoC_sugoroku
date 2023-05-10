@@ -48,6 +48,10 @@ private:
 	*/
 	void LoadSound(const std::string& file_name, SoundInfo** info,SoundVector* vector,bool loop = true);
 
+	/*
+	 *  @brief ‰¹Šy‚Ì‰ð•ú
+	 */
+	void DeleteSound(SoundInfo** info, SoundVector* vector);
 private:
 
 	static const std::string m_bgm_list_file;

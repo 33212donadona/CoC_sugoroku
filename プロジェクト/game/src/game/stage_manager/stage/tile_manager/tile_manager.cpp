@@ -7,6 +7,7 @@ namespace fs = std::filesystem;
 
 CTileManager::CTileManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "TileManager")
+	,m_LineFlag(false)
 {
 }
 
@@ -30,7 +31,7 @@ void CTileManager::Draw()
 	{
 		it->Draw();
 	}
-	
+
 }
 
 /*
@@ -41,27 +42,38 @@ void CTileManager::Finalize()
 	for (auto& it : m_TileList)
 	{
 		it->Finalize();
+		AQUA_SAFE_DELETE(it);
 	}
 }
 
 /*
  * タイル生成
  */
-void CTileManager::CreateTile(TileInfo info)
+void CTileManager::CreateTile(TileInfo* info)
 {
 	ITile* tile_object = nullptr;
 
-	if(info.tile_name == CNormalTile::GetTileName())
-		tile_object = aqua::CreateGameObject<CNormalTile>(this);
+	if ((*info).tile_name == CNormalTile::GetTileName())
+		tile_object = (ITile*)aqua::CreateGameObject<CNormalTile>(this);
 	else
-		tile_object = aqua::CreateGameObject<CIventTile>(this);
+		tile_object = (ITile*)aqua::CreateGameObject<CIventTile>(this);
 
 	if (tile_object)
 	{
-		tile_object->Initialize(info.position);
-
-		tile_object->SetTileID(info.id);
+		tile_object->Initialize(info);
 
 		m_TileList.push_back(tile_object);
 	}
+}
+
+/*
+ * タイルをつなげる
+ */
+void CTileManager::TileLine()
+{
+	if (m_LineFlag)return;
+	m_LineFlag = true;
+
+
+
 }

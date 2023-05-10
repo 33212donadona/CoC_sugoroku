@@ -14,6 +14,7 @@
 #include <iostream>
 #include <windows.h>
 #include <crtdbg.h>
+#include <list>
 #include "..\..\debug\debug.h"
 
 #ifdef AQUA_DEBUG

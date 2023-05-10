@@ -7,9 +7,9 @@ CIventTile::CIventTile(aqua::IGameObject* parent)
 {
 }
 
-void CIventTile::Initialize(aqua::CVector2 position)
+void CIventTile::Initialize(TileInfo* info)
 {
-	ITile::Initialize("data\\tile\\ivent_tile.png", position);
+	ITile::Initialize("data\\tile\\ivent_tile.png", info);
 }
 
 void CIventTile::Update()

@@ -12,9 +12,9 @@ const unsigned int CSceneManager::m_fade_color[] =       //! フェードの色
 	0xff7f007f
 };
 
-const float        CSceneManager::m_fade_time = 0.75f;	 //! フェードの最大時間
-const float        CSceneManager::m_max_alpha = 250.0f;	 //! 透過度の最大
-const float        CSceneManager::m_min_alpha = 0.0f;    //! 透過度の最小
+const float         CSceneManager::m_fade_time = 0.75f;	 //! フェードの最大時間
+const unsigned char CSceneManager::m_max_alpha = (unsigned char)250;	 //! 透過度の最大
+const unsigned char CSceneManager::m_min_alpha = (unsigned char)0;      //! 透過度の最小
 
 /*
  *  コンストラクタ
@@ -116,7 +116,8 @@ void CSceneManager::Update()
 
 		// シーンの終了処理
 		m_Scene->Finalize();
-		m_ChildObjectList.erase(std::find(m_ChildObjectList.begin(), m_ChildObjectList.end(), m_Scene));
+
+		aqua::AquaListErase(&m_ChildObjectList, m_Scene);
 
 		AQUA_SAFE_DELETE(m_Scene);
 
@@ -149,7 +150,8 @@ void CSceneManager::Finalize()
 {
 	// シーンの終了処理
 	m_Scene->Finalize();
-	m_ChildObjectList.erase(std::find(m_ChildObjectList.begin(), m_ChildObjectList.end(), m_Scene));
+
+	aqua::AquaListErase(&m_ChildObjectList, m_Scene);
 
 	AQUA_SAFE_DELETE(m_Scene);
 

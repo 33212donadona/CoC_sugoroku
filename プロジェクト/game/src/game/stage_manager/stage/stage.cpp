@@ -24,25 +24,29 @@ bool CStage::Initialize(std::string file_name)
 	m_BackGoundSprite.Create(loader.GetString(0,0));
 
 	int row = 1;
-	int max_row = loader.GetRows();
+	int count_row = 0;
+	int max_row = loader.GetRows() - row;
 	int max_col = loader.GetCols() - 1;
+
+	m_TileData = AQUA_NEW TileInfo[max_row];
 
 	while (row < max_row)
 	{
-		TileInfo info;
-
-		info.id = loader.GetInteger(row, 0);
-		info.tile_name = loader.GetString(row, 1);
-		info.position.x = loader.GetFloat(row, 2);
-		info.position.y = loader.GetFloat(row, 3);
+		m_TileData[count_row].id = loader.GetInteger(row, 0);
+		m_TileData[count_row].tile_name = loader.GetString(row, 1);
+		m_TileData[count_row].position.x = loader.GetFloat(row, 2);
+		m_TileData[count_row].position.y = loader.GetFloat(row, 3);
 
 		for (int i = 4; i < max_col; ++i)
-			info.m_FromID.push_back(loader.GetInteger(row, i));
+			m_TileData[count_row].m_FromID.push_back(loader.GetInteger(row, i));
 		
-		m_TileManager->CreateTile(info);
+		m_TileManager->CreateTile(&m_TileData[count_row]);
 
 		row++;
+		count_row++;
 	}
+
+	loader.Unload();
 
 	return true;
 }
@@ -71,5 +75,9 @@ void CStage::Draw()
 void CStage::Finalize()
 {
 	m_BackGoundSprite.Delete();
+
 	m_TileManager->Finalize();
+
+	AQUA_SAFE_DELETE(m_TileManager);
+	AQUA_SAFE_DELETE_ARRAY(m_TileData);
 }
