@@ -1,0 +1,8 @@
+ 0 ,ATTACKER,data\\character\\アタッカー_警官.png, 0 ,発砲, 6 , 9 , 5 
+ 0 ,ATTACKER,data\\character\\アタッカー_軍人.png, 1 ,喝, 7 , 8 , 4 
+ 1 ,TANKER,data\\character\\タンカー_ボディビルダー.png, 2 ,鋼の筋肉, 8 , 6 , 4 
+ 1 ,TANKER,data\\character\\タンカー_力士.png, 3 ,しこふみ, 9 , 5 , 3 
+ 2 ,SUPPORTER,data\\character\\サポーター_DQN.png, 4 ,奮闘のフィナーレ, 5 , 4 , 7 
+ 2 ,SUPPORTER,data\\character\\サポーター_音楽家.png, 5 ,いちゃもん, 6 , 4 , 6 
+ 3 ,HEALER,data\\character\\ヒーラー_医師.png, 6 ,緊急オペ, 4 , 4 , 7 
+ 3 ,HEALER,data\\character\\ヒーラー_薬師.png, 7 ,調薬, 5 , 3 , 9 

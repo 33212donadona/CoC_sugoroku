@@ -12,7 +12,7 @@ public:
 	/*
 	 * @brief 初期化
 	 */
-	void Initialize(aqua::CVector2* first_pos);
+	void Initialize(aqua::CVector2* start_pos, aqua::CVector2* end_pos);
 
 	/*
 	 * @brief 更新
@@ -30,30 +30,11 @@ public:
 	void Finalize()override;
 
 	/*
-	 * @brief 道のりのタイル番号の設定
-	 * 
-	 * @param[in] id タイル番号
-	 */
-	void SetLineWay(int* id);
-
-	/*
-	 * @brief 道のりにタイル番号があるか取得
-	 * 	 
-	 * @param[in] id タイル番号
-	 *
-	 * @return 道のりにタイル番号があるか
-	 * @retval true  ある
-	 * @retval false ない
-	 */
-	bool GetLineWayFlag(int* id);
-
-	/*
 	 * @brief 矢印の描画
 	 * 
 	 */
 	static void ArrowDraw();
 
-	aqua::CVector2* m_TergetPosition;     // 終点座標
 
 	static std::list<aqua::CSprite*> m_ArrowSpriteList;    // 矢印画像リスト
 
@@ -73,8 +54,10 @@ private:
 	static const float m_ArrowSize;                        // 矢印の大きさ
 
 	aqua::CVector2* m_FirstPosition;                       // 始点座標のポインタ
-	aqua::CVector2  m_PrevFirstPosition;                   // 終点座標
+	aqua::CVector2* m_TergetPosition;                      // 終点座標のポインタ
+	aqua::CVector2  m_Distance;                            // 距離
 	aqua::CSprite   m_ArrowSprite;                         // 矢印画像
+	aqua::CSprite   m_LineSprite;                          // 線画像
 
 	int*            m_RefalenceTileID[(int)LineWay::MAX];  // 始点終点のタイル番号
 };

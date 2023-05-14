@@ -1,0 +1,23 @@
+#pragma once
+
+enum class JOB_ID
+{
+	ATTACKER,
+	TANKER,
+	SUPPORTER,
+	HEALER,
+	MAX
+};
+
+enum class SKILL_ID
+{
+	FIRING,
+	SCOLDING,
+	STEEL_MUSCLE,
+	SIKOHUMI,
+	FINALE,
+	QUIBBLE,
+	EMERGENCY_SURGERY,
+	DOSE,
+	MAX
+};

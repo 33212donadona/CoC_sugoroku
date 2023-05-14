@@ -23,7 +23,7 @@ bool CStage::Initialize(std::string file_name)
 
 	m_BackGoundSprite.Create(loader.GetString(0,0));
 
-	int row = 1;
+	int row = 1;	
 	int count_row = 0;
 	int max_row = loader.GetRows() - row;
 	int max_col = loader.GetCols() - 1;

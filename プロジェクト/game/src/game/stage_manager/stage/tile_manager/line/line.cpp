@@ -1,4 +1,5 @@
 #include "line.h"
+#include <cmath>
 
 std::list<aqua::CSprite*> CLine::m_ArrowSpriteList;
 
@@ -16,17 +17,33 @@ CLine::CLine(aqua::IGameObject* parent)
 /*
  * 初期化
  */
-void CLine::Initialize(aqua::CVector2* first_pos)
+void CLine::Initialize(aqua::CVector2* start_pos, aqua::CVector2* end_pos)
 {
-	m_FirstPosition = first_pos;
+	m_FirstPosition = start_pos;
+	m_TergetPosition = end_pos;
 
 	for (int i = 0; i < (int)LineWay::MAX; i++)
 		m_RefalenceTileID[i] = 0;
+
+	m_LineSprite.Create("data\\line\\line.png");
+	m_LineSprite.anchor.x = m_LineSprite.GetTextureWidth() / 2.0f * m_LineSprite.scale.x;
+	m_LineSprite.anchor.y = m_LineSprite.GetTextureHeight() / 2.0f * m_LineSprite.scale.y;
+	m_LineSprite.position = *m_FirstPosition;
+	m_LineSprite.position += *m_FirstPosition - *m_TergetPosition;
+	m_LineSprite.rotation = atan2(m_TergetPosition->y - m_FirstPosition->y, m_TergetPosition->x - m_FirstPosition->x);
+	m_Distance.x = (m_TergetPosition->x - m_FirstPosition->x);
+	m_Distance.x *= m_Distance.x;
+	m_Distance.y = (m_TergetPosition->y - m_FirstPosition->y);
+	m_Distance.y *= m_Distance.y;
+
+	m_LineSprite.scale.x = std::sqrt(m_Distance.x + m_Distance.y) / m_LineSprite.GetTextureWidth();
 
 	m_ArrowSprite.Create("data\\arrow\\arrow.png");
 	m_ArrowSprite.scale = aqua::CVector2::ONE * m_ArrowSize;
 	m_ArrowSprite.anchor.x = m_ArrowSprite.GetTextureWidth() / 2.0f * m_ArrowSprite.scale.x;
 	m_ArrowSprite.anchor.y = m_ArrowSprite.GetTextureHeight() / 2.0f * m_ArrowSprite.scale.y;
+	m_ArrowSprite.rotation = m_LineSprite.rotation;
+
 }
 
 /*
@@ -34,12 +51,7 @@ void CLine::Initialize(aqua::CVector2* first_pos)
  */
 void CLine::Update()
 {
-	if (m_TergetPosition)
-		m_PrevFirstPosition = *m_TergetPosition;
 
-	m_ArrowSprite.rotation = atan2(m_PrevFirstPosition.y - m_FirstPosition->y, m_PrevFirstPosition.x - m_FirstPosition->x);
-
-	m_ArrowSprite.position = *m_FirstPosition - (*m_FirstPosition - m_PrevFirstPosition) / 2.0f - m_ArrowSprite.anchor;
 }
 
 /*
@@ -47,7 +59,7 @@ void CLine::Update()
  */
 void CLine::Draw()
 {
-	DrawLineAA(m_FirstPosition->x, m_FirstPosition->y, m_PrevFirstPosition.x, m_PrevFirstPosition.y, 0xffffffff, m_LineThick);
+	m_LineSprite.Draw();
 }
 
 /*
@@ -55,36 +67,8 @@ void CLine::Draw()
  */
 void CLine::Finalize()
 {
-	m_ArrowSpriteList.erase(std::find(m_ArrowSpriteList.begin(), m_ArrowSpriteList.end(), &m_ArrowSprite));
+	aqua::AquaListErase(&m_ArrowSpriteList,&m_ArrowSprite);
 	m_ArrowSprite.Delete();
-}
-
-/*
- * 道のりのタイル番号の設定
- */
-void CLine::SetLineWay(int* id)
-{
-	if (id <= 0) return;
-
-	for (int i = 0; i < (int)LineWay::MAX; i++)
-	{
-		if (m_RefalenceTileID[i] == 0)
-		{
-			m_RefalenceTileID[i] = id;
-			break;
-		}
-	}
-}
-
-/*
- * 道のりにタイル番号があるか取得
- */
-bool CLine::GetLineWayFlag(int* id)
-{
-	for (int i = 0; i < (int)LineWay::MAX; i++)
-		if (m_RefalenceTileID[i] == id)return true;
-
-	return false;
 }
 
 void CLine::ArrowDraw()
