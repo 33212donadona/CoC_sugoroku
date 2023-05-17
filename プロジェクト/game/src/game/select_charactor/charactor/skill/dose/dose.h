@@ -1,7 +1,7 @@
 #pragma once
 #include "../skill.h"
 class CDose
-	:ISkill
+	:public ISkill
 {
 public:
 	/*!
@@ -27,6 +27,8 @@ public:
 	/*!
 	 *  @brief スキルの発動
 	 */
-	void InvokeSkill(STATUS& m_MyChara, STATUS& m_SubjectChara);
-
+	void InvokeSkill(STATUS_LIST& m_SubjectChara);
+private:
+	static const int m_max_heel; //! 回復値の最大
+	static const int m_min_heel; //! 回復値の最小
 };

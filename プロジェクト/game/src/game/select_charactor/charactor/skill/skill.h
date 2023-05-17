@@ -3,7 +3,7 @@
 #include "../charactor_id.h"
 
 class ISkill
-	:aqua::IGameObject
+	:public aqua::IGameObject
 {
 public:
 	/*!

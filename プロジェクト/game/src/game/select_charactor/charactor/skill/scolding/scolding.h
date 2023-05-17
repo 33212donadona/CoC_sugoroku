@@ -1,7 +1,7 @@
 #pragma once
 #include "../skill.h"
 class CScolding
-	:ISkill
+	:public ISkill
 {
 public:
 	/*!

@@ -1,7 +1,7 @@
 #pragma once
 #include "../skill.h"
 class CSikohumi
-	:ISkill
+	:public ISkill
 {
 public:
 	/*!

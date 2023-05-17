@@ -1,0 +1,9 @@
+#pragma once
+#include "firing/firing.h"
+#include "scolding/scolding.h"
+#include "steel_muscle/steel_muscle.h"
+#include "sikohumi/sikohumi.h"
+#include "quibble/quibble.h"
+#include "finale/finale.h"
+#include "emergency_surgery/emergency_surgery.h"
+#include "dose/dose.h"

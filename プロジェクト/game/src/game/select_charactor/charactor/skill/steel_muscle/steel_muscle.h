@@ -1,7 +1,7 @@
 #pragma once
 #include "../skill.h"
 class CSteelMuscle
-	:ISkill
+	:public ISkill
 {
 public:
 	/*!

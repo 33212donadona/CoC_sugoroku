@@ -67,7 +67,7 @@ void CLine::Draw()
  */
 void CLine::Finalize()
 {
-	aqua::AquaListErase(&m_ArrowSpriteList,&m_ArrowSprite);
+	aqua::ListErase(&m_ArrowSpriteList,&m_ArrowSprite);
 	m_ArrowSprite.Delete();
 }
 

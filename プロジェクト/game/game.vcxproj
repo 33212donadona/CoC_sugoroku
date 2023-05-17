@@ -149,6 +149,7 @@
     <ClInclude Include="src\game\select_charactor\charactor\skill\scolding\scolding.h" />
     <ClInclude Include="src\game\select_charactor\charactor\skill\sikohumi\sikohumi.h" />
     <ClInclude Include="src\game\select_charactor\charactor\skill\skill.h" />
+    <ClInclude Include="src\game\select_charactor\charactor\skill\skill_channel.h" />
     <ClInclude Include="src\game\select_charactor\charactor\skill\steel_muscle\steel_muscle.h" />
     <ClInclude Include="src\game\select_charactor\select_characor.h" />
     <ClInclude Include="src\game\stage_manager\stage\stage.h" />

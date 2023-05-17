@@ -1,4 +1,5 @@
 #include "result.h"
+
 const std::string CResult::scene_name = "Result";
 const SceneID CResult::m_next_scene = SceneID::TITLE;
 
@@ -13,6 +14,7 @@ CResult::CResult(aqua::IGameObject* parent)
  */
 void CResult::Initialize()
 {
+	
 }
 
 // çXêV

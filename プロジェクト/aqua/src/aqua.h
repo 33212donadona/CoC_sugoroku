@@ -142,10 +142,21 @@ namespace aqua
 	/*
 	 *  @brief      リストから指定の変数を削除する
 	 */
-	template <class T1,class T2> void  AquaListErase(std::list<T1>* list,T2 erase_point)
+	template <class T1,class T2> void  ListErase(std::list<T1>* list,T2 erase_point)
 	{
 		if (!list->empty())
 			(*list).erase(std::find((*list).begin(), (*list).end(), erase_point));
+	};
+
+	/*
+	 *  @brief      リストから指定のポインタを描画する
+	 * 
+	 *  @param[in]  連続使用は重くなるので注意
+	 */
+	template <class T> void  AquaListLayerDraw(GAME_OBJECT_LIST* list,T draw_point)
+	{
+		if (!list->empty())
+			std::find((*list).begin(), (*list).end(), draw_point)->Draw();
 	};
 
 }

@@ -14,13 +14,13 @@ void CScolding::Update()
 
 void CScolding::Finalize()
 {
-	(*m_MyStatus).m_Str -= m_strength_up;
+	if(m_MyStatus)(*m_MyStatus).m_Str -= m_strength_up;
 	AQUA_SAFE_DELETE(m_MyStatus);
 }
 
 void CScolding::InvokeSkill(STATUS& m_MyChara, STATUS& m_SubjectChara)
 {
 	m_MyStatus = &m_MyChara;
-	m_SubjectChara.m_Hp -= (*m_MyStatus).m_Str;
-	(*m_MyStatus).m_Str += m_strength_up;
+	m_SubjectChara.m_Hp -= m_MyChara.m_Str;
+	m_MyChara.m_Str += m_strength_up;
 }

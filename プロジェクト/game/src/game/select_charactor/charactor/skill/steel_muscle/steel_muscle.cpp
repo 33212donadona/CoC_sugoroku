@@ -12,6 +12,6 @@ void CSteelMuscle::Update()
 void CSteelMuscle::InvokeSkill(STATUS& m_MyChara, STATUS& m_SubjectChara)
 {
 	// UŒ‚”¼Œ¸‚Ì‚½‚ß‚Ì‰ñ•œ
-	m_MyChara.m_Hp += m_SubjectChara.m_Str / 2.0f;
+	m_MyChara.m_Hp += (int)m_SubjectChara.m_Str / 2.0f;
 	m_SubjectChara.m_Hp -= m_MyChara.m_Str;
 }

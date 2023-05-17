@@ -1,5 +1,5 @@
 #include "select.h"
-
+#include "../../../select_charactor/select_characor.h"
 const std::string CSelect::scene_name = "Select";
 const SceneID   CSelect::m_next_scene = SceneID::GAME;
 
@@ -16,6 +16,9 @@ CSelect::CSelect(aqua::IGameObject* parent)
  */
 void CSelect::Initialize()
 {
+	aqua::CreateGameObject<CSelectCharactor>(this);
+
+	IGameObject::Initialize();
 }
 
 /*

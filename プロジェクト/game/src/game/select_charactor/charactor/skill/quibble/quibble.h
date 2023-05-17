@@ -1,7 +1,7 @@
 #pragma once
 #include "../skill.h"
 class CQuibble
-	:ISkill
+	:public ISkill
 {
 public:
 	/*!
@@ -27,5 +27,11 @@ public:
 	/*!
 	 *  @brief ƒXƒLƒ‹‚Ì”­“®
 	 */
-	void InvokeSkill(STATUS& m_MyChara, STATUS& m_SubjectChara);
+	void InvokeSkill(STATUS_LIST& m_SubjectChara);
+
+private:
+	static const int   m_quibble_damage;
+	static const float m_quibble_down_rate;
+
+
 };

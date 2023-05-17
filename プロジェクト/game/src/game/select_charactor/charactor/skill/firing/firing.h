@@ -1,7 +1,7 @@
 #pragma once
 #include "../skill.h"
 class CFiring
-	:ISkill
+	:public ISkill
 {
 public:
 	/*!
@@ -30,4 +30,5 @@ public:
 	void InvokeSkill(STATUS& m_MyChara, STATUS& m_SubjectChara);
 
 private:
+	static const float m_firing_damage_rate;
 };

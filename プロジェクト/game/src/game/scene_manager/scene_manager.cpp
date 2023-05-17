@@ -117,7 +117,7 @@ void CSceneManager::Update()
 		// シーンの終了処理
 		m_Scene->Finalize();
 
-		aqua::AquaListErase(&m_ChildObjectList, m_Scene);
+		aqua::ListErase(&m_ChildObjectList, m_Scene);
 
 		AQUA_SAFE_DELETE(m_Scene);
 
@@ -151,7 +151,7 @@ void CSceneManager::Finalize()
 	// シーンの終了処理
 	m_Scene->Finalize();
 
-	aqua::AquaListErase(&m_ChildObjectList, m_Scene);
+	aqua::ListErase(&m_ChildObjectList, m_Scene);
 
 	AQUA_SAFE_DELETE(m_Scene);
 
