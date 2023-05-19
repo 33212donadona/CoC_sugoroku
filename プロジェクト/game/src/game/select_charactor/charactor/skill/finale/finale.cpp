@@ -18,7 +18,7 @@ void CFinale::InvokeSkill(STATUS_LIST& m_SubjectChara)
 {
 	for (auto& it : m_SubjectChara)
 	{
-		it.m_Str *= m_finale_rate;
-		it.m_Dex *= m_finale_rate;
+		it.m_Str = (int)(it.m_Str * m_finale_rate);
+		it.m_Dex = (int)(it.m_Dex * m_finale_rate);
 	}
 }

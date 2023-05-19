@@ -61,4 +61,24 @@ namespace aqua
     {
         return std::max<T>(t_min, std::min<T>(num, t_max));
     }
+
+    /*!
+ *  @brief      数値の上下を求める
+ *
+ *  @param[in]  num     数値
+ *  @param[in]  t_max   最大値
+ *  @param[in]  t_min   最小値
+ *
+ *  @return     最小値から最大値までの数値
+ */
+    template<class T> T Mod(T num, T t_min, T t_max)
+    {
+        if (num > t_max)
+            return num - (t_max + (T)1);
+
+        if (num < t_min)
+            return (t_max + (T)1) + num;
+
+        return num;
+    }
 }

@@ -33,6 +33,10 @@ enum class SKILL_ID
 	MAX
 };
 
+const int m_max_hp  = 18;
+const int m_max_str = 18;
+const int m_max_dex = 18;
+
 struct STATUS
 {
 	float m_Hp = 0.0f;

@@ -116,6 +116,7 @@
     <ClCompile Include="src\game\select_charactor\charactor\skill\sikohumi\sikohumi.cpp" />
     <ClCompile Include="src\game\select_charactor\charactor\skill\skill.cpp" />
     <ClCompile Include="src\game\select_charactor\charactor\skill\steel_muscle\steel_muscle.cpp" />
+    <ClCompile Include="src\game\select_charactor\parameter\parameter.cpp" />
     <ClCompile Include="src\game\select_charactor\select_characor.cpp" />
     <ClCompile Include="src\game\stage_manager\stage\stage.cpp" />
     <ClCompile Include="src\game\stage_manager\stage\tile_manager\line\line.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="src\game\select_charactor\charactor\skill\skill.h" />
     <ClInclude Include="src\game\select_charactor\charactor\skill\skill_channel.h" />
     <ClInclude Include="src\game\select_charactor\charactor\skill\steel_muscle\steel_muscle.h" />
+    <ClInclude Include="src\game\select_charactor\parameter\parameter.h" />
     <ClInclude Include="src\game\select_charactor\select_characor.h" />
     <ClInclude Include="src\game\stage_manager\stage\stage.h" />
     <ClInclude Include="src\game\stage_manager\stage\tile_manager\line\line.h" />

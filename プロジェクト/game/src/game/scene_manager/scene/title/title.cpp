@@ -75,7 +75,7 @@ void CTitle::Update()
 void CTitle::Draw()
 {
 	m_BackGround.Draw();
-	m_FlashBackGround.Draw();
+	//m_FlashBackGround.Draw();
 	m_LeftBilldingSprite.Draw();
 	m_RightBilldingSprite.Draw();
 	m_GroundSprite.Draw();

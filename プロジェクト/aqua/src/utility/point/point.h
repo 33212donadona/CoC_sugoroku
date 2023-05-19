@@ -65,6 +65,26 @@ namespace aqua
          */
         void    DebugLog( void );
 
+        /*!
+         *  @brief      除算演算子のオーバーロード
+         *
+         *  @param[in]  vA  ベクトルクラス
+         *  @param[in]  vB  ベクトルクラス
+         *
+         *  @return     ベクトルクラス
+         */
+        friend CPoint     operator-(const CPoint& vA, const CPoint& vB) { return CPoint(vA.x - vB.x, vA.y - vB.y); }
+
+        /*!
+         *  @brief      除算演算子のオーバーロード
+         *
+         *  @param[in]  vA  ベクトルクラス
+         *  @param[in]  vB  ベクトルクラス
+         *
+         *  @return     ベクトルクラス
+         */
+        friend CPoint     operator*(const CPoint& vA, const CPoint& vB) { return CPoint(vA.x * vB.x, vA.y * vB.y); }
+
         //! 要素がすべて0
         static const CPoint  ZERO;
     };
