@@ -1,6 +1,7 @@
 #include "select_characor.h"
 #include "charactor/charactor_info.h"
 #include "parameter/parameter.h"
+#include "../common_data/common_data.h"
 
 const float  CSelectCharactor::m_box_thickness = 10.0f;
 const unsigned int  CSelectCharactor::m_box_color[] = 
@@ -23,6 +24,9 @@ CSelectCharactor::CSelectCharactor(aqua::IGameObject* parent)
 */
 void CSelectCharactor::Initialize()
 {
+	// クラス参照
+	m_CommonDataClass = (CCommonData*)aqua::FindGameObject("CommonData");
+
 	aqua::CCSVLoader loader;
 
 	loader.Load("data\\character\\charactor_list.csv");
@@ -167,15 +171,6 @@ void CSelectCharactor::Finalize()
 		AQUA_SAFE_DELETE(chara_it);
 	}
 
-	for (auto& select_chara_it : m_SelectChara)
-	{
-		select_chara_it->Finalize();
-
-		aqua::ListErase(&m_ChildObjectList, select_chara_it);
-
-		AQUA_SAFE_DELETE(select_chara_it);
-	}
-
 	for (auto& param_it : m_Parameter)
 	{
 		param_it->Finalize();
@@ -224,35 +219,34 @@ void CSelectCharactor::SelectCharactor()
 */
 void CSelectCharactor::DecideCharactor()
 {
-	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::RETURN) && m_NowSelectPlayer != PLAYER_ID::DUMMY)
+	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::LSHIFT) && aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::RETURN))
 	{
-		m_SelectChara.push_back(m_Charactor[m_SelectCharactor]);
+		if (!m_CommonDataClass->EmptyChara())
+		{
+			// リストから除外
+			m_CommonDataClass->EraseBackChara();
 
-		m_NowSelectPlayer = (PLAYER_ID)(aqua::Limit((int)m_NowSelectPlayer + 1, (int)PLAYER_ID::PL1, (int)PLAYER_ID::DUMMY));
+			// 範囲を限定する
+			m_NowSelectPlayer = 
+				aqua::Limit<PLAYER_ID,int>((int)m_NowSelectPlayer - 1,(int)PLAYER_ID::PL1, (int)PLAYER_ID::PL4);
 
-		if (m_NowSelectPlayer != PLAYER_ID::DUMMY)
-		{	// ボックスの座標を変更
+			// ボックスの色を変更
 			m_SelectBlendBox.color = m_box_color[(int)m_NowSelectPlayer];
 			m_SelectBox.color = m_box_color[(int)m_NowSelectPlayer];
 
 			m_SelectBlendBox.color.alpha = (unsigned char)100;
+
 		}
 	}
-
-	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::LSHIFT) && aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::RETURN))
+	else if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::RETURN) && m_NowSelectPlayer != PLAYER_ID::DUMMY)
 	{
+		m_CommonDataClass->PushBack_Chara((*m_Charactor[m_SelectCharactor]));
 
-		if (!m_SelectChara.empty())
+		m_NowSelectPlayer = aqua::Limit<PLAYER_ID, int>((int)m_NowSelectPlayer + 1, (int)PLAYER_ID::PL1, (int)PLAYER_ID::DUMMY);
+
+		if (m_NowSelectPlayer != PLAYER_ID::DUMMY)
 		{
-			(*(m_SelectChara.end() - 1))->Finalize();
-
-			aqua::ListErase(&m_ChildObjectList, (*(m_SelectChara.end() - 1)));
-
-			AQUA_SAFE_DELETE((*(m_SelectChara.end() - 1)));
-
-			m_NowSelectPlayer = (PLAYER_ID)(aqua::Limit((int)m_NowSelectPlayer - 1,(int)PLAYER_ID::PL1, (int)PLAYER_ID::PL4));
-
-			// ボックスの座標を変更
+			// ボックスの色を変更
 			m_SelectBlendBox.color = m_box_color[(int)m_NowSelectPlayer];
 			m_SelectBox.color = m_box_color[(int)m_NowSelectPlayer];
 

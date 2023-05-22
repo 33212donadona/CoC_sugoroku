@@ -42,6 +42,8 @@ void CCharactorInfo::InvokeSkill(STATUS& m_SubjectChara)
 {
 	if (!m_SkillClass)return;
 
+	m_SkillClass = nullptr;
+
 	switch (m_SkillID)
 	{
 	case SKILL_ID::FIRING:

@@ -2,6 +2,7 @@
 #include "../scene.h"
 
 class CStageManager;
+class CGameLoop;
 
 class CGameMain :
     public IScene
@@ -38,4 +39,5 @@ private:
     static const SceneID   m_next_scene;      //! 次のシーンのID
 
     CStageManager*       m_StageManager;      //! ステージ管理クラス
+    CGameLoop*           m_GameLoop;          //! ゲームループ管理クラス
 };

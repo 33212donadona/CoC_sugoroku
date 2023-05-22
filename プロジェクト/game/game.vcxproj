@@ -99,7 +99,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\common_data\common_data.cpp" />
     <ClCompile Include="src\game\game_sound_manager\game_sound_manager.cpp" />
+    <ClCompile Include="src\game\scene_manager\scene\game_main\game_loop\game_loop.cpp" />
+    <ClCompile Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\main_work\main_game_work.cpp" />
     <ClCompile Include="src\game\scene_manager\scene\result\result.cpp" />
     <ClCompile Include="src\game\scene_manager\scene\game_main\game_main.cpp" />
     <ClCompile Include="src\game\scene_manager\scene\select\select.cpp" />
@@ -129,7 +132,11 @@
     <ClCompile Include="src\game\scene_manager\scene\title\title.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\common_data\common_data.h" />
     <ClInclude Include="src\game\game_sound_manager\sound_id.h" />
+    <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\game_loop.h" />
+    <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\battle\battle.h" />
+    <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\main_work\main_game_work.h" />
     <ClInclude Include="src\game\scene_manager\scene\result\result.h" />
     <ClInclude Include="src\game\scene_manager\scene\game_main\game_main.h" />
     <ClInclude Include="src\game\scene_manager\scene\scene_id.h" />

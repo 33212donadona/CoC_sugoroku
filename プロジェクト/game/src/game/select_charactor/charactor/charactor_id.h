@@ -1,6 +1,9 @@
 #pragma once
 #include <list>
 
+/*
+*  @brief !ƒvƒŒƒCƒ„[ID
+*/
 enum class PLAYER_ID
 {
 	PL1,

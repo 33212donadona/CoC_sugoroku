@@ -1,6 +1,7 @@
 #include "scene_manager.h"
 #include "scene_channel.h"
 #include "../game_sound_manager/game_sound_manager.h"
+#include "../common_data/common_data.h"
 
 const unsigned int CSceneManager::m_fade_color[] =       //! フェードの色
 {
@@ -33,6 +34,7 @@ CSceneManager::CSceneManager(aqua::IGameObject* parent)
 void CSceneManager::Initialize()
 {
 	aqua::CreateGameObject<CGameSoundManager>(this)->Initialize();
+	aqua::CreateGameObject<CCommonData>(this);
 
 	ChageScene(m_NextID);
 

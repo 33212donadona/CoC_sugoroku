@@ -3,6 +3,7 @@
 #include "charactor/charactor_id.h"
 
 class CCharactorInfo;
+class CCommonData;
 class CParameter;
 
 using CHARACTOR_VECTOR = std::vector<CCharactorInfo>;
@@ -53,19 +54,20 @@ private:
 	static const unsigned int   m_box_color[(int)PLAYER_ID::DUMMY];  //  ボックスの線の色
 												        
 	std::vector<CCharactorInfo*> m_Charactor;                        //　キャラクターリスト
-	CHARACTOR_VECTOR             m_SelectChara;                      //  選んだキャラクター
+
 	std::vector<CParameter*>     m_Parameter;                        //　パラメーターリスト
 	std::vector<aqua::CSprite>   m_CharactorSpriteList;              //  キャラクター画像リスト
 
 	aqua::CSprite              m_BackgroudSprite;                    //  背景
 
-
 	aqua::CBoxPrimitive        m_SelectBox;                          //  選択中の枠
 	aqua::CBoxPrimitive        m_SelectBlendBox;                     //  選択中の箱
 
 	PLAYER_ID                  m_NowSelectPlayer;                    //  操作しているプレイヤー
+
+	CCommonData*               m_CommonDataClass;                    //  共有データクラス
 	
-	int                        m_CharactorMaxNum;
+	int                        m_CharactorMaxNum;                    //  
 
 	int                        m_SelectCharactor;
 };
