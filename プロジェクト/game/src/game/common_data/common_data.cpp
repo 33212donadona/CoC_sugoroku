@@ -27,10 +27,10 @@ bool CCommonData::EmptyChara()
 	return m_CharaList.empty();
 }
 
-CCharactorInfo& CCommonData::RefarenceChara(PLAYER_ID player_id)
+CCharactorInfo* CCommonData::RefarenceChara(PLAYER_ID player_id)
 {
 	if (player_id == PLAYER_ID::DUMMY)
-		return m_CharaList[(int)PLAYER_ID::PL1];
+		return &m_CharaList[(int)PLAYER_ID::PL1];
 	
-	return m_CharaList[(int)player_id];
+	return &m_CharaList[(int)player_id];
 }

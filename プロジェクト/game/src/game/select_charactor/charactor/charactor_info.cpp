@@ -6,9 +6,10 @@ CCharactorInfo::CCharactorInfo(aqua::IGameObject* parent)
 {
 }
 
-void CCharactorInfo::Initialize(std::string file_name, JOB_ID job_id, SKILL_ID skill_id, STATUS status)
+void CCharactorInfo::Initialize(std::string file_name, std::string text_file_name, JOB_ID job_id, SKILL_ID skill_id, STATUS status)
 {
 	m_CharactorSprite.Create(file_name);
+	m_CharactorSpriteText.Create(text_file_name);
 	m_JobID = job_id;
 	m_SkillID = skill_id;
 	SkillSelect(m_SkillID);
@@ -18,6 +19,7 @@ void CCharactorInfo::Initialize(std::string file_name, JOB_ID job_id, SKILL_ID s
 void CCharactorInfo::Update()
 {
 	m_CharactorSprite.position = m_Position;
+	m_CharactorSpriteText.position = m_Position;
 	m_CharactorSprite.scale = m_Scale;
 }
 
@@ -26,16 +28,22 @@ void CCharactorInfo::Draw()
 	m_CharactorSprite.Draw();
 }
 
+void CCharactorInfo::TextBoxCharaDraw()
+{
+	m_CharactorSpriteText.Draw();
+}
+
 void CCharactorInfo::Finalize()
 {
 	m_CharactorSprite.Delete();
+	m_CharactorSpriteText.Delete();
 	if(m_SkillClass)m_SkillClass->Finalize();
 	aqua::IGameObject::Finalize();
 }
 
-STATUS& CCharactorInfo::GetStatus()
+STATUS* CCharactorInfo::GetStatus()
 {
-	return m_Status;
+	return &m_Status;
 }
 
 void CCharactorInfo::InvokeSkill(STATUS& m_SubjectChara)

@@ -165,3 +165,16 @@ Clear( unsigned int color )
     // ‰æ–Ê‚ÌƒNƒŠƒA
     ClearDrawScreen( );
 }
+/*
+* @brief floatŒ^‚Ì¬”“_‚ğŒˆ‚ß‚ÄstringŒ^‚É•ÏŠ·
+*/
+std::string aqua::FloatToString(float num, int decimal_point)
+{
+    {
+        int m_Num = (int)num;
+
+        int m_Decimal = (int)(num * std::pow(10, decimal_point)) % (int)std::pow(10, decimal_point);
+
+        return std::to_string(m_Num) + "." + std::to_string(m_Decimal);
+    }
+}

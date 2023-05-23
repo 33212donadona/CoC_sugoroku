@@ -1,6 +1,9 @@
 #pragma once
 #include "aqua.h"
 
+enum class PLAYER_ID;
+struct STATUS;
+
 class CCommonData;
 class CCharactorInfo;
 
@@ -39,11 +42,18 @@ public:
 	void Finalize()override;
 
 private:
+	
+	static const aqua::CPoint m_text_box_space;//! キャラクターアイコンの座標
+	static const int          m_font_size;              //! キャラクターアイコンの座標
 
-	CCommonData* m_CommonData;
+	CCommonData*              m_CommonData;             //! 共有データクラス
+	STATUS*                   m_Status;
 
-	std::vector<CCharactorInfo>  m_CharaList;
+	aqua::CLabel              m_LabelHP	;               //! HPラベル
+	aqua::CLabel              m_LabelSTR;               //! STRラベル
+	aqua::CLabel              m_LabelDEX;               //! DEXラベル
 
-	aqua::CSprite  m_TextBoxSprite;
+	aqua::CSprite             m_TextBoxSprite;	        //! テキストボックス画像
 
+	PLAYER_ID                 m_NowPlayerID;		    //! 操作中のプレイヤーID
 };

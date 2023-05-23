@@ -29,7 +29,7 @@ public:
 
 	bool EmptyChara();
 
-	CCharactorInfo& RefarenceChara(PLAYER_ID player_id);
+	CCharactorInfo* RefarenceChara(PLAYER_ID player_id);
 
 private:
 

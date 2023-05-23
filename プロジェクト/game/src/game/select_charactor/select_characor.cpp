@@ -16,6 +16,7 @@ CSelectCharactor::CSelectCharactor(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "SelectCharactor")
 	, m_NowSelectPlayer(PLAYER_ID::PL1)
 	, m_SelectCharactor(0)
+	, m_FinishedSelect(false)
 {
 }
 
@@ -40,10 +41,12 @@ void CSelectCharactor::Initialize()
 		STATUS status;
 		aqua::CSprite sprite;
 		std::string file_name = loader.GetString(i, 2);
+		std::string text_file_name = loader.GetString(i, 3);
 
-		status.m_Hp = loader.GetFloat(i, 5);
-		status.m_Str = loader.GetInteger(i, 6);
-		status.m_Dex = loader.GetInteger(i, 7);
+		status.m_Hp = loader.GetFloat(i, 6);
+		status.m_MaxHp = loader.GetFloat(i, 6);
+		status.m_Str = loader.GetInteger(i, 7);
+		status.m_Dex = loader.GetInteger(i, 8);
 
 		info = aqua::CreateGameObject<CCharactorInfo>(this);
 		param = aqua::CreateGameObject<CParameter>(this);
@@ -51,8 +54,9 @@ void CSelectCharactor::Initialize()
 		info->Initialize
 		(
 			file_name,
+			text_file_name,
 			(JOB_ID)loader.GetInteger(i, 0),
-			(SKILL_ID)loader.GetInteger(i, 3),
+			(SKILL_ID)loader.GetInteger(i, 4),
 			status
 		);
 
@@ -114,6 +118,17 @@ void CSelectCharactor::Initialize()
 	);
 
 	m_SelectBlendBox.color.alpha = (unsigned char)100;
+
+	m_SelectParamBox.Setup
+	(
+		aqua::CVector2::ZERO,
+		aqua::GetWindowWidth(),
+		aqua::GetWindowHeight()/2
+	);
+
+	m_SelectParamBox.color = aqua::CColor::BLACK;
+	m_SelectParamBox.color.alpha = (unsigned char)100;
+
 }
 
 /*
@@ -134,6 +149,8 @@ void CSelectCharactor::Update()
 void CSelectCharactor::Draw()
 {
 	m_BackgroudSprite.Draw();
+
+	m_SelectParamBox.Draw();
 
 	for (auto& chara_it : m_Charactor)
 		chara_it->Draw();
@@ -192,15 +209,21 @@ void CSelectCharactor::Finalize()
 	aqua::IGameObject::Finalize();
 }
 
+bool CSelectCharactor::GetFinishedFlag()
+{
+	return m_FinishedSelect;
+}
+
 /*
 *  キャラクター選択
 */
 void CSelectCharactor::SelectCharactor()
 {
-	int step_right = aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::RIGHT);
-	int step_left = aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::LEFT) * (-1);
-	int step_up = aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::UP) * (m_CharactorMaxNum + 1) / 2 * (-1);
-	int step_down = aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::DOWN) * (m_CharactorMaxNum + 1) / 2;
+	// WASD操作を使用
+	int step_right = aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::D);
+	int step_left  = aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::A) * (-1);
+	int step_up    = aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::W) * (m_CharactorMaxNum + 1) / 2 * (-1);
+	int step_down  = aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::S) * (m_CharactorMaxNum + 1) / 2;
 
 	if (step_right || step_left || step_up || step_down)
 	{
@@ -252,5 +275,7 @@ void CSelectCharactor::DecideCharactor()
 
 			m_SelectBlendBox.color.alpha = (unsigned char)100;
 		}
+		else
+			m_FinishedSelect = true;
 	}
 }

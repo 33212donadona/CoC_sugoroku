@@ -20,7 +20,7 @@ public:
 	/*!
 	 *  @brief 初期化
 	 */
-	void Initialize(std::string file_name, JOB_ID job_id, SKILL_ID skill_id, STATUS status);
+	void Initialize(std::string file_name, std::string text_file_name, JOB_ID job_id, SKILL_ID skill_id, STATUS status);
 	
 	/*!
 	 *  @brief 描画
@@ -33,6 +33,11 @@ public:
 	void Draw()override;
 
 	/*!
+	 *  @brief 描画
+	 */
+	void TextBoxCharaDraw();
+
+	/*!
 	 *  @brief 解放
 	 */
 	void Finalize()override;
@@ -40,7 +45,7 @@ public:
 	/*!
 	 *  @brief ステータスのポインタ取得
 	 */
-	STATUS& GetStatus();
+	STATUS* GetStatus();
 
 	/*!
 	 *  @brief スキルの発動
@@ -72,6 +77,7 @@ private:
 	STATUS m_Status;
 
 	aqua::CSprite m_CharactorSprite;
+	aqua::CSprite m_CharactorSpriteText;
 
 	JOB_ID  m_JobID;
 

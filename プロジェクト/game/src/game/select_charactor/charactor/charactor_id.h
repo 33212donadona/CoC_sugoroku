@@ -43,6 +43,7 @@ const int m_max_dex = 18;
 struct STATUS
 {
 	float m_Hp = 0.0f;
+	float m_MaxHp = 0.0f;
 	int m_Str = 0;
 	int m_Dex = 0;
 	int m_Armored = 0;

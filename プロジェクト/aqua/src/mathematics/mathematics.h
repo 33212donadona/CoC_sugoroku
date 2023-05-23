@@ -86,12 +86,60 @@ namespace aqua
      */
     template<class T> T Mod(T num, T t_min, T t_max)
     {
+        T m_next = (T)1;
+
         if (num > t_max)
-            return num - (t_max + (T)1);
+            return num - (t_max + m_next);
 
         if (num < t_min)
-            return (t_max + (T)1) + num;
+            return (t_max + m_next) + num;
 
         return num;
+    }
+
+    /*!
+     *  @brief      数値の上下を求める
+     *
+     *  @param[in]  num     数値
+     *  @param[in]  t_max   最大値
+     *  @param[in]  t_min   最小値
+     *
+     *  @return     最小値から最大値までの数値
+     */
+    template<class ENUM,class T> ENUM Mod(ENUM num, ENUM t_min, ENUM t_max)
+    {
+        T m_num = (T)num;
+        T m_min = (T)t_min;
+        T m_max = (T)t_max;
+        T m_sub_max = (T)1;
+
+        if (m_num > m_max)
+            return (ENUM)(m_num - (m_max + m_sub_max));
+
+        if (m_num < m_min)
+            return (ENUM)((m_max + m_sub_max) + m_num);
+
+        return num;
+    }
+    /*!
+     *  @brief      数値の上下を求める
+     *
+     *  @param[in]  num     数値
+     *  @param[in]  t_max   最大値
+     *  @param[in]  t_min   最小値
+     *
+     *  @return     最小値から最大値までの数値
+     */
+    template<class ENUM, class T> ENUM Mod(T num, T t_min, T t_max)
+    {
+        T m_sub_max = (T)1;
+
+        if (num > t_max)
+            return (ENUM)(num - (t_max + m_sub_max));
+
+        if (num < t_min)
+            return (ENUM)((t_max + m_sub_max) + num);
+
+        return (ENUM)num;
     }
 }

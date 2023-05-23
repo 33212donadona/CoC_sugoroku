@@ -1,6 +1,8 @@
 #pragma once
 #include "../scene.h"
 
+class CSelectCharactor;
+
 class CSelect :
     public IScene
 {
@@ -34,4 +36,6 @@ public:
 private:
     static const std::string scene_name;      //! シーンの名前
     static const SceneID   m_next_scene;      //! 次のシーンのID
+
+    CSelectCharactor* m_SelectChara;
 };

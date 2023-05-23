@@ -159,4 +159,14 @@ namespace aqua
 			std::find((*list).begin(), (*list).end(), draw_point)->Draw();
 	};
 
+	/*!
+	 *
+	 *  @brief float型の小数点を決めてstring型に変換
+	 *
+	 *  @param[in] num　　　　　/   float型
+	 * 	@param[in] decimal_point　/ 小数点の数
+	 * 
+	 */
+	std::string FloatToString(float num,int decimal_point = 1);
+
 }

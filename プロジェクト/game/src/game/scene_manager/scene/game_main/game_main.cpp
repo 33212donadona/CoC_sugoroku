@@ -27,23 +27,17 @@ void CGameMain::Initialize()
 // XV
 void CGameMain::Update()
 {
-	m_StageManager->Update();
-	m_GameLoop->Update();
 	IScene::Update();
 }
 
 // •`‰æ
 void CGameMain::Draw()
 {
-	m_StageManager->Draw();
-	m_GameLoop->Draw();
 	IScene::Draw();
 }
 
 // ‰ð•ú
 void CGameMain::Finalize()
 {
-	m_StageManager->Finalize();
-	m_GameLoop->Finalize();
 	IScene::Finalize();
 }

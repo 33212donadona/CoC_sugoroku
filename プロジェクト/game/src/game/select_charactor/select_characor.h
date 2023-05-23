@@ -42,6 +42,11 @@ public:
 	 */
 	void Finalize()override;
 
+	/*!
+	*   @brief 選択終了フラグの取得
+	*/
+	bool GetFinishedFlag();
+
 private:
 
 	void SelectCharactor();
@@ -62,6 +67,7 @@ private:
 
 	aqua::CBoxPrimitive        m_SelectBox;                          //  選択中の枠
 	aqua::CBoxPrimitive        m_SelectBlendBox;                     //  選択中の箱
+	aqua::CBoxPrimitive        m_SelectParamBox;                     //  パラメータ中の色
 
 	PLAYER_ID                  m_NowSelectPlayer;                    //  操作しているプレイヤー
 
@@ -70,4 +76,6 @@ private:
 	int                        m_CharactorMaxNum;                    //  
 
 	int                        m_SelectCharactor;
+
+	bool                       m_FinishedSelect;
 };

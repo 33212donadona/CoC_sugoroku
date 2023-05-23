@@ -8,6 +8,7 @@ const SceneID   CSelect::m_next_scene = SceneID::GAME;
  */
 CSelect::CSelect(aqua::IGameObject* parent)
 	:IScene(parent, scene_name, m_next_scene)
+	, m_SelectChara(nullptr)
 {
 }
 
@@ -16,7 +17,7 @@ CSelect::CSelect(aqua::IGameObject* parent)
  */
 void CSelect::Initialize()
 {
-	aqua::CreateGameObject<CSelectCharactor>(this);
+	m_SelectChara = (CSelectCharactor*)aqua::CreateGameObject<CSelectCharactor>(this);
 
 	IGameObject::Initialize();
 }
@@ -26,6 +27,9 @@ void CSelect::Initialize()
  */
 void CSelect::Update()
 {
+	if (m_SelectChara)
+		m_ChangeFlag = m_SelectChara->GetFinishedFlag();
+
 	IScene::Update();
 }
 

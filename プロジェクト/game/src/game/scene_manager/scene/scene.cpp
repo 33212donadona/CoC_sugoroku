@@ -4,7 +4,7 @@
 IScene::IScene(aqua::IGameObject* parent, std::string name, SceneID next_scene)
 	:aqua::IGameObject(parent, name, "IScene")
 	, m_NextSceneID(SceneID::DUMMY)
-	, ChangeFlag(false)
+	, m_ChangeFlag(false)
 	, m_GameSoundManager(nullptr)
 {
 	m_SceneName.Create(40);
@@ -21,7 +21,7 @@ IScene::IScene(aqua::IGameObject* parent, std::string name, SceneID next_scene)
 // 更新
 void IScene::Update()
 {
-	ChangeFlag = aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::LEFT);
+	
 	IGameObject::Update();
 }
 
@@ -47,7 +47,7 @@ void IScene::Finalize()
 // 切り替えフラグの取得
 bool IScene::CheckChangeFlag()
 {
-	return ChangeFlag;
+	return m_ChangeFlag;
 }
 
 // 次のシーンの取得

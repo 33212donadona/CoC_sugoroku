@@ -66,6 +66,8 @@ void CTitle::Update()
 	m_FlashBackGround.rotation = 
 	m_BackGround.rotation = aqua::DegToRad(m_Rotation);
 
+	m_ChangeFlag = aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::RETURN);
+
 	IScene::Update();
 }
 
