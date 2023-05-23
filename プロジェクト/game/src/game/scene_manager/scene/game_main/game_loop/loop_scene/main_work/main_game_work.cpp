@@ -54,8 +54,6 @@ void CMainGameWork::Initialize()
 
 void CMainGameWork::Update()
 {
-	
-
 	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::A))
 	{
 		m_NowPlayerID = aqua::Mod<PLAYER_ID, int>((int)m_NowPlayerID + 1, (int)PLAYER_ID::PL1, (int)PLAYER_ID::PL4);
@@ -66,7 +64,7 @@ void CMainGameWork::Update()
 	}
 	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::S))
 	{
-		//m_Status = (*m_CommonData).RefarenceChara(m_NowPlayerID)->GetStatus();
+		
 		m_Status->m_Hp -= 0.2f;
 		m_LabelHP.text = "HP  : " + aqua::FloatToString(m_Status->m_Hp) + " / " + aqua::FloatToString(m_Status->m_MaxHp);
 	}

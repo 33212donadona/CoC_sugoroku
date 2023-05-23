@@ -42,6 +42,12 @@ public:
 	void Finalize()override;
 
 private:
+
+	/*
+	 *  @brief  
+	 */
+
+private:
 	
 	static const aqua::CPoint m_text_box_space;//! キャラクターアイコンの座標
 	static const int          m_font_size;              //! キャラクターアイコンの座標
