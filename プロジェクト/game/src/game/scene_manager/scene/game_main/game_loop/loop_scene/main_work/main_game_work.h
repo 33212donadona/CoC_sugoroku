@@ -48,6 +48,11 @@ private:
 	 */
 	void CharaStatusUpdate();
 
+	/*
+	 *  @brief  キャラクターのステータス描画を設定
+	 */
+	void SetUpStatus();
+
 private:
 	
 	static const aqua::CPoint m_text_box_space;//! キャラクターアイコンの座標

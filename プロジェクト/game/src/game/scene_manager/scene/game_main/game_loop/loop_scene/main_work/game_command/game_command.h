@@ -63,9 +63,20 @@ private:
 
 private:
 	static const std::string m_CommandName[(int)CommandID::MAX];
+	static const int m_rand_pattern;
+	static const int m_max_dice;
+	static const int m_rand_dice[2][6];
+	static const float m_change_dice_time;
 
 	std::vector<aqua::CLabel> m_CommandLabel;
+	
+	aqua::CSprite             m_DiceSprite[6];                   //! ƒTƒCƒRƒˆê–Ê‚¸‚Â‚Ì‰æ‘œ
+	std::vector<aqua::CSprite*> m_DrawDiceSprite;
+
+	aqua::CTimer  m_ChangeDiceTimer;
 
 	CommandID    m_NowSelectCommand;
+
+	bool m_UpdateCommand;
 
 };

@@ -39,9 +39,7 @@ void CMainGameWork::Initialize()
 
 	m_Status = (*m_CommonData).RefarenceChara(PLAYER_ID::PL1)->GetStatus();
 
-	m_LabelHP.text  = "HP  : " + aqua::FloatToString(m_Status->m_Hp) + " / " + aqua::FloatToString(m_Status->m_MaxHp);
-	m_LabelSTR.text = "STR : " + std::to_string(m_Status->m_Str);
-	m_LabelDEX.text = "DEX : " + std::to_string(m_Status->m_Dex);
+	SetUpStatus();
 
 	m_LabelHP.position = (*m_CommonData).RefarenceChara(PLAYER_ID::PL1)->m_Position + m_text_box_space;
 
@@ -98,14 +96,19 @@ void CMainGameWork::CharaStatusUpdate()
 		m_NowPlayerID = aqua::Mod<PLAYER_ID, int>((int)m_NowPlayerID + 1, (int)PLAYER_ID::PL1, (int)PLAYER_ID::PL4);
 
 		m_Status = (*m_CommonData).RefarenceChara(m_NowPlayerID)->GetStatus();
-		m_LabelHP.text = "HP  : " + aqua::FloatToString(m_Status->m_Hp) + " / " + aqua::FloatToString(m_Status->m_MaxHp);
-		m_LabelSTR.text = "STR : " + std::to_string(m_Status->m_Str);
-		m_LabelDEX.text = "DEX : " + std::to_string(m_Status->m_Dex);
+		SetUpStatus();
 	}
+
 	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::S)) // ƒ_ƒ[ƒW
 	{
-
 		m_Status->m_Hp -= 0.2f;
 		m_LabelHP.text = "HP  : " + aqua::FloatToString(m_Status->m_Hp) + " / " + aqua::FloatToString(m_Status->m_MaxHp);
 	}
+}
+
+void CMainGameWork::SetUpStatus()
+{
+	m_LabelHP.text = "HP  : " + aqua::FloatToString(m_Status->m_Hp) + " / " + aqua::FloatToString(m_Status->m_MaxHp);
+	m_LabelSTR.text = "STR : " + std::to_string(m_Status->m_Str);
+	m_LabelDEX.text = "DEX : " + std::to_string(m_Status->m_Dex);
 }
