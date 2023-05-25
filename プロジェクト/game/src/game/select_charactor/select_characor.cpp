@@ -122,8 +122,8 @@ void CSelectCharactor::Initialize()
 	m_SelectParamBox.Setup
 	(
 		aqua::CVector2::ZERO,
-		aqua::GetWindowWidth(),
-		aqua::GetWindowHeight()/2
+		(float)aqua::GetWindowWidth(),
+		(float)aqua::GetWindowHeight()/2
 	);
 
 	m_SelectParamBox.color = aqua::CColor::BLACK;
@@ -263,6 +263,8 @@ void CSelectCharactor::DecideCharactor()
 	}
 	else if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::RETURN) && m_NowSelectPlayer != PLAYER_ID::DUMMY)
 	{
+		(*m_Charactor[m_SelectCharactor]).GetStatus()->m_Player = m_NowSelectPlayer;
+
 		m_CommonDataClass->PushBack_Chara((*m_Charactor[m_SelectCharactor]));
 
 		m_NowSelectPlayer = aqua::Limit<PLAYER_ID, int>((int)m_NowSelectPlayer + 1, (int)PLAYER_ID::PL1, (int)PLAYER_ID::DUMMY);

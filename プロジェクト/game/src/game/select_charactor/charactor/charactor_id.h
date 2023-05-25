@@ -46,9 +46,10 @@ struct STATUS
 	float m_MaxHp = 0.0f;
 	int m_Str = 0;
 	int m_Dex = 0;
-	int m_Armored = 0;
+	float m_Armored = 0.0f;
 	PLAYER_ID m_Player = PLAYER_ID::DUMMY;
 	PLAYER_ID m_Terget = PLAYER_ID::DUMMY;
+
 };
 
 using STATUS_LIST = std::list<STATUS>;

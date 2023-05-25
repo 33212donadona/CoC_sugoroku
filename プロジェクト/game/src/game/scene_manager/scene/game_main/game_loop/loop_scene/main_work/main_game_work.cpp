@@ -1,6 +1,7 @@
 #include "main_game_work.h"
 #include "../../../../../../common_data/common_data.h"
 #include "../../../../../../select_charactor/charactor/charactor_info.h"
+#include "game_command/game_command.h"
 
 const aqua::CPoint   CMainGameWork::m_text_box_space(20, 15);
 const int            CMainGameWork::m_font_size = 30;
@@ -50,24 +51,14 @@ void CMainGameWork::Initialize()
 
 	m_LabelSTR.position.y = m_LabelHP.position.y + m_LabelHP.GetFontHeight();
 	m_LabelDEX.position.y = m_LabelSTR.position.y + m_LabelSTR.GetFontHeight();
+
+	m_GameCommand = aqua::CreateGameObject<CGameCommand>(this);
+	m_GameCommand->Initialize(m_LabelHP.position + aqua::CVector2(m_LabelHP.GetTextWidth(),0) + m_text_box_space);
 }
 
 void CMainGameWork::Update()
 {
-	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::A))
-	{
-		m_NowPlayerID = aqua::Mod<PLAYER_ID, int>((int)m_NowPlayerID + 1, (int)PLAYER_ID::PL1, (int)PLAYER_ID::PL4);
-		m_Status = (*m_CommonData).RefarenceChara(m_NowPlayerID)->GetStatus();
-		m_LabelHP.text = "HP  : " + aqua::FloatToString(m_Status->m_Hp) + " / " + aqua::FloatToString(m_Status->m_MaxHp);
-		m_LabelSTR.text = "STR : " + std::to_string(m_Status->m_Str);
-		m_LabelDEX.text = "DEX : " + std::to_string(m_Status->m_Dex);
-	}
-	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::S))
-	{
-		
-		m_Status->m_Hp -= 0.2f;
-		m_LabelHP.text = "HP  : " + aqua::FloatToString(m_Status->m_Hp) + " / " + aqua::FloatToString(m_Status->m_MaxHp);
-	}
+	CharaStatusUpdate();
 }
 
 void CMainGameWork::Draw()
@@ -83,6 +74,7 @@ void CMainGameWork::Draw()
 	m_LabelSTR.Draw();
 	m_LabelDEX.Draw();
 
+	m_GameCommand->Draw();
 }
 
 void CMainGameWork::Finalize()
@@ -93,4 +85,27 @@ void CMainGameWork::Finalize()
 	m_LabelSTR.Delete();
 	m_LabelDEX.Delete();
 
+	m_GameCommand->Finalize();
+}
+
+/*
+ *  @brief  キャラクターのステータス更新
+ */
+void CMainGameWork::CharaStatusUpdate()
+{
+	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::A)) // キャラクターが切り替わる
+	{
+		m_NowPlayerID = aqua::Mod<PLAYER_ID, int>((int)m_NowPlayerID + 1, (int)PLAYER_ID::PL1, (int)PLAYER_ID::PL4);
+
+		m_Status = (*m_CommonData).RefarenceChara(m_NowPlayerID)->GetStatus();
+		m_LabelHP.text = "HP  : " + aqua::FloatToString(m_Status->m_Hp) + " / " + aqua::FloatToString(m_Status->m_MaxHp);
+		m_LabelSTR.text = "STR : " + std::to_string(m_Status->m_Str);
+		m_LabelDEX.text = "DEX : " + std::to_string(m_Status->m_Dex);
+	}
+	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::S)) // ダメージ
+	{
+
+		m_Status->m_Hp -= 0.2f;
+		m_LabelHP.text = "HP  : " + aqua::FloatToString(m_Status->m_Hp) + " / " + aqua::FloatToString(m_Status->m_MaxHp);
+	}
 }

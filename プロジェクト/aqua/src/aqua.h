@@ -140,7 +140,7 @@ namespace aqua
 	void                Clear(unsigned int color);
 
 	/*
-	 *  @brief      リストから指定の変数を削除する
+	 *  @brief      リストから指定の要素を削除する
 	 */
 	template <class T1,class T2> void  ListErase(std::list<T1>* list,T2 erase_point)
 	{
@@ -149,7 +149,7 @@ namespace aqua
 	};
 
 	/*
-	 *  @brief      リストから指定のポインタを描画する
+	 *  @brief      リストから指定の要素を描画する
 	 * 
 	 *  @param[in]  連続使用は重くなるので注意
 	 */

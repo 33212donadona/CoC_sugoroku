@@ -11,27 +11,27 @@
 
 #include "aqua.h"
 
-/*
- *  ライブラリセットアップ
- */
+ /*
+  *  ライブラリセットアップ
+  */
 void
 aqua::
-Setup( HINSTANCE instance_handle, aqua::IGameObject* game )
+Setup(HINSTANCE instance_handle, aqua::IGameObject* game)
 {
-    // メモリリーク検知
-    AQUA_CHECK_MEMORY_LEAK;
+	// メモリリーク検知
+	AQUA_CHECK_MEMORY_LEAK;
 
-    // ゲームフレームワーク取得
-    aqua::core::CFramework& framework = aqua::core::CFramework::GetInstance( );
+	// ゲームフレームワーク取得
+	aqua::core::CFramework& framework = aqua::core::CFramework::GetInstance();
 
-    // ゲームフレームワーク初期化
-    framework.Initialize( instance_handle, game );
+	// ゲームフレームワーク初期化
+	framework.Initialize(instance_handle, game);
 
-    // ゲームフレームワーク更新
-    framework.Update( );
+	// ゲームフレームワーク更新
+	framework.Update();
 
-    // ゲームフレームワーク解放
-    framework.Finalize( );
+	// ゲームフレームワーク解放
+	framework.Finalize();
 }
 
 /*
@@ -39,9 +39,9 @@ Setup( HINSTANCE instance_handle, aqua::IGameObject* game )
  */
 HINSTANCE
 aqua::
-GetInstanceHandle( void )
+GetInstanceHandle(void)
 {
-    return aqua::core::CFramework::GetInstance( ).GetInstanceHandle( );
+	return aqua::core::CFramework::GetInstance().GetInstanceHandle();
 }
 
 /*
@@ -49,9 +49,9 @@ GetInstanceHandle( void )
  */
 HWND
 aqua::
-GetWindowHandle( void )
+GetWindowHandle(void)
 {
-    return aqua::core::CFramework::GetInstance( ).GetWindowHandle( );
+	return aqua::core::CFramework::GetInstance().GetWindowHandle();
 }
 
 /*
@@ -59,9 +59,9 @@ GetWindowHandle( void )
  */
 unsigned int
 aqua::
-GetWindowWidth( void )
+GetWindowWidth(void)
 {
-    return aqua::core::CFramework::GetInstance( ).GetWindowWidth( );
+	return aqua::core::CFramework::GetInstance().GetWindowWidth();
 }
 
 /*
@@ -69,9 +69,9 @@ GetWindowWidth( void )
  */
 unsigned int
 aqua::
-GetWindowHeight( void )
+GetWindowHeight(void)
 {
-    return aqua::core::CFramework::GetInstance( ).GetWindowHeight( );
+	return aqua::core::CFramework::GetInstance().GetWindowHeight();
 }
 
 /*
@@ -79,7 +79,7 @@ GetWindowHeight( void )
  */
 aqua::CPoint aqua::GetWindowSize()
 {
-    return aqua::CPoint(GetWindowWidth(), GetWindowHeight());
+	return aqua::CPoint(GetWindowWidth(), GetWindowHeight());
 }
 
 /*
@@ -87,9 +87,9 @@ aqua::CPoint aqua::GetWindowSize()
  */
 float
 aqua::
-GetDeltaTime( void )
+GetDeltaTime(void)
 {
-    return aqua::core::CFramework::GetInstance( ).GetDeltaTime( );
+	return aqua::core::CFramework::GetInstance().GetDeltaTime();
 }
 
 /*
@@ -97,9 +97,9 @@ GetDeltaTime( void )
  */
 float
 aqua::
-GetUnscaledDeltaTime( void )
+GetUnscaledDeltaTime(void)
 {
-    return aqua::core::CFramework::GetInstance( ).GetUnscaledDeltaTime( );
+	return aqua::core::CFramework::GetInstance().GetUnscaledDeltaTime();
 }
 
 /*
@@ -107,9 +107,9 @@ GetUnscaledDeltaTime( void )
  */
 float
 aqua::
-GetDeltaTimeScale( void )
+GetDeltaTimeScale(void)
 {
-    return aqua::core::CFramework::GetInstance( ).GetDeltaTimeScale( );
+	return aqua::core::CFramework::GetInstance().GetDeltaTimeScale();
 }
 
 /*
@@ -117,9 +117,9 @@ GetDeltaTimeScale( void )
  */
 void
 aqua::
-SetDeltaTimeScale( float scale )
+SetDeltaTimeScale(float scale)
 {
-    aqua::core::CFramework::GetInstance( ).SetDeltaTimeScale( scale );
+	aqua::core::CFramework::GetInstance().SetDeltaTimeScale(scale);
 }
 
 /*
@@ -127,9 +127,9 @@ SetDeltaTimeScale( float scale )
  */
 void
 aqua::
-SetFrameRate( int frame_rate )
+SetFrameRate(int frame_rate)
 {
-    aqua::core::CFramework::GetInstance( ).SetFrameRate( frame_rate );
+	aqua::core::CFramework::GetInstance().SetFrameRate(frame_rate);
 }
 
 /*
@@ -137,9 +137,9 @@ SetFrameRate( int frame_rate )
  */
 aqua::IGameObject*
 aqua::
-FindGameObject( const std::string& name )
+FindGameObject(const std::string& name)
 {
-    return aqua::core::CFramework::GetInstance( ).FindGameObject( name );
+	return aqua::core::CFramework::GetInstance().FindGameObject(name);
 }
 
 /*
@@ -147,9 +147,9 @@ FindGameObject( const std::string& name )
  */
 aqua::IGameObject*
 aqua::
-FindGameObject( aqua::FIND_METHOD func )
+FindGameObject(aqua::FIND_METHOD func)
 {
-    return aqua::core::CFramework::GetInstance( ).FindGameObject( func );
+	return aqua::core::CFramework::GetInstance().FindGameObject(func);
 }
 
 /*
@@ -157,24 +157,38 @@ FindGameObject( aqua::FIND_METHOD func )
  */
 void
 aqua::
-Clear( unsigned int color )
+Clear(unsigned int color)
 {
-    // 画面の背景色を設定
-    SetBackgroundColor( ( ( color & 0x00ff0000 ) >> 16 ), ( ( color & 0x0000ff00 ) >> 8 ), ( color & 0x000000ff ) );
+	// 画面の背景色を設定
+	SetBackgroundColor(((color & 0x00ff0000) >> 16), ((color & 0x0000ff00) >> 8), (color & 0x000000ff));
 
-    // 画面のクリア
-    ClearDrawScreen( );
+	// 画面のクリア
+	ClearDrawScreen();
 }
 /*
 * @brief float型の小数点を決めてstring型に変換
 */
 std::string aqua::FloatToString(float num, int decimal_point)
 {
-    {
-        int m_Num = (int)num;
+	int m_Num = std::abs((int)num);
+	int pow = std::pow(10, decimal_point);
 
-        int m_Decimal = (int)(num * std::pow(10, decimal_point)) % (int)std::pow(10, decimal_point);
+	std::string MinusSign = "";
 
-        return std::to_string(m_Num) + "." + std::to_string(m_Decimal);
-    }
+	float a = std::abs((num * (float)pow));
+
+	if (num < 0.0f)
+	{
+		MinusSign = "-";
+
+		a = ceil(a);
+
+		if ((int)a % pow == 0)
+			m_Num = m_Num + 1;
+	}
+
+	int m_Decimal = (int)a % pow;
+
+	return MinusSign + std::to_string(m_Num) + "." + std::to_string(m_Decimal);
+
 }

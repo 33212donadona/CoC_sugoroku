@@ -5,7 +5,7 @@ enum class PLAYER_ID;
 struct STATUS;
 
 class CCommonData;
-class CCharactorInfo;
+class CGameCommand;
 
 class CMainGameWork
 	:public aqua::IGameObject
@@ -44,8 +44,9 @@ public:
 private:
 
 	/*
-	 *  @brief  
+	 *  @brief  キャラクターのステータス更新
 	 */
+	void CharaStatusUpdate();
 
 private:
 	
@@ -54,6 +55,7 @@ private:
 
 	CCommonData*              m_CommonData;             //! 共有データクラス
 	STATUS*                   m_Status;
+	CGameCommand*             m_GameCommand;
 
 	aqua::CLabel              m_LabelHP	;               //! HPラベル
 	aqua::CLabel              m_LabelSTR;               //! STRラベル
