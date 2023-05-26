@@ -13,6 +13,8 @@ enum class TILE_ID
 	MAX
 };
 
+class CLine;
+
 class CTileManager :
 	public aqua::IGameObject
 {
@@ -41,17 +43,17 @@ public:
 	 */
 	void CreateTile(TileInfo* info);
 
-private:
-
 	/*
 	 * @brief タイルをつなげる
 	 * 
 	 */
-	void TileLine();
+	void CreateTileLine();
 
 private:
 
 	std::list<ITile*>        m_TileList;   //!  タイルリスト
+
+	std::list<CLine*>        m_LineList;   //!  道クラスリスト
 
 	bool                     m_LineFlag;   //!  線を引いたかどうか
 

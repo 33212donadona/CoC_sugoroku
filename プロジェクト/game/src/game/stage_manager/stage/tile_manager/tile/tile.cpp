@@ -24,6 +24,8 @@ void ITile::Initialize(TileInfo* info)
  */
 void ITile::Initialize(std::string block_name, TileInfo* info)
 {
+	m_TileInfo = info;
+
 	m_TileSprite.Create(block_name);
 	m_TileSprite.position = (*info).position;
 
@@ -87,7 +89,7 @@ aqua::CVector2* ITile::GetCenterPosition()
 /*!
  *   @brief  進めるタイル番号を設定
  */
-void ITile::SetNextTileID(int vector_num,ITile* next_tile)
+void ITile::SetFromTileID(int vector_num,ITile* next_tile)
 {
 	if (next_tile == nullptr) return;
 
@@ -116,7 +118,7 @@ void ITile::SetTileID(int tile_number)
 /*!
  *  自分のタイル番号を取得
  */
-int* ITile::GetNowTileID()
+int* ITile::GetMyTileID()
 {
 	return &m_NowID;
 }
@@ -124,22 +126,21 @@ int* ITile::GetNowTileID()
 /*!
  *  初期化
  */
-int ITile::GetMaxNextTileSize()
+int ITile::GetMaxFromTileSize()
 {
-	if (m_NextTile.empty())return NULL;
+	if (m_TileInfo->m_FromID.empty())return NULL;
 
-	return (int)m_NextTile.size();
+	return (int)m_TileInfo->m_FromID.size();
 }
 
 /*!
  *  進めるタイルの最大値を取得
  */
-int* ITile::GetNextTileID(int vector_num)
+int* ITile::GetFromTileID(int vector_num)
 {
-	if (vector_num < 0 && vector_num >= GetMaxNextTileSize())return NULL;
-	if (!m_NextTile[vector_num])return NULL;
+	if (vector_num < 0 && vector_num >= GetMaxFromTileSize())return NULL;
 
-	return m_NextTile[vector_num]->GetNowTileID();
+	return &m_TileInfo->m_FromID[vector_num];
 }
 
 /*!

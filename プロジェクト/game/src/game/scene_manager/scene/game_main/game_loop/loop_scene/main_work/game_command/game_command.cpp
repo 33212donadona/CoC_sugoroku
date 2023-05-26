@@ -1,4 +1,5 @@
 ﻿#include "game_command.h"
+#include "dice/dice.h"
 
 namespace key = aqua::keyboard;
 
@@ -7,24 +8,12 @@ const std::string CGameCommand::m_CommandName[] =
 	"サイコロを振る",
 	"他とチームを組む"
 };
-const float CGameCommand::m_change_dice_time = 0.5f;
-const int CGameCommand::m_rand_pattern = 2;
-const int CGameCommand::m_max_dice = 6;
-const int CGameCommand::m_rand_dice[m_rand_pattern][m_max_dice]
-{
-	{
-		1,4,5,2,6,3
-     },
-
-	{
-		5,2,4,6,3,1
-    }
-};
 
 CGameCommand::CGameCommand(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "GameCommand")
 	, m_NowSelectCommand(CommandID::DICE)
 	, m_UpdateCommand(false)
+	, m_DiceClass(nullptr)
 {
 }
 
@@ -41,31 +30,10 @@ void CGameCommand::Initialize(aqua::CVector2 position)
 		m_CommandLabel.push_back(label);
 	}
 
+	m_CommandLabel[(int)m_NowSelectCommand].color = aqua::CColor::YELLOW;
+
 	m_CommandLabel[(int)CommandID::TEAM].position.y +=
 		m_CommandLabel[(int)CommandID::DICE].GetFontHeight() * 2.0f;
-
-	
-	float dice_sprite_h = 0.0f;
-
-	for (int dice_sprite_i = 0; dice_sprite_i < m_max_dice; ++dice_sprite_i)
-	{
-		m_DiceSprite[dice_sprite_i].Create("data\\game_main\\UI\\dice.png");
-
-		if (dice_sprite_h == 0.0f)
-			dice_sprite_h = m_DiceSprite[dice_sprite_i].GetTextureHeight() / 6;
-
-		m_DiceSprite[dice_sprite_i].rect.top    = dice_sprite_h * dice_sprite_i;
-		m_DiceSprite[dice_sprite_i].rect.bottom = dice_sprite_h * (dice_sprite_i + 1);
-	}
-
-	int rand_dice = aqua::Rand(m_rand_pattern - 1); //TODO
-
-	for (int dice_i = 0; dice_i < m_max_dice; ++dice_i)
-	{
-		m_DrawDiceSprite.push_back(&m_DiceSprite[m_rand_dice[rand_dice][dice_i] - 1]);
-	}
-
-	m_ChangeDiceTimer.Setup(m_change_dice_time);
 }
 
 void CGameCommand::Update()
@@ -74,14 +42,17 @@ void CGameCommand::Update()
 
 	if (m_UpdateCommand)
 	{
-		
 		switch (m_NowSelectCommand)
 		{
 		case CommandID::DICE:
+
 			DiceCommand();
+
 			break;
 		case CommandID::TEAM:
+
 			TeamCommand();
+
 			break;
 		}
 	}
@@ -92,7 +63,15 @@ void CGameCommand::Update()
 void CGameCommand::Draw()
 {
 	for (auto& label : m_CommandLabel)
+	{
 		label.Draw();
+	}
+	
+	if (m_DiceClass)
+	{
+		m_DiceClass->Draw();
+	}
+
 }
 
 void CGameCommand::Finalize()
@@ -103,23 +82,44 @@ void CGameCommand::Finalize()
 
 void CGameCommand::SelectCommand()
 {
-	if (key::Trigger(key::KEY_ID::W))
+	if (key::Trigger(key::KEY_ID::W) || key::Trigger(key::KEY_ID::S))
 	{
+		int add = key::Trigger(key::KEY_ID::W) - key::Trigger(key::KEY_ID::S);
+
 		m_NowSelectCommand =
-			aqua::Mod<CommandID, int>((int)m_NowSelectCommand + 1, CommandID::DICE, CommandID::MAX);
-	}
-	if (key::Trigger(key::KEY_ID::S))
-	{
-		m_NowSelectCommand =
-			aqua::Mod<CommandID, int>((int)m_NowSelectCommand - 1, CommandID::DICE, CommandID::MAX);
+			aqua::Mod<CommandID, int>((int)m_NowSelectCommand + add, (int)CommandID::DICE, (int)CommandID::MAX - 1);
+
+		for (auto& label : m_CommandLabel)
+		{
+			label.color = aqua::CColor::WHITE;
+		}
+
+		m_CommandLabel[(int)m_NowSelectCommand].color = aqua::CColor::YELLOW;
 	}
 }
 
 void CGameCommand::DiceCommand()
 {
+	if (!m_DiceClass)
+	{
+		m_DiceClass = aqua::CreateGameObject<CDice>(this);
+		m_DiceClass->Initialize();
+	}
+	else
+	{
+		m_DiceClass->Update();
 
+		if (m_DiceClass->GetDice() != -1)
+		{
+			m_DiceClass->Finalize();
+			m_DiceClass = nullptr;
+			m_UpdateCommand = false;
+		}
+	}
 }
+
 
 void CGameCommand::TeamCommand()
 {
+	m_UpdateCommand = false;
 }

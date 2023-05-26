@@ -46,6 +46,8 @@ bool CStage::Initialize(std::string file_name)
 		count_row++;
 	}
 
+	m_TileManager->CreateTileLine();
+
 	loader.Unload();
 
 	return true;

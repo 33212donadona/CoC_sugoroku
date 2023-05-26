@@ -57,6 +57,8 @@ void CMainGameWork::Initialize()
 void CMainGameWork::Update()
 {
 	CharaStatusUpdate();
+
+	m_GameCommand->Update();
 }
 
 void CMainGameWork::Draw()

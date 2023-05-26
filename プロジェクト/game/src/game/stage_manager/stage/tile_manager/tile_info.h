@@ -3,8 +3,8 @@
 
 struct TileInfo
 {
-	int id = 0;
-	aqua::CVector2 position;
-	std::string tile_name = "";
-	std::list<int> m_FromID;
+	int id = 0;                 //! é©ï™ÇÃID
+	aqua::CVector2 position;	//! ç¿ïW
+	std::string tile_name = "";	//! ñºëO
+	std::vector<int> m_FromID;	//! çsêÊÇÃID
 };

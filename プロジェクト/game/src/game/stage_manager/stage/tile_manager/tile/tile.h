@@ -64,7 +64,7 @@ public:
 	 *   @param[in] vector_num       配列番号
 	 *   @param[in] next_tile_number タイル番号
 	 */
-	void SetNextTileID(int vector_num,ITile* next_tile_number);
+	void SetFromTileID(int vector_num,ITile* next_tile_number);
 
 	/*!
 	 *   @brief  タイル番号を設定
@@ -78,14 +78,14 @@ public:
 	 * 
 	 *   @return タイル番号
 	 */
-	int* GetNowTileID();
+	int* GetMyTileID();
 
 	/*!
 	 *   @brief  進めるタイルの最大値を取得
 	 * 
 	 *   @return 進めるタイルの最大値
 	 */
-	int GetMaxNextTileSize();
+	int GetMaxFromTileSize();
 
 	/*!
 	 *   @brief  次に進めるタイル番号
@@ -94,7 +94,7 @@ public:
 	 * 
 	 *   @return 次に進めるタイル番号
 	 */
-	int* GetNextTileID(int vector_num);
+	int* GetFromTileID(int vector_num);
 
 	/*!
 	 *   @brief  生成されたタイル番号
@@ -133,6 +133,6 @@ private:
 
 	aqua::CVector2 m_CenterPosition;     //! タイルの中心座標
 
-	TileInfo       m_TileInfo;
+	TileInfo*      m_TileInfo;
 
 };

@@ -1,13 +1,14 @@
 #include "tile_manager.h"
 #include "tile/normal_tile/normal_tile.h"
 #include "tile/ivent_tile/ivent_tile.h"
+#include "line/line.h"
 #include <filesystem>
 
 namespace fs = std::filesystem;
 
 CTileManager::CTileManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "TileManager")
-	,m_LineFlag(false)
+	, m_LineFlag(false)
 {
 }
 
@@ -27,11 +28,18 @@ void CTileManager::Update()
  */
 void CTileManager::Draw()
 {
+
+	for (auto& it : m_LineList)
+	{
+		it->Draw();
+	}
+
 	for (auto& it : m_TileList)
 	{
 		it->Draw();
 	}
 
+	CLine::ArrowDraw();
 }
 
 /*
@@ -69,11 +77,35 @@ void CTileManager::CreateTile(TileInfo* info)
 /*
  * タイルをつなげる
  */
-void CTileManager::TileLine()
+void CTileManager::CreateTileLine()
 {
-	if (m_LineFlag)return;
-	m_LineFlag = true;
+	for (auto& tile_it : m_TileList)
+	{
+		int from_size = tile_it->GetMaxFromTileSize();
 
+		for (int i = 0; i < from_size; ++i)
+		{
+			int from_id = (*tile_it->GetFromTileID(i));
 
+			if (from_id != 0) // タイルIDが0なら処理しない
+			{
+				for (auto& from_it : m_TileList)
+				{
+					if (from_id == *from_it->GetMyTileID())
+					{
+						tile_it->SetFromTileID(i, from_it);
 
+						CLine* line = aqua::CreateGameObject<CLine>(this);
+						
+						line->Initialize(tile_it->GetCenterPosition(),from_it->GetCenterPosition());
+
+						m_LineList.push_back(line);
+
+						break;
+					}
+				}
+			}
+		}
+
+	}
 }
