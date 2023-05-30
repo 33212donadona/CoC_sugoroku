@@ -49,9 +49,19 @@ public:
 	 */
 	void CreateTileLine();
 
+	/*
+	 * @brief タイルの座標取得
+	 */
+	aqua::CVector2 GetTilePosition(int tile_id);
+
+	/*
+	 *  @brief 次に進めるタイルのID 
+	 */
+	std::vector<int>* GetNextTileID(int tile_id); 
+
 private:
 
-	std::list<ITile*>        m_TileList;   //!  タイルリスト
+	std::vector<ITile*>      m_TileList;   //!  タイルリスト
 
 	std::list<CLine*>        m_LineList;   //!  道クラスリスト
 

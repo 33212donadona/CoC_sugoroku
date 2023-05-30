@@ -134,13 +134,13 @@ int ITile::GetMaxFromTileSize()
 }
 
 /*!
- *  進めるタイルの最大値を取得
+ *  進めるタイルのID取得
  */
-int* ITile::GetFromTileID(int vector_num)
+std::vector<int>* ITile::GetFromTileID(int vector_num)
 {
 	if (vector_num < 0 && vector_num >= GetMaxFromTileSize())return NULL;
 
-	return &m_TileInfo->m_FromID[vector_num];
+	return &m_TileInfo->m_FromID;
 }
 
 /*!

@@ -87,7 +87,7 @@ void CGameSoundManager::LoadSound(const std::string& file_name, SoundInfo** info
 	aqua::CCSVLoader loader;
 	loader.Load(file_name);
 
-	int se_add = (int)Sound_ID::DUMMY * !loop;
+	int se_add = ((int)Sound_ID::DUMMY + 1) * !loop;
 
 	int row = loader.GetRows();
 

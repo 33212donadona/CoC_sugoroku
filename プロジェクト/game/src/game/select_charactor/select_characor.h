@@ -5,6 +5,7 @@
 class CCharactorInfo;
 class CCommonData;
 class CParameter;
+class CGameSoundManager;
 
 using CHARACTOR_VECTOR = std::vector<CCharactorInfo>;
 
@@ -64,6 +65,7 @@ private:
 	std::vector<aqua::CSprite>   m_CharactorSpriteList;              //  キャラクター画像リスト
 
 	aqua::CSprite              m_BackgroudSprite;                    //  背景
+	aqua::CSprite              m_JobSprite;                          //  職業
 
 	aqua::CBoxPrimitive        m_SelectBox;                          //  選択中の枠
 	aqua::CBoxPrimitive        m_SelectBlendBox;                     //  選択中の箱
@@ -72,6 +74,7 @@ private:
 	PLAYER_ID                  m_NowSelectPlayer;                    //  操作しているプレイヤー
 
 	CCommonData*               m_CommonDataClass;                    //  共有データクラス
+	CGameSoundManager*         m_GameSoundManager;                   //  音楽管理クラス
 	
 	int                        m_CharactorMaxNum;                    //  
 

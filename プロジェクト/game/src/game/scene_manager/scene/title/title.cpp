@@ -22,8 +22,8 @@ CTitle::CTitle(aqua::IGameObject* parent)
 void CTitle::Initialize()
 {
 	m_StartLabel.Create(m_font_size);
-	m_StartLabel.text = "～左クリックでスタート～";
-	m_StartLabel.position.x = (aqua::GetWindowWidth()  - m_StartLabel.GetTextWidth()) / 2.0f;
+	m_StartLabel.text = "～エンターキーでスタート～";
+	m_StartLabel.position.x = (aqua::GetWindowWidth() - m_StartLabel.GetTextWidth()) / 2.0f;
 	m_StartLabel.position.y = aqua::GetWindowWidth() * 0.7f - m_StartLabel.GetTextWidth() / 2.0f;
 	m_StartLabel.color = 0xff7f7f7f;
 
@@ -32,7 +32,7 @@ void CTitle::Initialize()
 	m_GroundSprite.Create("data\\title\\back_ground\\タイトル_地面.png");
 	m_GroundLineSprite.Create("data\\title\\back_ground\\タイトル_地面_ライン.png");
 	m_LabelSprite.Create("data\\title\\back_ground\\タイトル_リボン.png");
-	
+
 	m_BackGround.Create("data\\title\\back_ground\\タイトル_空.png");
 
 	m_LeftBilldingSprite.anchor.x = m_LeftBilldingSprite.GetTextureWidth() / 2.0f;
@@ -43,13 +43,9 @@ void CTitle::Initialize()
 
 	m_BackGround.position.x -= m_BackGround.GetTextureWidth() / 4.0f;
 	m_BackGround.position.y -= m_BackGround.GetTextureHeight() / 5.0f;
-	
+
 	m_BackGround.anchor.x = m_BackGround.GetTextureWidth() / 2.0f;
 	m_BackGround.anchor.y = m_BackGround.GetTextureHeight() / 2.0f;
-
-	m_FlashBackGround = m_BackGround;
-
-	m_FlashBackGround.blend_mode = aqua::ALPHABLEND::ADD;
 
 	m_EasingTime.Setup(m_easing_time);
 
@@ -63,10 +59,14 @@ void CTitle::Update()
 	SpriteScale();
 
 	m_Rotation -= 0.1f;
-	m_FlashBackGround.rotation = 
+
 	m_BackGround.rotation = aqua::DegToRad(m_Rotation);
 
-	m_ChangeFlag = aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::RETURN);
+	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::RETURN))
+	{
+		m_ChangeFlag = true;
+		PlaySE(Sound_ID::TITLE_CLICK);
+	}
 
 	IScene::Update();
 }
@@ -77,7 +77,6 @@ void CTitle::Update()
 void CTitle::Draw()
 {
 	m_BackGround.Draw();
-	//m_FlashBackGround.Draw();
 	m_LeftBilldingSprite.Draw();
 	m_RightBilldingSprite.Draw();
 	m_GroundSprite.Draw();
@@ -94,7 +93,6 @@ void CTitle::Draw()
 void CTitle::Finalize()
 {
 	m_BackGround.Delete();
-	m_FlashBackGround.Delete();
 	m_LeftBilldingSprite.Delete();
 	m_RightBilldingSprite.Delete();
 	m_GroundSprite.Delete();
@@ -118,14 +116,5 @@ void CTitle::SpriteScale()
 
 	m_RightBilldingSprite.scale.y =
 		cos(aqua::DegToRad((float)m_Frame)) * 0.125f + 1.25f;
-
-	m_FlashBackGround.color.alpha =
-		(unsigned char)aqua::easing::InBack
-		(
-			m_EasingTime.GetTime(),
-			m_EasingTime.GetLimit(),
-			0.0f,
-			155.0f
-		);
 
 }

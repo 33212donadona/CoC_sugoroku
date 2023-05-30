@@ -94,7 +94,7 @@ public:
 	 * 
 	 *   @return 次に進めるタイル番号
 	 */
-	int* GetFromTileID(int vector_num);
+	std::vector<int>* GetFromTileID();
 
 	/*!
 	 *   @brief  生成されたタイル番号

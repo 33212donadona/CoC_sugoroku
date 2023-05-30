@@ -56,6 +56,11 @@ SceneID IScene::GetNextScene()
 	return m_NextSceneID;
 }
 
+void IScene::PlaySE(Sound_ID se_id)
+{
+	m_GameSoundManager->PlaySE(se_id);
+}
+
 /*!
 *  ƒV[ƒ“‚É‡‚Á‚½‰¹ŠyID‚ðŽæ“¾
 */

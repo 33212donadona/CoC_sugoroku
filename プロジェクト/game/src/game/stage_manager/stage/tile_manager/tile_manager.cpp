@@ -109,3 +109,16 @@ void CTileManager::CreateTileLine()
 
 	}
 }
+
+aqua::CVector2 CTileManager::GetTilePosition(int tile_id)
+{
+
+	if (tile_id < 0 || tile_id >= m_TileList.size())return m_TileList[0]->GetPosition();
+
+	return m_TileList[tile_id]->GetPosition();
+}
+
+std::vector<int>* CTileManager::GetNextTileID(int tile_id)
+{
+	return  m_TileList[tile_id]->GetFromTileID();
+}

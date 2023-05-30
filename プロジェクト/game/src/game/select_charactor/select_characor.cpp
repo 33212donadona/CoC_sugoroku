@@ -2,6 +2,7 @@
 #include "charactor/charactor_info.h"
 #include "parameter/parameter.h"
 #include "../common_data/common_data.h"
+#include "../game_sound_manager/game_sound_manager.h"
 
 const float  CSelectCharactor::m_box_thickness = 10.0f;
 const unsigned int  CSelectCharactor::m_box_color[] = 
@@ -27,6 +28,7 @@ void CSelectCharactor::Initialize()
 {
 	// クラス参照
 	m_CommonDataClass = (CCommonData*)aqua::FindGameObject("CommonData");
+	m_GameSoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 
 	aqua::CCSVLoader loader;
 
@@ -98,6 +100,8 @@ void CSelectCharactor::Initialize()
 	m_CharactorMaxNum = (int)m_Charactor.size() - 1;
 
 	m_BackgroudSprite.Create("data\\select\\back_ground\\back_ground2.png");
+	m_JobSprite.Create("data\\select\\back_ground\\syokugyou.png");
+	m_JobSprite.position.y = aqua::GetWindowHeight() / 2.0f;
 
 	m_SelectBox.Setup
 	(
@@ -152,6 +156,8 @@ void CSelectCharactor::Draw()
 
 	m_SelectParamBox.Draw();
 
+	m_JobSprite.Draw();
+
 	for (auto& chara_it : m_Charactor)
 		chara_it->Draw();
 
@@ -178,6 +184,8 @@ void CSelectCharactor::Draw()
 void CSelectCharactor::Finalize()
 {
 	m_BackgroudSprite.Delete();
+
+	m_JobSprite.Delete();
 
 	for (auto& chara_it : m_Charactor)
 	{
@@ -227,6 +235,8 @@ void CSelectCharactor::SelectCharactor()
 
 	if (step_right || step_left || step_up || step_down)
 	{
+		m_GameSoundManager->PlaySE(Sound_ID::SELECT_BOTTON_MOVE);
+
 		m_SelectCharactor += step_right + step_left + step_up + step_down;
 
 		m_SelectCharactor = aqua::Mod(m_SelectCharactor, 0, m_CharactorMaxNum);
@@ -246,6 +256,8 @@ void CSelectCharactor::DecideCharactor()
 	{
 		if (!m_CommonDataClass->EmptyChara())
 		{
+ 			m_GameSoundManager->PlaySE(Sound_ID::SELECT_CANCEL);
+
 			// リストから除外
 			m_CommonDataClass->EraseBackChara();
 
@@ -263,6 +275,8 @@ void CSelectCharactor::DecideCharactor()
 	}
 	else if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::RETURN) && m_NowSelectPlayer != PLAYER_ID::DUMMY)
 	{
+		m_GameSoundManager->PlaySE(Sound_ID::SELECT_CLICK);
+
 		(*m_Charactor[m_SelectCharactor]).GetStatus()->m_Player = m_NowSelectPlayer;
 
 		m_CommonDataClass->PushBack_Chara((*m_Charactor[m_SelectCharactor]));

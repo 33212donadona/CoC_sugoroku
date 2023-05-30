@@ -38,7 +38,6 @@ void CGameCommand::Initialize(aqua::CVector2 position)
 
 void CGameCommand::Update()
 {
-	SelectCommand();
 
 	if (m_UpdateCommand)
 	{
@@ -57,7 +56,10 @@ void CGameCommand::Update()
 		}
 	}
 	else
+	{
 		m_UpdateCommand = key::Trigger(key::KEY_ID::RETURN);
+		SelectCommand();
+	}
 }
 
 void CGameCommand::Draw()
@@ -66,7 +68,7 @@ void CGameCommand::Draw()
 	{
 		label.Draw();
 	}
-	
+
 	if (m_DiceClass)
 	{
 		m_DiceClass->Draw();

@@ -48,7 +48,6 @@ private:
     aqua::CSprite  m_RightBilldingSprite;     //! ‰E‘¤ƒrƒ‹‚Ì‰æ‘œ
 
     aqua::CSprite  m_BackGround;
-    aqua::CSprite  m_FlashBackGround;
 
     aqua::CTimer   m_EasingTime;
 

@@ -6,6 +6,7 @@ struct STATUS;
 
 class CCommonData;
 class CGameCommand;
+calss CStage;
 
 class CMainGameWork
 	:public aqua::IGameObject

@@ -50,9 +50,15 @@ public:
 	*/
 	SceneID GetNextScene();
 
+
+	/*
+	*  @brief SEの再生
+	*/
+	void    PlaySE(Sound_ID se_id);
 protected:
 
 	bool m_ChangeFlag;                 //! 切り替えフラグ
+
 
 private:
 
@@ -67,8 +73,6 @@ private:
 	SceneID m_NextSceneID;           //! 次のシーンID
 
 	aqua::CLabel m_SceneName;        //! シーン名
-
-	
 
 	CGameSoundManager* m_GameSoundManager; //! 音楽管理クラス
 };
