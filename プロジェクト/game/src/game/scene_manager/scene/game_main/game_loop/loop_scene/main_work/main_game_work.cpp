@@ -88,8 +88,13 @@ void CMainGameWork::Finalize()
 	m_GameCommand->Finalize();
 }
 
+PLAYER_ID CMainGameWork::GetNowPlayerID()
+{
+	return m_NowPlayerID;
+}
+
 /*
- *  @brief  キャラクターのステータス更新
+ *  キャラクターのステータス更新
  */
 void CMainGameWork::CharaStatusUpdate()
 {

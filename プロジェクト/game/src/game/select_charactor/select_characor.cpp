@@ -108,7 +108,7 @@ void CSelectCharactor::Initialize()
 		m_Charactor[m_SelectCharactor]->m_Position,
 		m_Charactor[m_SelectCharactor]->GetSpriteSize().x,
 		m_Charactor[m_SelectCharactor]->GetSpriteSize().y,
-		m_box_color[(int)m_NowSelectPlayer],
+		m_CommonDataClass->GetPlayerColor(m_NowSelectPlayer),
 		false,
 		m_box_thickness
 	);
@@ -118,7 +118,7 @@ void CSelectCharactor::Initialize()
 		m_Charactor[m_SelectCharactor]->m_Position,
 		m_Charactor[m_SelectCharactor]->GetSpriteSize().x,
 		m_Charactor[m_SelectCharactor]->GetSpriteSize().y,
-		m_box_color[(int)m_NowSelectPlayer]
+		m_CommonDataClass->GetPlayerColor(m_NowSelectPlayer)
 	);
 
 	m_SelectBlendBox.color.alpha = (unsigned char)100;
@@ -266,8 +266,8 @@ void CSelectCharactor::DecideCharactor()
 				aqua::Limit<PLAYER_ID,int>((int)m_NowSelectPlayer - 1,(int)PLAYER_ID::PL1, (int)PLAYER_ID::PL4);
 
 			// ボックスの色を変更
-			m_SelectBlendBox.color = m_box_color[(int)m_NowSelectPlayer];
-			m_SelectBox.color = m_box_color[(int)m_NowSelectPlayer];
+			m_SelectBlendBox.color = m_CommonDataClass->GetPlayerColor(m_NowSelectPlayer);
+			m_SelectBox.color = m_CommonDataClass->GetPlayerColor(m_NowSelectPlayer);
 
 			m_SelectBlendBox.color.alpha = (unsigned char)100;
 
@@ -286,8 +286,8 @@ void CSelectCharactor::DecideCharactor()
 		if (m_NowSelectPlayer != PLAYER_ID::DUMMY)
 		{
 			// ボックスの色を変更
-			m_SelectBlendBox.color = m_box_color[(int)m_NowSelectPlayer];
-			m_SelectBox.color = m_box_color[(int)m_NowSelectPlayer];
+			m_SelectBlendBox.color = m_CommonDataClass->GetPlayerColor(m_NowSelectPlayer);
+			m_SelectBox.color = m_CommonDataClass->GetPlayerColor(m_NowSelectPlayer);
 
 			m_SelectBlendBox.color.alpha = (unsigned char)100;
 		}

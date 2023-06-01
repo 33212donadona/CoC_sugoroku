@@ -31,7 +31,10 @@ public:
 
 	CCharactorInfo* RefarenceChara(PLAYER_ID player_id);
 
+	unsigned int GetPlayerColor(PLAYER_ID player_id);
+
 private:
+	static const unsigned int m_player_color[(int)PLAYER_ID::DUMMY];
 
 	std::vector<CCharactorInfo>  m_CharaList;
 

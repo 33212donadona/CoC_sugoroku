@@ -6,7 +6,7 @@ struct STATUS;
 
 class CCommonData;
 class CGameCommand;
-calss CStage;
+class CStage;
 
 class CMainGameWork
 	:public aqua::IGameObject
@@ -41,6 +41,8 @@ public:
 	 *  @brief ‰ð•ú
 	 */
 	void Finalize()override;
+
+	PLAYER_ID GetNowPlayerID();
 
 private:
 

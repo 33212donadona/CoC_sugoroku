@@ -136,10 +136,8 @@ int ITile::GetMaxFromTileSize()
 /*!
  *  i‚ß‚éƒ^ƒCƒ‹‚ÌIDæ“¾
  */
-std::vector<int>* ITile::GetFromTileID(int vector_num)
+std::vector<int>* ITile::GetFromTileID()
 {
-	if (vector_num < 0 && vector_num >= GetMaxFromTileSize())return NULL;
-
 	return &m_TileInfo->m_FromID;
 }
 
