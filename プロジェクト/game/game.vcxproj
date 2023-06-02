@@ -101,7 +101,7 @@
   <ItemGroup>
     <ClCompile Include="src\game\common_data\common_data.cpp" />
     <ClCompile Include="src\game\game_sound_manager\game_sound_manager.cpp" />
-    <ClCompile Include="src\game\scene_manager\scene\game_main\game_loop\charactor_map_move\charactor_map_move.cpp" />
+    <ClCompile Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\main_work\charactor_map_move\charactor_map_move.cpp" />
     <ClCompile Include="src\game\scene_manager\scene\game_main\game_loop\game_loop.cpp" />
     <ClCompile Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\main_work\game_command\dice\dice.cpp" />
     <ClCompile Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\main_work\game_command\game_command.cpp" />
@@ -137,10 +137,11 @@
   <ItemGroup>
     <ClInclude Include="src\game\common_data\common_data.h" />
     <ClInclude Include="src\game\game_sound_manager\sound_id.h" />
-    <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\charactor_map_move\charactor_map_move.h" />
+    <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\main_work\charactor_map_move\charactor_map_move.h" />
     <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\game_loop.h" />
     <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\battle\battle.h" />
     <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\main_work\game_command\dice\dice.h" />
+    <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\main_work\game_command\dice\dice_info.h" />
     <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\main_work\game_command\game_command.h" />
     <ClInclude Include="src\game\scene_manager\scene\game_main\game_loop\loop_scene\main_work\main_game_work.h" />
     <ClInclude Include="src\game\scene_manager\scene\result\result.h" />

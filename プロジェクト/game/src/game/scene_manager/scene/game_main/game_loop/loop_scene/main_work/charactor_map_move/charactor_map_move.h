@@ -1,6 +1,7 @@
 #pragma once
 #include "aqua.h"
-#include "../../../../../select_charactor/charactor/charactor_id.h"
+#include "../../../../../../../select_charactor/charactor/charactor_id.h"
+#include "../game_command/dice/dice_info.h"
 
 class CTileManager;
 class CMainGameWork;
@@ -49,9 +50,10 @@ public:
 	/*!
 	 *  @brief プレイヤーの座標更新 
 	 */
-	void SetPlayerPosition(int tile_id);
+	bool SetPlayerPosition(int tile_id);
 
 private:
+	static const float m_max_easing_time;
 
 	CTileManager* m_TileManager;
 
@@ -62,4 +64,9 @@ private:
 	PLAYER_ID      m_PlayerID;
 
 	aqua::CSprite  m_PlayerIcom[(int)PLAYER_ID::DUMMY];
+
+	aqua::CVector2 m_Position;
+	aqua::CVector2 m_PrevPosition;
+
+	aqua::CTimer   m_EasingTime;
 };

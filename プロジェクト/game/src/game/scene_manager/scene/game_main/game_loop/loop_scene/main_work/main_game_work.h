@@ -4,14 +4,16 @@
 enum class PLAYER_ID;
 struct STATUS;
 
-class CCommonData;
+class CCharactorMapMove;
 class CGameCommand;
+class CCommonData;
 class CStage;
 
 class CMainGameWork
 	:public aqua::IGameObject
 {
 public:
+
 	/*!
 	*  @brief コンストラクタ
 	*/
@@ -42,6 +44,7 @@ public:
 	 */
 	void Finalize()override;
 
+
 	PLAYER_ID GetNowPlayerID();
 
 private:
@@ -58,12 +61,13 @@ private:
 
 private:
 	
-	static const aqua::CPoint m_text_box_space;//! キャラクターアイコンの座標
-	static const int          m_font_size;              //! キャラクターアイコンの座標
+	static const aqua::CPoint m_text_box_space;      //! キャラクターアイコンの座標
+	static const int          m_font_size;           //! キャラクターアイコンの座標
 
-	CCommonData*              m_CommonData;             //! 共有データクラス
+	CCommonData*              m_CommonData;          //! 共有データクラス
 	STATUS*                   m_Status;
 	CGameCommand*             m_GameCommand;
+	CCharactorMapMove*        m_CharactorMapMove;
 
 	aqua::CLabel              m_LabelHP	;               //! HPラベル
 	aqua::CLabel              m_LabelSTR;               //! STRラベル

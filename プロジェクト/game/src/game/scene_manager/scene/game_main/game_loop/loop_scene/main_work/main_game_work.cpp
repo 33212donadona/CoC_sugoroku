@@ -2,6 +2,7 @@
 #include "../../../../../../common_data/common_data.h"
 #include "../../../../../../select_charactor/charactor/charactor_info.h"
 #include "game_command/game_command.h"
+#include "charactor_map_move/charactor_map_move.h"
 
 const aqua::CPoint   CMainGameWork::m_text_box_space(20, 15);
 const int            CMainGameWork::m_font_size = 30;
@@ -50,13 +51,19 @@ void CMainGameWork::Initialize()
 	m_LabelSTR.position.y = m_LabelHP.position.y + m_LabelHP.GetFontHeight();
 	m_LabelDEX.position.y = m_LabelSTR.position.y + m_LabelSTR.GetFontHeight();
 
+	m_CharactorMapMove = aqua::CreateGameObject<CCharactorMapMove>(this);
+	m_CharactorMapMove->Initialize();
+
 	m_GameCommand = aqua::CreateGameObject<CGameCommand>(this);
 	m_GameCommand->Initialize(m_LabelHP.position + aqua::CVector2(m_LabelHP.GetTextWidth(),0) + m_text_box_space);
+
 }
 
 void CMainGameWork::Update()
 {
 	CharaStatusUpdate();
+
+	m_CharactorMapMove->Update();
 
 	m_GameCommand->Update();
 }
@@ -74,6 +81,8 @@ void CMainGameWork::Draw()
 	m_LabelSTR.Draw();
 	m_LabelDEX.Draw();
 
+	m_CharactorMapMove->Draw();
+
 	m_GameCommand->Draw();
 }
 
@@ -85,6 +94,7 @@ void CMainGameWork::Finalize()
 	m_LabelSTR.Delete();
 	m_LabelDEX.Delete();
 
+	m_CharactorMapMove->Finalize();
 	m_GameCommand->Finalize();
 }
 

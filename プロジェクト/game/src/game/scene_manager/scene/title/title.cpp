@@ -82,6 +82,7 @@ void CTitle::Draw()
 	m_GroundSprite.Draw();
 	m_GroundLineSprite.Draw();
 	m_LabelSprite.Draw();
+
 	m_StartLabel.Draw();
 
 	IScene::Draw();
@@ -98,6 +99,7 @@ void CTitle::Finalize()
 	m_GroundSprite.Delete();
 	m_GroundLineSprite.Delete();
 	m_LabelSprite.Delete();
+
 	m_StartLabel.Delete();
 
 	IScene::Finalize();

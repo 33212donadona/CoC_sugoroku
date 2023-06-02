@@ -52,7 +52,7 @@ public:
 	/*
 	 * @brief タイルの座標取得
 	 */
-	aqua::CVector2 GetTilePosition(int tile_id);
+	aqua::CVector2* GetTilePosition(int tile_id);
 
 	/*
 	 *  @brief 次に進めるタイルのID 

@@ -52,6 +52,12 @@ void CTileManager::Finalize()
 		it->Finalize();
 		AQUA_SAFE_DELETE(it);
 	}
+
+	for (auto& it : m_LineList)
+	{
+		it->Finalize();
+		AQUA_SAFE_DELETE(it);
+	}
 }
 
 /*
@@ -83,9 +89,11 @@ void CTileManager::CreateTileLine()
 	{
 		int from_size = tile_it->GetMaxFromTileSize();
 
+		std::vector<int>* from_id_vector = tile_it->GetFromTileID();
+
 		for (int i = 0; i < from_size; ++i)
 		{
-			int from_id = (*tile_it->GetFromTileID(i));
+			int from_id = (*from_id_vector)[i];
 
 			if (from_id != 0) // ƒ^ƒCƒ‹ID‚ª0‚È‚çˆ—‚µ‚È‚¢
 			{
@@ -110,12 +118,12 @@ void CTileManager::CreateTileLine()
 	}
 }
 
-aqua::CVector2 CTileManager::GetTilePosition(int tile_id)
+aqua::CVector2* CTileManager::GetTilePosition(int tile_id)
 {
 
-	if (tile_id < 0 || tile_id >= m_TileList.size())return m_TileList[0]->GetPosition();
+	if (tile_id < 0 || tile_id >= m_TileList.size())return m_TileList[0]->GetCenterPosition();
 
-	return m_TileList[tile_id]->GetPosition();
+	return m_TileList[tile_id]->GetCenterPosition();
 }
 
 std::vector<int>* CTileManager::GetNextTileID(int tile_id)

@@ -10,6 +10,7 @@ enum class CommandID
 };
 
 class CDice;
+class CCharactorMapMove;
 
 class CGameCommand
 	:public aqua::IGameObject
@@ -72,6 +73,8 @@ private:
 
 	bool m_UpdateCommand;
 
-	CDice* m_DiceClass;
+	CDice* m_DiceClass;                       //! 
+	CCharactorMapMove* m_CharactorMapMove;    //! 
 
+	int m_MoveTile;
 };

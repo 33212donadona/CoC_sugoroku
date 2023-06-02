@@ -1,9 +1,9 @@
 #pragma once
 #include "aqua.h"
+#include "dice_info.h"
 
 
-const int m_rand_pattern = 4;
-const int m_max_dice = 6;
+class CCharactorMapMove;
 
 class CDice
 	: public aqua::IGameObject
@@ -53,14 +53,14 @@ private:
 
 private:
 	static const int m_aftertaste_max_count;
-	static const int m_rand_dice[4][6];
+	static const int m_rand_dice[dice::rand_pattern][dice::max_dice];
 	static const float m_change_dice_time;
 	static const float m_add_dice_time;
 	static const float m_emphasis_dice_time;
 	static const float m_emphasis_dice_max_size;
 	static const float m_emphasis_dice_min_size;
 
-	aqua::CSprite             m_DiceSprite[6];                   //! サイコロ一面ずつの画像
+	aqua::CSprite               m_DiceSprite[dice::max_dice];      //! サイコロ一面ずつの画像
 	std::vector<aqua::CSprite*> m_DrawDiceSprite;
 
 	aqua::CBoxPrimitive       m_BackGround;

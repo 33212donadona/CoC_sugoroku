@@ -8,7 +8,7 @@ const float CDice::m_emphasis_dice_time = 2.0f;
 const float CDice::m_emphasis_dice_max_size = 1.5f;
 const float CDice::m_emphasis_dice_min_size = 1.0f;
 const int CDice::m_aftertaste_max_count = 5;
-const int CDice::m_rand_dice[m_rand_pattern][m_max_dice]
+const int CDice::m_rand_dice[dice::rand_pattern][dice::max_dice]
 {
 	{ 1,4,5,2,6,3},
 	{ 5,2,4,6,3,1},
@@ -28,12 +28,12 @@ void CDice::Initialize()
 {
 	float dice_sprite_h = 0.0f;
 
-	for (int dice_sprite_i = 0; dice_sprite_i < m_max_dice; ++dice_sprite_i)
+	for (int dice_sprite_i = 0; dice_sprite_i < dice::max_dice; ++dice_sprite_i)
 	{
 		m_DiceSprite[dice_sprite_i].Create("data\\game_main\\UI\\dice.png");
 
 		if (dice_sprite_h == 0.0f)
-			dice_sprite_h = m_DiceSprite[dice_sprite_i].GetTextureHeight() / m_max_dice;
+			dice_sprite_h = m_DiceSprite[dice_sprite_i].GetTextureHeight() / dice::max_dice;
 
 		m_DiceSprite[dice_sprite_i].rect.top = dice_sprite_h * dice_sprite_i;
 		m_DiceSprite[dice_sprite_i].rect.bottom = dice_sprite_h * (dice_sprite_i + 1);
@@ -70,7 +70,7 @@ void CDice::Update()
 {
 	if (m_ChangeDiceTimer.Finished())
 	{
-		m_DiceNumber = aqua::Mod(m_DiceNumber + 1, 0, m_max_dice - 1);
+		m_DiceNumber = aqua::Mod(m_DiceNumber + 1, 0, dice::max_dice - 1);
 
 		if (m_ReturnDice)
 		{
@@ -99,6 +99,8 @@ void CDice::Update()
 				m_emphasis_dice_max_size
 			);
 
+		
+
 		m_EmphasisDiceTimer.Update();
 	}
 }
@@ -113,7 +115,7 @@ void CDice::Finalize()
 {
 	m_DrawDiceSprite.clear();
 
-	for (int dice_sprite_i = 0; dice_sprite_i < m_max_dice; ++dice_sprite_i)
+	for (int dice_sprite_i = 0; dice_sprite_i < dice::max_dice; ++dice_sprite_i)
 		m_DiceSprite[dice_sprite_i].Delete();
 }
 
@@ -127,11 +129,11 @@ int CDice::GetDice()
 
 void CDice::SetUpDice()
 {
-	int rand_dice = aqua::Rand(m_rand_pattern - 1);
+	int rand_dice = aqua::Rand(dice::rand_pattern - 1);
 
 	if (m_DrawDiceSprite.empty())
 	{
-		for (int dice_i = 0; dice_i < m_max_dice; ++dice_i)
+		for (int dice_i = 0; dice_i < dice::max_dice; ++dice_i)
 		{
 			m_DrawDiceSprite.push_back(&m_DiceSprite[m_rand_dice[rand_dice][dice_i] - 1]);
 		}

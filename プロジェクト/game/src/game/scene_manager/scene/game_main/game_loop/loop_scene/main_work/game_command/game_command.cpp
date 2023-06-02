@@ -1,5 +1,6 @@
 ﻿#include "game_command.h"
 #include "dice/dice.h"
+#include "../charactor_map_move/charactor_map_move.h"
 
 namespace key = aqua::keyboard;
 
@@ -14,6 +15,7 @@ CGameCommand::CGameCommand(aqua::IGameObject* parent)
 	, m_NowSelectCommand(CommandID::DICE)
 	, m_UpdateCommand(false)
 	, m_DiceClass(nullptr)
+	, m_MoveTile(0)
 {
 }
 
@@ -28,12 +30,15 @@ void CGameCommand::Initialize(aqua::CVector2 position)
 		label.position = position;
 
 		m_CommandLabel.push_back(label);
+		label.Delete();
 	}
 
 	m_CommandLabel[(int)m_NowSelectCommand].color = aqua::CColor::YELLOW;
 
 	m_CommandLabel[(int)CommandID::TEAM].position.y +=
 		m_CommandLabel[(int)CommandID::DICE].GetFontHeight() * 2.0f;
+
+	m_CharactorMapMove = (CCharactorMapMove*)aqua::FindGameObject("CharactorMapMove");
 }
 
 void CGameCommand::Update()
@@ -107,16 +112,19 @@ void CGameCommand::DiceCommand()
 		m_DiceClass = aqua::CreateGameObject<CDice>(this);
 		m_DiceClass->Initialize();
 	}
-	else
+	else if(m_DiceClass->GetDice() != -1)
 	{
 		m_DiceClass->Update();
+		m_MoveTile = m_DiceClass->GetDice();
+	}
+	else
+	{
 
-		if (m_DiceClass->GetDice() != -1)
-		{
-			m_DiceClass->Finalize();
-			m_DiceClass = nullptr;
-			m_UpdateCommand = false;
-		}
+
+
+		//m_DiceClass->Finalize();
+		//m_DiceClass = nullptr;
+		//m_UpdateCommand = false;
 	}
 }
 
