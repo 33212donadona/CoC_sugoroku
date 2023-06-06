@@ -46,6 +46,11 @@ STATUS* CCharactorInfo::GetStatus()
 	return &m_Status;
 }
 
+SKILL_ID CCharactorInfo::GetSkillID()
+{
+	return m_SkillID;
+}
+
 void CCharactorInfo::InvokeSkill(STATUS& m_SubjectChara)
 {
 	if (!m_SkillClass)return;

@@ -171,7 +171,7 @@ Clear(unsigned int color)
 std::string aqua::FloatToString(float num, int decimal_point)
 {
 	int m_Num = std::abs((int)num);
-	int pow = std::pow(10, decimal_point);
+	int pow = (int)std::pow(10, decimal_point);
 
 	std::string MinusSign = "";
 

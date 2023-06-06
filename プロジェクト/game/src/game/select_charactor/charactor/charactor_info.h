@@ -48,6 +48,11 @@ public:
 	STATUS* GetStatus();
 
 	/*!
+	 *  @brief スキル番号取得
+	 */
+	SKILL_ID GetSkillID();
+
+	/*!
 	 *  @brief スキルの発動
 	 */
 	void  InvokeSkill(STATUS& m_SubjectChara);

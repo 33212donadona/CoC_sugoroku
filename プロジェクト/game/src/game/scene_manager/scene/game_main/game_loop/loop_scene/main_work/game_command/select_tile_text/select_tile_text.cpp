@@ -37,8 +37,8 @@ void CSelectTileText::Initialize(std::string text, aqua::CVector2 center_positio
 	}
 
 	// ï∂éöÇ…çáÇÌÇπÇƒëÂÇ´Ç≥ÇïœçX
-	m_TextBox.scale.x = (text_size.x + m_TextBothEnds[0].GetTextureWidth()) / m_TextBox.GetTextureWidth();
-	m_TextBox.scale.y = text_size.y / m_TextBox.GetTextureHeight();
+	m_TextBox.scale.x = (float)((text_size.x + m_TextBothEnds[0].GetTextureWidth()) / m_TextBox.GetTextureWidth());
+	m_TextBox.scale.y = (float)(text_size.y / m_TextBox.GetTextureHeight());
 
 	m_TextBothEnds[0].position.x -= m_TextBothEnds[0].GetTextureWidth() / 2.0f;
 	m_TextBothEnds[1].position.x += m_TextBox.GetTextureWidth() * m_TextBox.scale.x - m_TextBothEnds[1].GetTextureWidth() / 2.0f;

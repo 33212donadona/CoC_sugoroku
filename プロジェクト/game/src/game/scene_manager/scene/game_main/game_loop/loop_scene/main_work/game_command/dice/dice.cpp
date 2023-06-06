@@ -33,10 +33,10 @@ void CDice::Initialize()
 		m_DiceSprite[dice_sprite_i].Create("data\\game_main\\UI\\dice.png");
 
 		if (dice_sprite_h == 0.0f)
-			dice_sprite_h = m_DiceSprite[dice_sprite_i].GetTextureHeight() / dice::max_dice;
+			dice_sprite_h = (float)(m_DiceSprite[dice_sprite_i].GetTextureHeight() / dice::max_dice);
 
-		m_DiceSprite[dice_sprite_i].rect.top = dice_sprite_h * dice_sprite_i;
-		m_DiceSprite[dice_sprite_i].rect.bottom = dice_sprite_h * (dice_sprite_i + 1);
+		m_DiceSprite[dice_sprite_i].rect.top = (int)dice_sprite_h * dice_sprite_i;
+		m_DiceSprite[dice_sprite_i].rect.bottom = (int)dice_sprite_h * (dice_sprite_i + 1);
 
 		m_DiceSprite[dice_sprite_i].position.x =
 			(aqua::GetWindowWidth() - m_DiceSprite[dice_sprite_i].GetTextureWidth()) / 2.0f;
@@ -60,8 +60,8 @@ void CDice::Initialize()
 	m_BackGround.Setup
 	(
 		aqua::CVector2::ZERO,
-		aqua::GetWindowWidth(),
-		aqua::GetWindowHeight(),
+		(float)aqua::GetWindowWidth(),
+		(float)aqua::GetWindowHeight(),
 		0x77000000
 	);
 }
