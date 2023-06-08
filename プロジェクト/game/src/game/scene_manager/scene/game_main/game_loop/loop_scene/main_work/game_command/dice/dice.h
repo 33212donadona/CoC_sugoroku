@@ -71,5 +71,6 @@ private:
 	bool m_ReturnDice;
 
 	int  m_DiceNumber;
+	int  m_DiceRand;
 	int  m_DiceAftertasteCount;
 };

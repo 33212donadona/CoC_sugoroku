@@ -28,15 +28,14 @@ void CTileManager::Update()
  */
 void CTileManager::Draw()
 {
-
-	for (auto& it : m_LineList)
+	for (auto& line_it : m_LineList)
 	{
-		it->Draw();
+		line_it->Draw();
 	}
 
-	for (auto& it : m_TileList)
+	for (auto& tile_it : m_TileList)
 	{
-		it->Draw();
+		tile_it->Draw();
 	}
 
 	CLine::ArrowDraw();
@@ -47,17 +46,22 @@ void CTileManager::Draw()
  */
 void CTileManager::Finalize()
 {
-	for (auto& it : m_TileList)
+	for (auto& tile_it : m_TileList)
 	{
-		it->Finalize();
-		AQUA_SAFE_DELETE(it);
+		tile_it->Finalize();
+		AQUA_SAFE_DELETE(tile_it);
 	}
 
-	for (auto& it : m_LineList)
+	m_TileList.clear();
+
+	for (auto& line_it : m_LineList)
 	{
-		it->Finalize();
-		AQUA_SAFE_DELETE(it);
+		line_it->Finalize();
+		AQUA_SAFE_DELETE(line_it);
 	}
+
+	m_LineList.clear();
+
 }
 
 /*
@@ -81,7 +85,7 @@ void CTileManager::CreateTile(TileInfo* info)
 }
 
 /*
- * タイルをつなげる
+ * タイルを道でつなげる
  */
 void CTileManager::CreateTileLine()
 {
@@ -101,11 +105,13 @@ void CTileManager::CreateTileLine()
 				{
 					if (from_id == *from_it->GetMyTileID())
 					{
+						CLine* line;
+
 						tile_it->SetFromTileID(i, from_it);
 
-						CLine* line = aqua::CreateGameObject<CLine>(this);
+						line = aqua::CreateGameObject<CLine>(this);
 						
-						line->Initialize(tile_it->GetCenterPosition(),from_it->GetCenterPosition());
+						line->Initialize(tile_it->GetCenterPosition(),from_it->GetCenterPosition(), *tile_it->GetMyTileID(),from_id);
 
 						m_LineList.push_back(line);
 
@@ -118,15 +124,47 @@ void CTileManager::CreateTileLine()
 	}
 }
 
+/*
+ * タイルの座標 
+ */
 aqua::CVector2* CTileManager::GetTilePosition(int tile_id)
 {
 
-	if (tile_id < 0 || tile_id >= m_TileList.size())return m_TileList[0]->GetCenterPosition();
+	if (tile_id < 0 || tile_id >= m_TileList.size())
+		return m_TileList[0]->GetCenterPosition();
 
 	return m_TileList[tile_id]->GetCenterPosition();
 }
 
+/*
+ * タイルの行先の情報
+ */
 std::vector<int>* CTileManager::GetNextTileID(int tile_id)
 {
-	return  m_TileList[tile_id]->GetFromTileID();
+	int id = tile_id - 1;
+
+	if (id <= 0)id = 0;
+	if (id >= (int)m_TileList.size())id = (int)m_TileList.size() - 1;
+
+	return  m_TileList[id]->GetFromTileID();
+}
+
+/*
+ * タイルリストの大きさ
+ */
+int CTileManager::GetTileSize()
+{
+	return (int)m_TileList.size();
+}
+
+/*
+ * 道の表示フラグを反転
+ */
+void CTileManager::LineVisible(int tile_id)
+{
+	for (auto& line_it : m_LineList)
+	{
+		if (line_it->GetWayTileID(LineWay::TO) == tile_id)
+			line_it->visible = !line_it->visible;
+	}
 }

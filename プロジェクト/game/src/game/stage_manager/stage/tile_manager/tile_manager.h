@@ -59,12 +59,22 @@ public:
 	 */
 	std::vector<int>* GetNextTileID(int tile_id); 
 
+	/*
+	 *  @brief 次に進めるタイルのID 
+	 */
+	int GetTileSize(); 
+
+	/*
+	 *  @brief 道の表示の反転
+	 */
+	void LineVisible(int tile_id);
+
 private:
 
-	std::vector<ITile*>      m_TileList;   //!  タイルリスト
+	std::vector<ITile*>               m_TileList;   //!  タイルリスト
 
-	std::list<CLine*>        m_LineList;   //!  道クラスリスト
+	std::list<CLine*>                 m_LineList;   //!  道クラスリスト
 
-	bool                     m_LineFlag;   //!  線を引いたかどうか
+	bool                              m_LineFlag;   //!  線を引いたかどうか
 
 };

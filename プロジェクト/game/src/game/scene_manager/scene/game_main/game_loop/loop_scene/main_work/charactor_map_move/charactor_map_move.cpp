@@ -21,6 +21,8 @@ void CCharactorMapMove::Initialize()
 	{
 		m_PlayerIcom[i].Create("data\\game_main\\UI\\キャラアイコン.png");
 		m_PlayerIcom[i].color = m_CommonData->GetPlayerColor((PLAYER_ID)i);
+
+		m_PlayerTileID[i] = 1;
 	}
 
 	m_EasingTime.Setup(m_max_easing_time);
@@ -28,15 +30,18 @@ void CCharactorMapMove::Initialize()
 
 void CCharactorMapMove::Update()
 {
-	if (m_PlayerIcom[(int)m_PlayerID].position != m_PrevPosition)
+	if (m_PlayerIcom[(int)m_PlayerID].position != m_FromPosition)
 	{
+		if (m_EasingTime.Finished())
+			m_EasingTime.SetTime(m_EasingTime.GetLimit());
+
 		m_PlayerIcom[(int)m_PlayerID].position.x =
 			aqua::easing::InCubic
 			(
 				m_EasingTime.GetTime(),
 				m_EasingTime.GetLimit(),
 				m_Position.x,
-				m_PrevPosition.x
+				m_FromPosition.x
 			);
 
 		m_PlayerIcom[(int)m_PlayerID].position.y =
@@ -45,7 +50,7 @@ void CCharactorMapMove::Update()
 				m_EasingTime.GetTime(),
 				m_EasingTime.GetLimit(),
 				m_Position.y,
-				m_PrevPosition.y
+				m_FromPosition.y
 			);
 
 		m_EasingTime.Update();
@@ -72,15 +77,36 @@ void CCharactorMapMove::SetPlayerID(PLAYER_ID id)
 {
 	if (id == PLAYER_ID::DUMMY)return;
 	m_PlayerID = id;
+	m_FromPosition = m_PlayerIcom[(int)m_PlayerID].position;
+}
+
+int CCharactorMapMove::GetPlayerTileID(PLAYER_ID id)
+{
+	if (id == PLAYER_ID::DUMMY)return 0;
+
+	return m_PlayerTileID[(int)id];
+
 }
 
 bool CCharactorMapMove::SetPlayerPosition(int tile_id)
 {
+	m_PlayerTileID[(int)m_PlayerID] = tile_id;
+
 	if (!m_EasingTime.Finished())
 	{
+
 		m_Position = m_PlayerIcom[(int)m_PlayerID].position;
-		m_PrevPosition = *m_TileManager->GetTilePosition(tile_id);
+		m_FromPosition = *m_TileManager->GetTilePosition(tile_id);
+
 	}
 
 	return m_EasingTime.Finished();
+}
+
+int CCharactorMapMove::GetFromTileSize(int tile_id)
+{
+	if (tile_id < 0 || tile_id > m_TileManager->GetTileSize())
+		return 0;
+
+	return (int)m_TileManager->GetNextTileID(tile_id)->size();
 }

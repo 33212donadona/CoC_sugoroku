@@ -2,12 +2,12 @@
 
 namespace key = aqua::keyboard;
 
-const float CDice::m_change_dice_time = 0.05f;
-const float CDice::m_add_dice_time = 0.15f;
-const float CDice::m_emphasis_dice_time = 2.0f;
+const float CDice::m_change_dice_time       = 0.05f;
+const float CDice::m_add_dice_time          = 0.15f;
+const float CDice::m_emphasis_dice_time     = 2.0f;
 const float CDice::m_emphasis_dice_max_size = 1.5f;
 const float CDice::m_emphasis_dice_min_size = 1.0f;
-const int CDice::m_aftertaste_max_count = 5;
+const int CDice::m_aftertaste_max_count     = 5;
 const int CDice::m_rand_dice[dice::rand_pattern][dice::max_dice]
 {
 	{ 1,4,5,2,6,3},
@@ -121,21 +121,21 @@ void CDice::Finalize()
 
 int CDice::GetDice()
 {
-	if (m_DiceAftertasteCount < m_aftertaste_max_count || !m_EmphasisDiceTimer.Finished())
+	if (m_DiceAftertasteCount == m_aftertaste_max_count && m_EmphasisDiceTimer.Finished())
 		return -1;
 
-	return m_DiceNumber;
+	return m_rand_dice[m_DiceRand][m_DiceNumber];
 }
 
 void CDice::SetUpDice()
 {
-	int rand_dice = aqua::Rand(dice::rand_pattern - 1);
+	m_DiceRand = aqua::Rand(dice::rand_pattern - 1);
 
 	if (m_DrawDiceSprite.empty())
 	{
 		for (int dice_i = 0; dice_i < dice::max_dice; ++dice_i)
 		{
-			m_DrawDiceSprite.push_back(&m_DiceSprite[m_rand_dice[rand_dice][dice_i] - 1]);
+			m_DrawDiceSprite.push_back(&m_DiceSprite[m_rand_dice[m_DiceRand][dice_i] - 1]);
 		}
 	}
 }

@@ -11,6 +11,10 @@ enum class CommandID
 
 class CDice;
 class CCharactorMapMove;
+class CTileManager;
+class CSelectTileText;
+
+enum class PLAYER_ID;
 
 class CGameCommand
 	:public aqua::IGameObject
@@ -47,6 +51,11 @@ public:
 	 */
 	void Finalize()override;
 
+	/*!
+	 *  @brief 
+	 */
+	void SetPlayerID(PLAYER_ID id);
+
 private:
 
 	/*
@@ -75,6 +84,12 @@ private:
 
 	CDice* m_DiceClass;                       //! 
 	CCharactorMapMove* m_CharactorMapMove;    //! 
+	CTileManager*      m_TileManager;         //! 
+	std::vector<CSelectTileText*> m_SelectTextVector;
+	
+	PLAYER_ID m_PlayerID;
 
 	int m_MoveTile;
+	int m_MaxFromTile;
+	int m_SelectFromTile;
 };

@@ -48,9 +48,19 @@ public:
 	void SetPlayerID(PLAYER_ID id);
 
 	/*!
+	 *  @brief プレイヤーの立っているタイルID
+	 */
+	int GetPlayerTileID(PLAYER_ID id);
+
+	/*!
 	 *  @brief プレイヤーの座標更新 
 	 */
 	bool SetPlayerPosition(int tile_id);
+
+	/*!
+	 *  @brief タイルの移動先の数 
+	 */
+	int GetFromTileSize(int tile_id);
 
 private:
 	static const float m_max_easing_time;
@@ -65,8 +75,10 @@ private:
 
 	aqua::CSprite  m_PlayerIcom[(int)PLAYER_ID::DUMMY];
 
+	int            m_PlayerTileID[(int)PLAYER_ID::DUMMY];
+
 	aqua::CVector2 m_Position;
-	aqua::CVector2 m_PrevPosition;
+	aqua::CVector2 m_FromPosition;
 
 	aqua::CTimer   m_EasingTime;
 };

@@ -1,6 +1,8 @@
 #pragma once
 #include "aqua.h"
 
+class Shake;
+
 class CSelectTileText
 	:public aqua::IGameObject
 {
@@ -36,20 +38,46 @@ public:
 	 */
 	void Finalize()override;
 
+	/*
+	 *  @brief 点滅
+	 */
+	void FlashingColor();
+
+	/*!
+	 *  @brief テキストの大きさ
+	 */
+	aqua::CVector2 GetTextSize();
+
+	/*!
+	 *  @brief テキストの座標
+	 */
+	void SetPosition(aqua::CVector2 position);
+
 private:
-	static const aqua::CPoint m_font_space;
-	static const aqua::CPoint m_shake_noise;
-	static const float m_shake_interval;
-	static const int   m_shake_max_count;
+	static const aqua::CPoint	m_font_space;
+	static const aqua::CPoint	m_shake_noise;
+	static const float			m_shake_interval;
+	static const int			m_shake_max_count;
+	static const int			m_flashing_max_time;
+	static const int			m_max_both_ends;
+	static const unsigned char  m_flashing_alpha;
 
-	aqua::CLabel  m_TextLabel;
-	aqua::CSprite m_TextBox;
-	aqua::CSprite m_TextBothEnds[2];
+	aqua::CLabel   m_TextLabel;
+	aqua::CSprite  m_TextBox;
+	aqua::CSprite* m_TextBothEnds;
+	aqua::CPoint  m_TextSize;
 
+	aqua::CSprite  m_FlashingTextBox;
+	aqua::CSprite* m_FlashingTextBothEnds;
+	bool           m_FlashingFlag;
+	aqua::CTimer   m_FlashingTime;
 
-	aqua::CVector2 m_ShakeMove;
-	aqua::CTimer  m_ShakeTimer;
-	int m_ShakeCount;
-	float m_Angle;
+	Shake*         m_Shake;
+
+	aqua::CVector2  m_TextLabelPosition;
+	aqua::CVector2  m_TextBoxPosition;
+	aqua::CVector2* m_TextBothEndsPosition;
+	aqua::CVector2  m_FlashingTextBoxPosition;
+	aqua::CVector2* m_FlashingTextBothEndsPosition;
 
 };

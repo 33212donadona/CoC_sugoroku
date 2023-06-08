@@ -101,9 +101,7 @@ void CTurn::Update()
 
 		case MENU_ID::SKIIL:
 
-			SKILL_ID id = m_CommonData->RefarenceChara((PLAYER_ID)m_TurnNum)->GetSkillID();
-
-			switch (id)
+			switch (m_CommonData->RefarenceChara((PLAYER_ID)m_TurnNum)->GetSkillID())
 			{
 			case SKILL_ID::FIRING:
 			case SKILL_ID::SCOLDING:
@@ -187,7 +185,7 @@ void CTurn::SelectCommand()
 		m_MenuLabel[(int)m_NowMenuID].color = aqua::CColor::WHITE; 
 
 		//  選択コマンドを移動
-		m_NowMenuID = aqua::Mod((MENU_ID)((int)m_NowMenuID + add), MENU_ID::ATTACK, MENU_ID::MAX);
+		m_NowMenuID = aqua::Mod<MENU_ID,int>((MENU_ID)((int)m_NowMenuID + add), MENU_ID::ATTACK, MENU_ID::MAX);
 
 		//　文字を黄色にする
 		m_MenuLabel[(int)m_NowMenuID].color = aqua::CColor::YELLOW;
