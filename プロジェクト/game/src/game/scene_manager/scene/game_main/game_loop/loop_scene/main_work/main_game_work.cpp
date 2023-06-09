@@ -9,11 +9,14 @@ const int            CMainGameWork::m_font_size = 30;
 
 CMainGameWork::CMainGameWork(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "MainGameWork")
-	, m_NowPlayerID(PLAYER_ID::PL1)
+	, m_NowPlayerID(PLAYER_ID::PL4)
 	, m_Status(nullptr)
 {
 }
 
+/*
+ * 初期化 
+ */
 void CMainGameWork::Initialize()
 {
 	m_TextBoxSprite.Create("data\\game_main\\UI\\text_box.png");
@@ -59,6 +62,9 @@ void CMainGameWork::Initialize()
 
 }
 
+/*
+ * 更新 
+ */
 void CMainGameWork::Update()
 {
 	CharaStatusUpdate();
@@ -66,8 +72,16 @@ void CMainGameWork::Update()
 	m_CharactorMapMove->Update();
 
 	m_GameCommand->Update();
+
+	if (m_TextBoxSprite.color.GetColor() != m_CommonData->GetPlayerColor(m_NowPlayerID))
+	{
+		m_TextBoxSprite.color = m_CommonData->GetPlayerColor(m_NowPlayerID);
+	}
 }
 
+/*
+ * 描画 
+ */
 void CMainGameWork::Draw()
 {
 	m_TextBoxSprite.Draw();
@@ -86,6 +100,9 @@ void CMainGameWork::Draw()
 	m_GameCommand->Draw();
 }
 
+/*
+ * 解放 
+ */
 void CMainGameWork::Finalize()
 {
 	m_TextBoxSprite.Delete();
@@ -96,8 +113,13 @@ void CMainGameWork::Finalize()
 
 	m_CharactorMapMove->Finalize();
 	m_GameCommand->Finalize();
+
+	IGameObject::Finalize();
 }
 
+/*
+ * 今のプレイヤー番号 
+ */
 PLAYER_ID CMainGameWork::GetNowPlayerID()
 {
 	return m_NowPlayerID;
@@ -108,11 +130,15 @@ PLAYER_ID CMainGameWork::GetNowPlayerID()
  */
 void CMainGameWork::CharaStatusUpdate()
 {
-	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::A)) // キャラクターが切り替わる
+	if (m_GameCommand->GetFinishedCommand()) // キャラクターが切り替わる
 	{
 		m_NowPlayerID = aqua::Mod<PLAYER_ID, int>((int)m_NowPlayerID + 1, (int)PLAYER_ID::PL1, (int)PLAYER_ID::PL4);
 
+		m_CharactorMapMove->SetPlayerID(m_NowPlayerID);
+		m_GameCommand->SetPlayerID(m_NowPlayerID);
+
 		m_Status = (*m_CommonData).RefarenceChara(m_NowPlayerID)->GetStatus();
+
 		SetUpStatus();
 	}
 

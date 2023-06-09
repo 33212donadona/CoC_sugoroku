@@ -1,10 +1,10 @@
 #include "stage.h"
 #include <filesystem>
 /*
- *  コンストラクタ 
+ *  コンストラクタ
  */
 CStage::CStage(aqua::IGameObject* parent)
-	:aqua::IGameObject(parent,"Stage")
+	:aqua::IGameObject(parent, "Stage")
 {
 }
 
@@ -13,7 +13,7 @@ CStage::CStage(aqua::IGameObject* parent)
  */
 bool CStage::Initialize(std::string file_name)
 {
-	if(!std::filesystem::exists(file_name))return false;
+	if (!std::filesystem::exists(file_name))return false;
 
 	m_TileManager = aqua::CreateGameObject<CTileManager>(this);
 
@@ -21,16 +21,16 @@ bool CStage::Initialize(std::string file_name)
 
 	loader.Load(file_name);
 
-	m_BackGoundSprite.Create(loader.GetString(0,0));
+	m_BackGoundSprite.Create(loader.GetString(0, 0));
 
-	int row = 1;	
+	int row = 1;
 	int count_row = 0;
 	int max_row = loader.GetRows() - row;
 	int max_col = loader.GetCols() - 1;
 
 	m_TileData = AQUA_NEW TileInfo[max_row];
 
-	while (row < max_row)
+	while (row <= max_row)
 	{
 		m_TileData[count_row].id = loader.GetInteger(row, 0);
 		m_TileData[count_row].tile_name = loader.GetString(row, 1);
@@ -38,8 +38,11 @@ bool CStage::Initialize(std::string file_name)
 		m_TileData[count_row].position.y = loader.GetFloat(row, 3);
 
 		for (int i = 4; i < max_col; ++i)
-			m_TileData[count_row].m_FromID.push_back(loader.GetInteger(row, i));
-		
+		{
+			if (loader.GetInteger(row, i) != 0)
+				m_TileData[count_row].m_FromID.push_back(loader.GetInteger(row, i));
+		}
+
 		m_TileManager->CreateTile(&m_TileData[count_row]);
 
 		row++;
@@ -82,4 +85,6 @@ void CStage::Finalize()
 
 	AQUA_SAFE_DELETE(m_TileManager);
 	AQUA_SAFE_DELETE_ARRAY(m_TileData);
+
+	m_ChildObjectList.clear();
 }

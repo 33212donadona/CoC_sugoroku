@@ -52,8 +52,10 @@ private:
 	void SetUpDice();
 
 private:
-	static const int m_aftertaste_max_count;
-	static const int m_rand_dice[dice::rand_pattern][dice::max_dice];
+	static const int   m_aftertaste_max_count;
+	static const int   m_rand_dice[dice::rand_pattern][dice::max_dice];
+	static const int   m_dice_label_font_size;
+	static const float m_dice_label_distance;
 	static const float m_change_dice_time;
 	static const float m_add_dice_time;
 	static const float m_emphasis_dice_time;
@@ -62,11 +64,12 @@ private:
 
 	aqua::CSprite               m_DiceSprite[dice::max_dice];      //! サイコロ一面ずつの画像
 	std::vector<aqua::CSprite*> m_DrawDiceSprite;
+	aqua::CLabel                m_DiceLabel;                       //! サイコロの決定方法のラベル
 
-	aqua::CBoxPrimitive       m_BackGround;
+	aqua::CBoxPrimitive         m_BackGround;
 
-	aqua::CTimer  m_ChangeDiceTimer;
-	aqua::CTimer  m_EmphasisDiceTimer;     // 出た出目の強調
+	aqua::CTimer  m_ChangeDiceTimer;                               //! サイコロの切り替わる時間
+	aqua::CTimer  m_EmphasisDiceTimer;                             //! 出た出目の強調
 
 	bool m_ReturnDice;
 

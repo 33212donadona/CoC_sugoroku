@@ -7,6 +7,7 @@
 
 namespace key = aqua::keyboard;
 
+const int  CGameCommand::m_select_text_size = 120;
 const std::string CGameCommand::m_CommandName[] =
 {
 	"サイコロを振る",
@@ -24,6 +25,9 @@ CGameCommand::CGameCommand(aqua::IGameObject* parent)
 {
 }
 
+/*
+ * 初期化
+ */
 void CGameCommand::Initialize(aqua::CVector2 position)
 {
 	for (int i = (int)CommandID::DICE; i < (int)CommandID::MAX; ++i)
@@ -47,8 +51,12 @@ void CGameCommand::Initialize(aqua::CVector2 position)
 	m_TileManager = (CTileManager*)aqua::FindGameObject("TileManager");
 }
 
+/*
+ * 更新
+ */
 void CGameCommand::Update()
 {
+	m_PrevUpdateCommand = m_UpdateCommand;
 
 	if (m_UpdateCommand)
 	{
@@ -73,6 +81,9 @@ void CGameCommand::Update()
 	}
 }
 
+/*
+ * 描画
+ */
 void CGameCommand::Draw()
 {
 	for (auto& label : m_CommandLabel)
@@ -93,6 +104,9 @@ void CGameCommand::Draw()
 
 }
 
+/*
+ * 解放
+ */
 void CGameCommand::Finalize()
 {
 	for (auto& label : m_CommandLabel)
@@ -101,10 +115,29 @@ void CGameCommand::Finalize()
 	if (!m_SelectTextVector.empty())
 	{
 		for (auto& text_it : m_SelectTextVector)
-			text_it->Draw();
+			text_it->Finalize();
 	}
 }
 
+/*
+ * コマンドの終わり
+ */
+bool CGameCommand::GetFinishedCommand()
+{
+	return !m_UpdateCommand && m_PrevUpdateCommand;
+}
+
+/*
+ * プレイヤーのIDを書き換える
+ */
+void CGameCommand::SetPlayerID(PLAYER_ID id)
+{
+	m_PlayerID = id;
+}
+
+/*
+ * コマンドの選択
+ */
 void CGameCommand::SelectCommand()
 {
 	if (key::Trigger(key::KEY_ID::W) || key::Trigger(key::KEY_ID::S))
@@ -125,6 +158,9 @@ void CGameCommand::SelectCommand()
 
 }
 
+/*
+ * サイコロを振るコマンド
+ */
 void CGameCommand::DiceCommand()
 {
 	if (!m_DiceClass)
@@ -140,64 +176,56 @@ void CGameCommand::DiceCommand()
 
 			if (m_DiceClass->GetDice() != -1)
 				m_MoveTile = m_DiceClass->GetDice();
-
 		}
 		else
 		{
-			// TODO
-			if (m_SelectTextVector.empty())
-			{
-				m_TileManager->LineVisible(m_CharactorMapMove->GetPlayerTileID(m_PlayerID));
-
-				m_DiceClass->Finalize();
-
-				m_SelectFromTile = 0;
-
-				int tile_id = m_CharactorMapMove->GetPlayerTileID(m_PlayerID);
-				m_MaxFromTile = m_CharactorMapMove->GetFromTileSize(tile_id);
-
-				for (int i = 0; i < m_MaxFromTile; ++i)
-				{
-					CSelectTileText* text;
-					aqua::CVector2 position;
-					text = aqua::CreateGameObject<CSelectTileText>(this);
-					text->Initialize("タイル" + std::to_string(i), aqua::GetWindowSize() / 2.0f, 80);
-
-					position.x = aqua::GetWindowWidth() / 2.0f - text->GetTextSize().x / 2.0f;
-					position.y = aqua::GetWindowHeight() / 2.0f + text->GetTextSize().y * i;
-
-					text->SetPosition(position);
-					m_SelectTextVector.push_back(text);
-
-				}
-			}
 
 			if (key::Trigger(key::KEY_ID::W) || key::Trigger(key::KEY_ID::S))
 			{
 
 				int add = key::Trigger(key::KEY_ID::S) - key::Trigger(key::KEY_ID::W);
+				int tile_id = m_CharactorMapMove->GetPlayerTileID(m_PlayerID);
 
+				m_TileManager->LineVisible(tile_id, (*m_TileManager->GetNextTileID(tile_id))[m_SelectFromTile]);
+				
 				m_SelectFromTile = aqua::Mod(m_SelectFromTile + add, 0, m_MaxFromTile - 1);
+
+				m_TileManager->LineVisible(tile_id, (*m_TileManager->GetNextTileID(tile_id))[m_SelectFromTile]);
 
 			}
 
 			if (!m_SelectTextVector.empty())
 			{
+
 				for (auto& text_it : m_SelectTextVector)
 					text_it->Update();
 
 				m_SelectTextVector[m_SelectFromTile]->FlashingColor();
+
+			}
+			else
+			{
+				CreateSelectTileText();
 			}
 
 			if (key::Trigger(key::KEY_ID::RETURN))
 			{
+
 				int tile = m_CharactorMapMove->GetPlayerTileID(m_PlayerID);
 				int from_tile = (*m_TileManager->GetNextTileID(tile))[m_SelectFromTile];
 
-				m_CharactorMapMove->SetPlayerPosition(from_tile);
+				m_TileManager->LineVisible(tile, from_tile);
+
+				m_CharactorMapMove->SetPlayerTileID(from_tile);
 
 				for (auto& text_it : m_SelectTextVector)
+				{
+
 					text_it->Finalize();
+
+					aqua::ListErase(&m_ChildObjectList, text_it);
+
+				}
 
 				m_SelectTextVector.clear();
 
@@ -207,8 +235,6 @@ void CGameCommand::DiceCommand()
 				{
 					m_UpdateCommand = false;
 
-					m_TileManager->LineVisible(m_CharactorMapMove->GetPlayerTileID(m_PlayerID));
-
 					m_DiceClass->Finalize();
 					m_DiceClass = nullptr;
 				}
@@ -217,8 +243,41 @@ void CGameCommand::DiceCommand()
 	}
 }
 
-
+/*
+ * チームを組むコマンド
+ */
 void CGameCommand::TeamCommand()
 {
 	m_UpdateCommand = false;
+}
+
+/*
+ * 選択肢の生成
+ */
+void CGameCommand::CreateSelectTileText()
+{
+
+	m_SelectFromTile = 0;
+
+	int tile_id = m_CharactorMapMove->GetPlayerTileID(m_PlayerID);
+	m_TileManager->LineVisible(tile_id, (*m_TileManager->GetNextTileID(tile_id))[m_SelectFromTile]);
+	m_MaxFromTile = m_CharactorMapMove->GetFromTileSize(tile_id);
+
+	for (int i = 0; i < m_MaxFromTile; ++i)
+	{
+
+		CSelectTileText* text;
+		aqua::CVector2 position;
+		text = aqua::CreateGameObject<CSelectTileText>(this);
+
+		int from_tile = (*m_TileManager->GetNextTileID(tile_id))[i];
+		text->Initialize("タイル" + std::to_string(from_tile) + "へ", aqua::GetWindowSize() / 2.0f, m_select_text_size);
+
+		position.x = aqua::GetWindowWidth()   - text->GetTextSize().x / 2.0f;
+		position.y = aqua::GetWindowHeight() / 2.0f  + text->GetTextSize().y * i;
+
+		text->SetPosition(position);
+		m_SelectTextVector.push_back(text);
+
+	}
 }

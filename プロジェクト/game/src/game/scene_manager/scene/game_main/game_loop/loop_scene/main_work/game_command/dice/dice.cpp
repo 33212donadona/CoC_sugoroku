@@ -5,9 +5,11 @@ namespace key = aqua::keyboard;
 const float CDice::m_change_dice_time       = 0.05f;
 const float CDice::m_add_dice_time          = 0.15f;
 const float CDice::m_emphasis_dice_time     = 2.0f;
-const float CDice::m_emphasis_dice_max_size = 1.5f;
-const float CDice::m_emphasis_dice_min_size = 1.0f;
+const float CDice::m_emphasis_dice_max_size = 2.5f;
+const float CDice::m_emphasis_dice_min_size = 2.0f;
+const float CDice::m_dice_label_distance    = 50.0f;
 const int CDice::m_aftertaste_max_count     = 5;
+const int CDice::m_dice_label_font_size     = 75;
 const int CDice::m_rand_dice[dice::rand_pattern][dice::max_dice]
 {
 	{ 1,4,5,2,6,3},
@@ -26,6 +28,11 @@ CDice::CDice(aqua::IGameObject* parent)
 
 void CDice::Initialize()
 {
+
+	m_DiceLabel.Create(m_dice_label_font_size);
+	m_DiceLabel.text = "エンターキーで止める";
+	m_DiceLabel.position.x = (aqua::GetWindowWidth() - m_DiceLabel.GetTextWidth()) / 2.0f;
+
 	float dice_sprite_h = 0.0f;
 
 	for (int dice_sprite_i = 0; dice_sprite_i < dice::max_dice; ++dice_sprite_i)
@@ -48,7 +55,15 @@ void CDice::Initialize()
 		m_DiceSprite[dice_sprite_i].anchor.y =
 			dice_sprite_h / 2.0f ;
 
+		m_DiceSprite[dice_sprite_i].scale = aqua::CVector2::ONE * m_emphasis_dice_min_size;
+
 	}
+
+	m_DiceLabel.position.y = 
+		m_DiceSprite[0].position.y  - 
+		m_DiceSprite[0].anchor.y    -
+		m_DiceLabel.GetFontHeight() - 
+		m_dice_label_distance;
 
 	SetUpDice();
 
@@ -109,6 +124,7 @@ void CDice::Draw()
 {
 	m_BackGround.Draw();
 	m_DrawDiceSprite[m_DiceNumber]->Draw();
+	m_DiceLabel.Draw();
 }
 
 void CDice::Finalize()
@@ -117,6 +133,10 @@ void CDice::Finalize()
 
 	for (int dice_sprite_i = 0; dice_sprite_i < dice::max_dice; ++dice_sprite_i)
 		m_DiceSprite[dice_sprite_i].Delete();
+
+	m_DiceLabel.Delete();
+
+	aqua::IGameObject::Finalize();
 }
 
 int CDice::GetDice()

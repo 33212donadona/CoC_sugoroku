@@ -62,6 +62,8 @@ void CTileManager::Finalize()
 
 	m_LineList.clear();
 
+	m_ChildObjectList.clear();
+
 }
 
 /*
@@ -129,11 +131,12 @@ void CTileManager::CreateTileLine()
  */
 aqua::CVector2* CTileManager::GetTilePosition(int tile_id)
 {
+	int id = tile_id - 1;
 
-	if (tile_id < 0 || tile_id >= m_TileList.size())
+	if (id < 0 || id >= m_TileList.size())
 		return m_TileList[0]->GetCenterPosition();
 
-	return m_TileList[tile_id]->GetCenterPosition();
+	return m_TileList[id]->GetCenterPosition();
 }
 
 /*
@@ -160,11 +163,11 @@ int CTileManager::GetTileSize()
 /*
  * “¹‚Ì•\Ž¦ƒtƒ‰ƒO‚ð”½“]
  */
-void CTileManager::LineVisible(int tile_id)
+void CTileManager::LineVisible(int tile_id,int from_id)
 {
 	for (auto& line_it : m_LineList)
 	{
-		if (line_it->GetWayTileID(LineWay::TO) == tile_id)
+		if (line_it->GetWayTileID(LineWay::TO) == tile_id && line_it->GetWayTileID(LineWay::FROM) == from_id)
 			line_it->visible = !line_it->visible;
 	}
 }

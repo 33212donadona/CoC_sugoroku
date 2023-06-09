@@ -55,7 +55,7 @@ public:
 	/*!
 	 *  @brief プレイヤーの座標更新 
 	 */
-	bool SetPlayerPosition(int tile_id);
+	bool SetPlayerTileID(int tile_id);
 
 	/*!
 	 *  @brief タイルの移動先の数 
@@ -77,8 +77,8 @@ private:
 
 	int            m_PlayerTileID[(int)PLAYER_ID::DUMMY];
 
-	aqua::CVector2 m_Position;
-	aqua::CVector2 m_FromPosition;
+	aqua::CVector2 m_Position[(int)PLAYER_ID::DUMMY];
+	aqua::CVector2 m_FromPosition[(int)PLAYER_ID::DUMMY];
 
-	aqua::CTimer   m_EasingTime;
+	aqua::CTimer   m_EasingTime[(int)PLAYER_ID::DUMMY];
 };

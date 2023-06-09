@@ -54,6 +54,7 @@ public:
 	void SetPosition(aqua::CVector2 position);
 
 private:
+
 	static const aqua::CPoint	m_font_space;
 	static const aqua::CPoint	m_shake_noise;
 	static const float			m_shake_interval;
@@ -62,22 +63,24 @@ private:
 	static const int			m_max_both_ends;
 	static const unsigned char  m_flashing_alpha;
 
-	aqua::CLabel   m_TextLabel;
-	aqua::CSprite  m_TextBox;
-	aqua::CSprite* m_TextBothEnds;
-	aqua::CPoint  m_TextSize;
+	aqua::CLabel    m_TextLabel;					//! 
+	aqua::CSprite   m_TextBox;						//! 
+	aqua::CSprite*  m_TextBothEnds;					//! 
+	aqua::CPoint    m_TextSize;						//! 
 
-	aqua::CSprite  m_FlashingTextBox;
-	aqua::CSprite* m_FlashingTextBothEnds;
-	bool           m_FlashingFlag;
-	aqua::CTimer   m_FlashingTime;
+	aqua::CSprite   m_FlashingTextBox;				//! 
+	aqua::CSprite*  m_FlashingTextBothEnds;			//! 
+	bool            m_FlashingFlag;					//! 
+	bool            m_PrevFlashingFlag;				//! 
+	int             m_FlashingFrame;				//! 
+	int             m_FlashingTime;					//! 
 
-	Shake*         m_Shake;
+	Shake*          m_Shake;						//! 
 
-	aqua::CVector2  m_TextLabelPosition;
-	aqua::CVector2  m_TextBoxPosition;
-	aqua::CVector2* m_TextBothEndsPosition;
-	aqua::CVector2  m_FlashingTextBoxPosition;
-	aqua::CVector2* m_FlashingTextBothEndsPosition;
+	aqua::CVector2  m_TextLabelPosition;			//! 
+	aqua::CVector2  m_TextBoxPosition;				//! 
+	aqua::CVector2* m_TextBothEndsPosition;			//! 
+	aqua::CVector2  m_FlashingTextBoxPosition;		//! 
+	aqua::CVector2* m_FlashingTextBothEndsPosition; //! 
 
 };

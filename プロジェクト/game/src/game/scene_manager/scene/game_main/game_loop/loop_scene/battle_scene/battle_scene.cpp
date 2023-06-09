@@ -35,7 +35,7 @@ void CBattleScene::Update()
 void CBattleScene::Draw()
 {
 	m_BackGround.Draw();
-	IGameObject::Update();
+	aqua::IGameObject::Draw();
 }
 
 /*
@@ -44,5 +44,5 @@ void CBattleScene::Draw()
 void CBattleScene::Finalize()
 {
 	m_BackGround.Delete();
-	IGameObject::Update();
+	aqua::IGameObject::Finalize();
 }

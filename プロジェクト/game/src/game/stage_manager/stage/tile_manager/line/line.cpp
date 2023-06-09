@@ -12,7 +12,7 @@ CLine::CLine(aqua::IGameObject* parent)
 	, m_TergetPosition(nullptr)
 	, m_FirstPosition(nullptr)
 {
-	m_LinePair.first = &m_ArrowSprite;
+	m_LinePair.first  = &m_ArrowSprite;
 	m_LinePair.second = &visible;
 
 	m_ArrowSpriteList.push_back(&m_LinePair);

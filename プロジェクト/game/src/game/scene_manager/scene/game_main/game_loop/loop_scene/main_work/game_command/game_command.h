@@ -54,6 +54,11 @@ public:
 	/*!
 	 *  @brief 
 	 */
+	bool GetFinishedCommand();
+
+	/*!
+	 *  @brief
+	 */
 	void SetPlayerID(PLAYER_ID id);
 
 private:
@@ -73,14 +78,21 @@ private:
 	 */
 	void TeamCommand();
 
+	/*
+	 *  @brief ëIëéàÇÃê∂ê¨
+	 */
+	void CreateSelectTileText();
+
 private:
 	static const std::string m_CommandName[(int)CommandID::MAX];
+	static const int  m_select_text_size;
 	
 	std::vector<aqua::CLabel> m_CommandLabel;
 
 	CommandID    m_NowSelectCommand;
 
 	bool m_UpdateCommand;
+	bool m_PrevUpdateCommand;
 
 	CDice* m_DiceClass;                       //! 
 	CCharactorMapMove* m_CharactorMapMove;    //! 

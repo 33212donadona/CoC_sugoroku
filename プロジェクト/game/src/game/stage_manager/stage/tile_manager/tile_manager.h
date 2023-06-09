@@ -67,7 +67,7 @@ public:
 	/*
 	 *  @brief “¹‚Ì•\Ž¦‚Ì”½“]
 	 */
-	void LineVisible(int tile_id);
+	void LineVisible(int tile_id,int from_id);
 
 private:
 
